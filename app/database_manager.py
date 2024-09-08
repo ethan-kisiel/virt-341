@@ -1,0 +1,3 @@
+"""
+Manages all database interactions
+"""
