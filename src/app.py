@@ -23,8 +23,20 @@ def index():
     return render_template("index.html")  # found in /src/templates/index.html
 
 
-@app.route("/student-profile/")
+@app.route("/student/<int:student_id>")
 def student_profile(student_id: int):
+    """Endpoint for student profiles
+
+    Keyword arguments:
+    student_id -- primary key of the user object which is a student
+    Return: Template
+    """
+
+    raise UnimplementedException()
+
+
+@app.route("/squadron/<int:squadron_id>")
+def squadron(squadron_id: int):
     """Endpoint for student profiles
 
     Keyword arguments:
