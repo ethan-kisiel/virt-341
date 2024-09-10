@@ -4,12 +4,20 @@ Main app file (Web Server Gateway Interface)
 includes routes, flask app, etc
 """
 
+# pylint: disable=import-error
+
+
 from flask import Flask
 from flask import render_template
 
-from exceptions import UnimplementedException
+from blueprints.squadron.bp_squadron import squadron_bp
+from blueprints.student.bp_student import student_bp
 
 app = Flask(__name__)
+
+## register blueprints:
+app.register_blueprint(squadron_bp, url_prefix="/squadron")
+app.register_blueprint(student_bp, url_prefix="/student")
 
 
 @app.route("/")
@@ -23,29 +31,6 @@ def index():
     return render_template("index.html")  # found in /src/templates/index.html
 
 
-@app.route("/student/<int:student_id>")
-def student_profile(student_id: int):
-    """Endpoint for student profiles
-
-    Keyword arguments:
-    student_id -- primary key of the user object which is a student
-    Return: Template
-    """
-
-    raise UnimplementedException()
-
-
-@app.route("/squadron/<int:squadron_id>")
-def squadron(squadron_id: int):
-    """Endpoint for student profiles
-
-    Keyword arguments:
-    student_id -- primary key of the user object which is a student
-    Return: Template
-    """
-
-    raise UnimplementedException()
-
-
 if __name__ == "__main__":
+    app.debug = True
     app.run()
