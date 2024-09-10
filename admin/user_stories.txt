@@ -1,0 +1,24 @@
+#### As a student,
+
+As a student, I will be able to log into my profile
+As a student, I will be able to view my 341 qr code
+
+
+
+
+#### As an authorized NCO/MTL/Instructor,
+
+As an authorized NCO/MTL/Instructor, I will be able to log into my profile
+As an authorized NCO/MTL/Instructor, I will be able to scan a student's 341 to fill it out
+As an authorized NCO/MTL/Instructor, I will be able to view a student's phase when filling out a 341
+As an authorized NCO/MTL/Instructor, I will be able to view a student's recent 341s and their statuses (open/closed), (excellence/discrepancy)
+    when filling out a 341
+As an authorized NCO/MTL/Instructor, I will be able to view a detailed rap-sheet of a student's 341s and their statuses
+
+
+
+
+#### As an authorized Flight Chief/Leadership,
+
+As an authorized Flight Chief/Leadership, I will be able to do everything an authorized NCO/MTL/Instructor
+As an authorized Flight Chief/Leadership, I will be able to view squadron trends and data in a dedicated dashboard
