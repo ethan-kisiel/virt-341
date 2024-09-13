@@ -9,6 +9,8 @@ from flask import Blueprint
 
 from exceptions import UnimplementedException
 
+from managers.database_manager import DatabaseManager
+
 student_bp = Blueprint("bp_student", __name__, template_folder="templates")
 
 

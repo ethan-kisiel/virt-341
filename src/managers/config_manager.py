@@ -62,7 +62,7 @@ class ConfigManager:
             ip = wsgi_config["ip"]
             port = wsgi_config["port"]
 
-            database_url = database_config["database"]
+            database_url = database_config["url"]
 
             cls.config = Config(is_development, ip, port, database_url)
 

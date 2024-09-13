@@ -13,6 +13,13 @@ from flask import render_template
 from blueprints.squadron.bp_squadron import squadron_bp
 from blueprints.student.bp_student import student_bp
 
+from managers.config_manager import ConfigManager
+from managers.database_manager import DatabaseManager
+
+ConfigManager.load_config("config.ini")
+DatabaseManager.set_database_url(ConfigManager.config.database_url)
+
+
 app = Flask(__name__)
 
 ## register blueprints:
@@ -32,5 +39,9 @@ def index():
 
 
 if __name__ == "__main__":
-    app.debug = True
-    app.run()
+    app.debug = ConfigManager.config.is_development
+
+    # host = ConfigManager.config.ip
+    # port = ConfigManager.config.port
+
+    app.run()  # TODO get control of host and port

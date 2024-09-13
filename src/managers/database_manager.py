@@ -11,8 +11,8 @@ class DatabaseManager:
     Handles database interactions
     """
 
-    database_route = ""
-    engine = create_engine(database_route)
+    database_url = ""
+    engine = None
 
     @classmethod
     def with_engine(cls, callback: Callable):
@@ -26,3 +26,15 @@ class DatabaseManager:
 
         with cls.engine.connect() as connection:
             callback(connection)
+
+    @classmethod
+    def set_database_url(cls, url: str) -> None:
+        """Sets the value of cls.database_route
+
+        Keyword arguments:
+        url -- url of the database
+        Return: None
+        """
+
+        cls.database_url = url
+        cls.engine = create_engine(url)
