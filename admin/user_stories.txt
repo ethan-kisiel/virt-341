@@ -1,7 +1,10 @@
 #### As a student,
 
 As a student, I will be able to log into my profile
+As a student, I will be able to update my personal information in my profile
 As a student, I will be able to view my 341 qr code
+As a student, I will be able to receive notifications when a new 341 is filled out or updated.
+As a student, I will be able to request a review or appeal a discrepancy 341.
 
 
 
@@ -22,3 +25,5 @@ As an authorized NCO/MTL/Instructor, I will be able to view a detailed rap-sheet
 
 As an authorized Flight Chief/Leadership, I will be able to do everything an authorized NCO/MTL/Instructor
 As an authorized Flight Chief/Leadership, I will be able to view squadron trends and data in a dedicated dashboard
+As an authorized Flight Chief/Leadership, I will be able to override or amend a 341 filled by an NCO/MTL/Instructor.
+As an authorized Flight Chief/Leadership, I will be able to create and share reports on squadron trends and data for higher-level briefings or strategy meetings.
