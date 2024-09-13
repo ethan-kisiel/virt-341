@@ -1,0 +1,104 @@
+
+
+
+/* General body styling for the webpage */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #0011ff; /* Background color changed for visual clarity */
+}
+
+/* Container for the form with border and padding */
+.form-container {
+    width: 600px; /* Fixed width for form container */
+    margin: 0 auto; /* Centers the form on the page */
+    border: 2px solid black; /* Border for the form container */
+    padding: 10px; /* Inner spacing for form content */
+    background-color: white; /* White background for form clarity */
+}
+
+/* Styling for the form title */
+.form-title {
+    text-align: center; /* Centers the form title */
+    font-weight: bold; /* Bold font for title */
+    padding: 10px 0; /* Padding above and below the title */
+    border-bottom: 2px solid black; /* Border below title for separation */
+    font-size: 14px; /* Font size for form title */
+}
+
+/* Flexbox styling for rows in the form */
+.form-row {
+    display: flex; /* Flex container to align children */
+    border-bottom: 1px solid black; /* Border below each row */
+    padding: 5px 0; /* Padding for each row */
+}
+
+/* Individual cell styling within each form row */
+.form-cell {
+    padding: 5px; /* Inner padding for form cells */
+    border-right: 1px solid black; /* Right border for each cell */
+    display: flex; /* Flex display for inner elements */
+    align-items: flex-start; /* Aligns text to the top left */
+    justify-content: flex-start; /* Justifies text to the left */
+    text-align: left; /* Aligns text to the left */
+    flex-direction: column; /* Stacks label above input */
+    font-size: 12px; /* Makes text smaller */
+}
+
+/* Class for cells with more space */
+.large {
+    flex: 2; /* Takes more space in the row */
+}
+
+/* Classes for medium and small cells */
+.small, .medium {
+    flex: 1; /* Equal space for medium and small cells */
+}
+
+/* Removes the right border for the last cell in each row */
+.form-cell:last-child {
+    border-right: none; /* No right border for the last cell */
+}
+
+/* Styling for the form sections */
+.form-section {
+    padding: 10px 0; /* Padding for each section */
+    font-size: 12px; /* Font size for section text */
+}
+
+/* Styling for text inputs and text area */
+textarea, input[type="text"] {
+    width: 100%; /* Full width for input fields */
+    border: 1px solid black; /* Border around inputs */
+    padding: 3px; /* Inner padding for input text */
+    font-family: Arial, sans-serif; /* Consistent font */
+    margin-top: 2px; /* Margin above input fields */
+    box-sizing: border-box; /* Includes padding in width calculation */
+    font-size: 12px; /* Font size for input text */
+}
+
+/* Specific styling for the text area */
+textarea {
+    height: 60px; /* Fixed height for text area */
+    resize: none; /* Prevents resizing */
+}
+
+/* Styling for the footer section */
+.form-footer {
+    display: flex; /* Flexbox for footer alignment */
+    justify-content: space-between; /* Aligns items to both left and right */
+    padding-bottom: 10px; /* Padding at the bottom of the footer */
+    font-size: 12px; /* Font size for footer text */
+    margin-top: 5px; /* Space above the footer */
+}
+
+/* Left alignment for footer text */
+.footer-left {
+    text-align: left; /* Aligns footer text to the left */
+}
+
+/* Right alignment for footer text */
+.footer-right {
+    text-align: right; /* Aligns footer text to the right */
+}
