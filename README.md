@@ -14,35 +14,35 @@ This project uses [Segno](https://pypi.org/project/segno/) for generating QR cod
 
 
 # Project Architecture
-.
-├── src/
-│   ├── blueprints/ <-- This chunks out a few core items for separation of concerns
-│   │   ├── squadron/ <-- All views and viewmodels for squadron related functionality goes here
-│   │   │   ├── static/
-│   │   │   │   ├── js/
-│   │   │   │   └── css/
-│   │   │   ├── templates/
-│   │   │   └── bp_squadron.py
-│   │   └── student/ <-- All views and viewmodels for student related functionality goes here
-│   │       ├── static/
-│   │       │   ├── js/
-│   │       │   └── css/
-│   │       ├── templates/
-│   │       └── bp_student.py
-│   ├── managers/
-│   │   ├── config_manager.py <-- Application configuration is managed here
-│   │   └── database_manager.py <-- All database operations happen here
-│   ├── persistent/
-│   │   ├── images/
-│   │   ├── migrations/ <-- Most likely not going to be used
-│   │   └── app.db
-│   ├── static/ <-- Static files for app.py views
-│   │   ├── js/
-│   │   └── css/
-│   ├── templates/ <-- Views for app.py
-│   ├── app.py <-- Main coordinator, topmost viewmodel
-│   ├── constants.py
-│   ├── exceptions.py
-│   ├── models.py
-│   └── utils.py
-└── tests/
+.<br>
+├── src/<br>
+│   ├── blueprints/ <-- This chunks out a few core items for separation of concerns<br>
+│   │   ├── squadron/ <-- All views and viewmodels for squadron related functionality goes here<br>
+│   │   │   ├── static/<br>
+│   │   │   │   ├── js/<br>
+│   │   │   │   └── css/<br>
+│   │   │   ├── templates/<br>
+│   │   │   └── bp_squadron.py<br>
+│   │   └── student/ <-- All views and viewmodels for student related functionality goes here<br>
+│   │       ├── static/<br>
+│   │       │   ├── js/<br>
+│   │       │   └── css/<br>
+│   │       ├── templates/<br>
+│   │       └── bp_student.py<br>
+│   ├── managers/<br>
+│   │   ├── config_manager.py <-- Application configuration is managed here<br>
+│   │   └── database_manager.py <-- All database operations happen here<br>
+│   ├── persistent/<br>
+│   │   ├── images/<br>
+│   │   ├── migrations/ <-- Most likely not going to be used<br>
+│   │   └── app.db<br>
+│   ├── static/ <-- Static files for app.py views<br>
+│   │   ├── js/<br>
+│   │   └── css/<br>
+│   ├── templates/ <-- Views for app.py<br>
+│   ├── app.py <-- Main coordinator, topmost viewmodel<br>
+│   ├── constants.py<br>
+│   ├── exceptions.py<br>
+│   ├── models.py<br>
+│   └── utils.py<br>
+└── tests/<br>
