@@ -13,6 +13,7 @@ Enter the following command to run the program (in the virt-341 base folder): ``
 # Packages
 This project uses the [SQLAlchemy ORM](https://pypi.org/project/SQLAlchemy/) for database management.
 This project uses [Flask Login](https://pypi.org/project/Flask-Login/) for user logins and session management.
+This project uses [WTForms](https://pypi.org/project/WTForms/) for form creation and validation.
 This project uses [Segno](https://pypi.org/project/segno/) for generating QR codes.
 
 
