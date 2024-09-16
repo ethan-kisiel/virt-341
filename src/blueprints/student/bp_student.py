@@ -29,7 +29,7 @@ def index():
     Return: Template
     """
 
-    return render_template("341.html")
+    return render_template("341_1.html")
 
 
 @student_bp.route("/<int:student_id>")
