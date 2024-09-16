@@ -6,12 +6,30 @@ Student specific views
 
 
 from flask import Blueprint
+from flask import render_template
 
 from exceptions import UnimplementedException
 
 from managers.database_manager import DatabaseManager
 
-student_bp = Blueprint("bp_student", __name__, template_folder="templates")
+student_bp = Blueprint(
+    "bp_student",
+    __name__,
+    template_folder="templates",
+    static_folder="static",
+)
+
+
+@student_bp.route("/")
+def index():
+    """index endpoint (for testing purposes)
+
+    Keyword arguments:
+    argument -- description
+    Return: Template
+    """
+
+    return render_template("341.html")
 
 
 @student_bp.route("/<int:student_id>")

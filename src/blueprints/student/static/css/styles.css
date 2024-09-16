@@ -11,12 +11,15 @@ body {
 
 /* Container for the form with border and padding */
 .form-container {
-    width: 600px; /* Fixed width for form container */
+    width: 100%; /* Makes the container flexible and scale with the screen size */
+    max-width: 600px; /* Limits the width to 600px */
     margin: 0 auto; /* Centers the form on the page */
     border: 2px solid black; /* Border for the form container */
     padding: 10px; /* Inner spacing for form content */
     background-color: white; /* White background for form clarity */
+    box-sizing: border-box; /* Ensures padding and border are included in total width */
 }
+
 
 /* Styling for the form title */
 .form-title {

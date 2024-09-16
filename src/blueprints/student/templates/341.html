@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Excellence/Discrepancy Report Form</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('bp_student.static', filename='css/styles.css') }}">
 </head>
 <body>
 <div class="form-container">
@@ -24,7 +24,7 @@
             <input type="text" id="grade">
         </div>
     </div>
-    
+
     <!-- Organization and Class/Flight Input Section -->
     <div class="form-row">
         <!-- Input for Organization -->
@@ -38,13 +38,13 @@
             <input type="text" id="class-flight">
         </div>
     </div>
-    
+
     <!-- Description of Excellence/Discrepancy Section -->
     <div class="form-section">
         <label for="excellence-discrepancy">EXCELLENCE/EXHIBITED DISCREPANCY (Be specific)</label>
         <textarea id="excellence-discrepancy"></textarea>
     </div>
-    
+
     <!-- Time, Date, and Place Input Section -->
     <div class="form-row">
         <!-- Input for Time -->
@@ -63,7 +63,7 @@
             <input type="text" id="place">
         </div>
     </div>
-    
+
     <!-- Reporting Individual's Name and Signature Section -->
     <div class="form-row">
         <!-- Input for Reporting Individual's Name -->
