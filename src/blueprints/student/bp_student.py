@@ -25,7 +25,7 @@ def index():
     """index endpoint (for testing purposes)
 
     Keyword arguments:
-    argument -- description
+
     Return: Template
     """
 

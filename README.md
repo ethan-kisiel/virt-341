@@ -7,9 +7,13 @@ A webapp for tracking, managing, and providing insight on AETC Form 341 Excellen
 2. Ensure your working directory is the same the setup.bat file
 3. Run the setup.bat file
 
+# Run the program
+Enter the following command to run the program (in the virt-341 base folder): ```python src/app.py```
+
 # Packages
 This project uses the [SQLAlchemy ORM](https://pypi.org/project/SQLAlchemy/) for database management.
 This project uses [Flask Login](https://pypi.org/project/Flask-Login/) for user logins and session management.
+This project uses [WTForms](https://pypi.org/project/WTForms/) for form creation and validation.
 This project uses [Segno](https://pypi.org/project/segno/) for generating QR codes.
 
 
