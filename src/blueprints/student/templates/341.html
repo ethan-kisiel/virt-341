@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('bp_student.static', filename='css/styles.css') }}">
 </head>
 <body>
+
 <div class="form-container">
     <!-- Form Title Section -->
     <div class="form-title">EXCELLENCE/DISCREPANCY REPORT</div>
@@ -91,5 +93,19 @@
         </div>
     </div>
 </div>
+<div class="container" id="phaseContainer"></div>
+    <h2>Student Phase Selector</h2>
+    <label for="phaseSelect">Select Student Phase:</label>
+    <select id="phaseSelect" onchange="updatePhase()">
+        <option value="phase-1">Phase I - Green Card</option>
+        <option value="phase-2">Phase II - White Card</option>
+        <option value="phase-3">Phase III - Yellow Card</option>
+        <option value="phase-4">Academic Study Program Phase - Blue Card</option>
+        <option value="phase-5">Stalled Progression Phase/Phase-Back - Red Card</option>
+    </select>
+    <p id="phaseDisplay">The selected phase is: <span id="phaseName">Phase 1</span></p>
+</div>
 </body>
 </html>
+
+
