@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Hello World{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 500px;">
+    <form action="action_page.php" method="post" class="needs-validation" novalidate>
+        <div class="text-center mb-3">
+            <img src="img_avatar2.png" alt="Avatar" class="rounded-circle" style="width:100px;">
+        </div>
+
+        <div class="mb-3">
+            <label for="uname" class="form-label"><b>Username</b></label>
+            <input type="text" class="form-control" id="uname" placeholder="Enter Username" name="uname" required>
+            <div class="invalid-feedback">
+                Please enter your username.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="psw" class="form-label"><b>Password</b></label>
+            <input type="password" class="form-control" id="psw" placeholder="Enter Password" name="psw" required>
+            <div class="invalid-feedback">
+                Please enter your password.
+            </div>
+        </div>
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="remember" name="remember" checked>
+            <label class="form-check-label" for="remember">Remember me</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100" onclick="login()">Login</button>
+
+        <div class="mt-3">
+            <button type="button" class="btn btn-secondary w-100">Cancel</button>
+        </div>
+
+        <div class="text-center mt-2">
+            <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
