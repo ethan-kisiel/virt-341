@@ -31,6 +31,7 @@ def index():
 
     return render_template("341-form.html")
 
+
 @student_bp.route("/<int:student_id>/profile")
 def profile(student_id: int):
     """Endpoint for student profiles

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Amn Kisiel{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="outline-style: solid;outline-width: 2px;">
+    <!-- Form Title Section -->
+    <div class="text-center fw-bold border-bottom pb-2 mb-3">EXCELLENCE/DISCREPANCY REPORT</div>
+
+    <!-- Name and Grade Input Section -->
+    <div class="row mb-3">
+        <!-- Input for Name -->
+        <div class="col-lg-8 mb-3 mb-lg-0">
+            <label for="name" class="form-label">LAST NAME - FIRST NAME - MIDDLE INITIAL</label>
+            <input type="text" id="name" class="form-control">
+        </div>
+        <!-- Input for Grade -->
+        <div class="col-lg-4">
+            <label for="grade" class="form-label">GRADE</label>
+            <input type="text" id="grade" class="form-control">
+        </div>
+    </div>
+
+    <!-- Organization and Class/Flight Input Section -->
+    <div class="row mb-3">
+        <!-- Input for Organization -->
+        <div class="col-lg-8 mb-3 mb-lg-0">
+            <label for="organization" class="form-label">ORGANIZATION</label>
+            <input type="text" id="organization" class="form-control">
+        </div>
+        <!-- Input for Class/Flight -->
+        <div class="col-lg-4">
+            <label for="class-flight" class="form-label">CLASS/FLIGHT (If Applicable)</label>
+            <input type="text" id="class-flight" class="form-control">
+        </div>
+    </div>
+
+    <!-- Description of Excellence/Discrepancy Section -->
+    <div class="mb-3">
+        <label for="excellence-discrepancy" class="form-label">EXCELLENCE/EXHIBITED DISCREPANCY (Be specific)</label>
+        <textarea id="excellence-discrepancy" class="form-control" rows="4"></textarea>
+    </div>
+
+    <!-- Time, Date, and Place Input Section -->
+    <div class="row mb-3">
+        <!-- Input for Time -->
+        <div class="col-lg-4 mb-3 mb-lg-0">
+            <label for="time" class="form-label">TIME</label>
+            <input type="text" id="time" class="form-control">
+        </div>
+        <!-- Input for Date -->
+        <div class="col-lg-4 mb-3 mb-lg-0">
+            <label for="date" class="form-label">DATE</label>
+            <input type="text" id="date" class="form-control">
+        </div>
+        <!-- Input for Place -->
+        <div class="col-lg-4">
+            <label for="place" class="form-label">PLACE</label>
+            <input type="text" id="place" class="form-control">
+        </div>
+    </div>
+
+    <!-- Reporting Individual's Name and Signature Section -->
+    <div class="row mb-3">
+        <!-- Input for Reporting Individual's Name -->
+        <div class="col-lg-6 mb-3 mb-lg-0">
+            <label for="reporting-name" class="form-label">PRINTED NAME OF REPORTING INDIVIDUAL</label>
+            <input type="text" id="reporting-name" class="form-control">
+        </div>
+        <!-- Input for Signature -->
+        <div class="col-lg-6">
+            <label for="signature" class="form-label">SIGNATURE OF REPORTING INDIVIDUAL</label>
+            <input type="text" id="signature" class="form-control">
+        </div>
+    </div>
+
+    <!-- Footer for Document Information -->
+    <div class="d-flex justify-content-between border-top pt-3">
+        <div>
+            <strong>AETC FORM 341, 20070815</strong><br>
+            <span>Prescribed by: AETCI36-2651</span>
+        </div>
+        <div>
+            PREVIOUS EDITION IS OBSOLETE.
+        </div>
+    </div>
+</div>
+{% endblock %}
