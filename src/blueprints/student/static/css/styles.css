@@ -9,28 +9,22 @@ body {
     background-color: #6972f0; 
 }
 
-/* Styles for each phase */
-.phase-1 { background-color: green; 
-} 
-.phase-2 { background-color: beige; 
-} 
-.phase-3 { background-color: Yellow; 
-} 
-.phase-4 { background-color: blue; 
-} 
-.phase-5 { background-color: red;
-} 
-
-/* Style the dropdown */
-#phaseSelect {
-    padding: 5px;
-    font-size: 16px;
+.container{
+    padding: 20px;
+    margin-bottom: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 2px solid black; 
+    box-sizing: border-box; 
+    background-color: rgb(171, 183, 221); 
 }
+
 /* Container for the form with border and padding */
 .form-container {
     width: 100%; 
     max-width: 600px; 
     margin: 0 auto; 
+    margin-top: 10px;
     border: 2px solid black; 
     padding: 10px; 
     background-color: white; 
@@ -100,7 +94,7 @@ textarea, input[type="text"] {
 
 /* Specific styling for the text area */
 textarea {
-    height: 60px;
+    height: 70px;
     resize: none; 
 }
 
