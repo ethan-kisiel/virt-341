@@ -10,7 +10,7 @@ includes routes, flask app, etc
 from flask import Flask
 from flask import render_template
 
-from blueprints.squadron.bp_squadron import squadron_bp
+from blueprints.organization.bp_organization import organization_bp
 from blueprints.student.bp_student import student_bp
 
 from managers.config_manager import ConfigManager
@@ -23,7 +23,7 @@ DatabaseManager.set_database_url(ConfigManager.config.database_url)
 app = Flask(__name__)
 
 ## register blueprints:
-app.register_blueprint(squadron_bp, url_prefix="/squadron")
+app.register_blueprint(organization_bp, url_prefix="/organization")
 app.register_blueprint(student_bp, url_prefix="/student")
 
 
@@ -37,6 +37,25 @@ def index():
     """
     return render_template("index.html")  # found in /src/templates/index.html
 
+@app.route("/login")
+def login():
+    """Initial view
+
+    Keyword arguments:
+    argument -- description
+    Return: Template
+    """
+    return render_template("login.html")  # found in /src/templates/index.html
+
+@app.route("/register")
+def register():
+    """Initial view
+
+    Keyword arguments:
+    argument -- description
+    Return: Template
+    """
+    return render_template("register.html")  # found in /src/templates/index.html
 
 if __name__ == "__main__":
     app.debug = ConfigManager.config.is_development

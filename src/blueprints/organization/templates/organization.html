@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Hello World{% endblock %}</h1>
+  <link rel="stylesheet" href="{{ url_for('bp_organization.static', filename='css/styles.css') }}">
+  <script src="{{ url_for('bp_organization.static', filename='js/charts.js') }}"></script>{% endblock %}
+<!-- make search bar for finding specific students/dates/etc, graph bar for the days of week and how many have been pulled since, common words for 341s input w/custom date range -->
+{% block content %}
+<div class="input-group w-25">
+  <input type="search" class="form-control rounded w" placeholder="Search for a thing with this" aria-label="Search""/>
+  <button type="button" class="btn btn-primary">Search</button>
+</div>
+<canvas id="bar-chart-custom-tooltip"></canvas>
+{% endblock %}
