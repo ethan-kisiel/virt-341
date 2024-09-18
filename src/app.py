@@ -47,6 +47,16 @@ def login():
     """
     return render_template("login.html")  # found in /src/templates/index.html
 
+@app.route("/register")
+def register():
+    """Initial view
+
+    Keyword arguments:
+    argument -- description
+    Return: Template
+    """
+    return render_template("register.html")  # found in /src/templates/index.html
+
 if __name__ == "__main__":
     app.debug = ConfigManager.config.is_development
 
