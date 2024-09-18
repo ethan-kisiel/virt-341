@@ -1,34 +1,24 @@
-// Bar chart with custom tooltip
-const dataBarCustomTooltip = {
-    type: 'bar',
+window.onload = formChart
+function formChart() {const xValues = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const yValues = [8, 25, 15, 10, 22, 33, 48];
+  const barColors = ["red", "green","blue","orange","brown", "purple", "black"];
+  
+  new Chart("myChart", {
+    type: "bar",
     data: {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'Traffic',
-          data: [30, 15, 62, 65, 61, 65, 40],
-        },
-      ],
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+      }]
     },
-  };
-  
-  const optionsBarCustomTooltip = {
     options: {
-      plugins: {
-        tooltip: {
-          callbacks: {
-             label: function (context) {
-              let label = context.dataset.label || '';
-              label = `${label}: ${context.formattedValue} users`;
-              return label;
-            },
-          },
-         },
-       },
-    },
-  };
-  
-  new mdb.Chart(
-    document.getElementById('bar-chart-custom-tooltip'),
-    dataBarCustomTooltip,
-    optionsBarCustomTooltip);
+      legend: {display: false},
+      title: {
+        display: true,
+        text: "Number of 341s pulled [date range]"
+      }
+    }
+  });
+}
+

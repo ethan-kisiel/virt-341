@@ -1,14 +1,29 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Hello World{% endblock %}</h1>
+  <h1>{% block title %}[Organization] View{% endblock %}</h1>
   <link rel="stylesheet" href="{{ url_for('bp_organization.static', filename='css/styles.css') }}">
-  <script src="{{ url_for('bp_organization.static', filename='js/charts.js') }}"></script>{% endblock %}
+  <script src="{{ url_for('bp_organization.static', filename='js/charts.js') }}" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>{% endblock %}
 <!-- make search bar for finding specific students/dates/etc, graph bar for the days of week and how many have been pulled since, common words for 341s input w/custom date range -->
 {% block content %}
 <div class="input-group w-25">
   <input type="search" class="form-control rounded w" placeholder="Search for a thing with this" aria-label="Search""/>
   <button type="button" class="btn btn-primary">Search</button>
 </div>
-<canvas id="bar-chart-custom-tooltip"></canvas>
+<body onload="formChart()"></body>
+<canvas id="myChart" style="width:100%;max-width:600px;"></canvas>
+
+<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+  <h4 id="scrollspyHeading1">First heading</h4>
+  <p>...</p>
+  <h4 id="scrollspyHeading2">Second heading</h4>
+  <p>...</p>
+  <h4 id="scrollspyHeading3">Third heading</h4>
+  <p>...</p>
+  <h4 id="scrollspyHeading4">Fourth heading</h4>
+  <p>...</p>
+  <h4 id="scrollspyHeading5">Fifth heading</h4>
+  <p>...</p>
+</div>
 {% endblock %}
