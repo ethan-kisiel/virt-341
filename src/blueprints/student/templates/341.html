@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,9 @@
     <link rel="stylesheet" href="{{ url_for('bp_student.static', filename='css/styles.css') }}">
 </head>
 <body>
+<div class="container">
+    <input type="text" id="studentPhase" placeholder="Student's Current Phase" readonly>
+</div>
 <div class="form-container">
     <!-- Form Title Section -->
     <div class="form-title">EXCELLENCE/DISCREPANCY REPORT</div>
@@ -91,5 +95,11 @@
         </div>
     </div>
 </div>
+
+<script src="{{ 'bp_student.static', filename='js/341.js' }}"></script> <!-- Linked JavaScript file -->
+
 </body>
 </html>
+
+
+
