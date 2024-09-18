@@ -26,6 +26,9 @@ app = Flask(__name__)
 app.register_blueprint(organization_bp, url_prefix="/organization")
 app.register_blueprint(student_bp, url_prefix="/student")
 
+# student/
+#       profile, 341, analytics,
+# student/<int: student_id>/
 
 @app.route("/")
 def index():

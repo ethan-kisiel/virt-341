@@ -21,7 +21,7 @@ window.onload = async function() {
 
 async function updatePhase() {
     try {
-        const response = await fetch('/api/getStudentPhase'); // Replace with your actual API endpoint
+        const response = await fetch( "{{ url_for('bp_student.templates', filename= '/student/<int:student_id>341-form.html')}}" ); // Replace with actual API endpoint
         const data = await response.json();  
 
         phaseInput.value = data.phase; // Set the value of the text box
