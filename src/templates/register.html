@@ -15,6 +15,13 @@
         </div>
 
         <div class="mb-3">
+            <label for="name" class="form-label"><b>Full Name</b></label>
+            <input type="name" class="form-control" id="fname" placeholder="First Name" name="name" required>
+            <input type="name" class="form-control" id="mname" placeholder="Middle Name(s)" name="name" required>
+            <input type="name" class="form-control" id="lname" placeholder="Last Name" name="name" required>
+        </div>
+
+        <div class="mb-3">
             <label for="email" class="form-label"><b>Email</b></label>
             <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email" required>
             <div class="invalid-feedback">
@@ -41,15 +48,15 @@
         <hr>
 
         <div class="mb-3">
-            <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+            <p>By creating an account you agree to our <a href="https://www.google.com/search?client=firefox-b-1-d&sca_esv=5ee2dcc9703b3f64&sca_upv=1&sxsrf=ADLYWIIQT3OtYzFYrpaMwUS41Jg7IFm7PA:1726672034069&q=dickbutt+image+site&udm=2&fbs=AEQNm0Aa4sjWe7Rqy32pFwRj0UkWd8nbOJfsBGGB5IQQO6L3J7pRxUp2pI1mXV9fBsfh39JqJxzRlphkmT2MeVSzs3MQEN5DgZmMeykT7pJra3boNLZnu_5tndbt0B1M3XLn1qbCrHVm5u-tncY-lmea9PiStNZ9eJS94DUI766pUVC1fpio1ZP_3qV2amahtpN19jVnfw-T_BjghPRTftMGLk6z20h08A&sa=X&ved=2ahUKEwjHx-_J4syIAxU2NNAFHV-iIEsQtKgLegQIERAB&biw=1152&bih=503&dpr=1.67">Terms & Privacy</a>.</p>
         </div>
 
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary w-100">Register</button>
+            <button type="submit" class="btn btn-primary w-100" onclick=register()>Register</button>
         </div>
     </form>
 
     <div class="container text-center mt-3">
-        <p>Already have an account? <a href="#">Sign in</a>.</p>
+        <p>Already have an account? <a href="http://127.0.0.1:5000/login">Sign in</a>.</p>
     </div>
 </div>
