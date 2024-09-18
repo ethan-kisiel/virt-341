@@ -47,6 +47,9 @@ class User(Base):
     grade: Mapped[str] = mapped_column(String(3))
 
     role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"))
-    role: Mapped["Role"] = relationship("Role")
+    role: Mapped[Role] = relationship("Role")
 
-    organization: Mapped[int] = mapped_column(ForeignKey("organizations.id"))
+    organization_id: Mapped[int] = mapped_column(ForeignKey("organizations.id"))
+    organization: Mapped[Organization] = relationship(
+        "Organization", back_populates="students"
+    )
