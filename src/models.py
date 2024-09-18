@@ -2,13 +2,9 @@
 Database models for the v341 application
 """
 
-from typing import List
-from typing import Optional
-from sqlalchemy import ForeignKey
-from sqlalchemy import String
-from sqlalchemy import DateTime
-from sqlalchemy import Column
 from sqlalchemy import Integer
+from sqlalchemy import String
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -24,26 +20,33 @@ class Base(DeclarativeBase):
 
 
 class Phase(Base):
-    pass
+    __tablename__ = "phases"
 
 
 class Student(Base):
-    pass
+    __tablename__ = "students"
 
 
 class Role(Base):
-    pass
+    __tablename__ = "roles"
+
+
+class Organization(Base):
+    __tablename__ = "organizations"
 
 
 class User(Base):
     __tablename__ = "users"
 
-    id = Column("id", Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
 
-    last_name = Column("last_name", String)
-    first_name = Column("first_name", String)
-    middle_initial = Column("middle_initial", String)
+    last_name: Mapped[str] = mapped_column(String(40))
+    first_name: Mapped[str] = mapped_column(String(100))
+    middle_initial: Mapped[str] = mapped_column(String(3))
 
-    grade = Column("grade", String)
+    grade: Mapped[str] = mapped_column(String(3))
 
-    role_id = Column("role_id", ForeignKey)
+    role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"))
+    role: Mapped["Role"] = relationship("Role")
+
+    organization: Mapped[int] = mapped_column(ForeignKey("organizations.id"))
