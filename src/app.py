@@ -35,6 +35,7 @@ from managers.database_manager import DatabaseManager
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "ctrlaltelite"
 
+
 # create form class
 class RegisterForm(FlaskForm):
     fname = StringField("First Name", validators=[DataRequired()])
@@ -45,6 +46,7 @@ class RegisterForm(FlaskForm):
     confirm_pwd = PasswordField("Repeat Password", validators=[DataRequired(), EqualTo('pwd', message="Passwords must match")])
     submit = SubmitField("Submit")
 
+
 ## register blueprints:
 app.register_blueprint(organization_bp, url_prefix="/organization")
 app.register_blueprint(student_bp, url_prefix="/student")
@@ -52,7 +54,6 @@ app.register_blueprint(student_bp, url_prefix="/student")
 # student/
 #       profile, 341, analytics,
 # student/<int: student_id>/
-
 
 
 @app.route("/")
@@ -63,6 +64,9 @@ def index():
     argument -- description
     Return: Template
     """
+
+    print(DatabaseManager.get_account("test_email@gmail.com"))
+
     return render_template(
         "index.html", include_navbar=True
     )  # found in /src/templates/index.html
@@ -91,6 +95,7 @@ def register():
     """
 
     form = RegisterForm()
+
     if request.method == "POST":
         print(form.validate_on_submit())
     if form.validate_on_submit():
