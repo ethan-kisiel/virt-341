@@ -1,16 +1,12 @@
+{% extends 'base.html'%}
+{% block title %}Excellence/Discrepancy Report Form{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excellence/Discrepancy Report Form</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Link to external CSS file -->
-    <link href="{{ url_for('bp_student.static', filename='css/styles.css') }}" rel="stylesheet">
-</head>
-<body>
+{% block head_injection %}
+<link href="{{ url_for('bp_student.static', filename='css/styles.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
 <div class="container mt-4">
     <!-- Navigation Buttons -->
     <div class="button-container d-flex justify-content-center mb-4">
@@ -114,11 +110,9 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
+
+{% block body_bottom_injection %}
 <script src="{{ url_for('bp_student.static', filename='js/341-form.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
-
+{% endblock %}
