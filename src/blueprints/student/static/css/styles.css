@@ -6,102 +6,153 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #0011ff; /* Background color changed for visual clarity */
+    background-color: #6972f0;
+}
+
+/* Container for main elements */
+.container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: rgb(171, 183, 221);
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+
+/* Navigation button container styling */
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* Styling each button box */
+.button-box {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.button-box .btn {
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+}
+
+/* Input box for student's current phase */
+.phase-container {
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 /* Container for the form with border and padding */
 .form-container {
-    width: 100%; /* Makes the container flexible and scale with the screen size */
-    max-width: 600px; /* Limits the width to 600px */
-    margin: 0 auto; /* Centers the form on the page */
-    border: 2px solid black; /* Border for the form container */
-    padding: 10px; /* Inner spacing for form content */
-    background-color: white; /* White background for form clarity */
-    box-sizing: border-box; /* Ensures padding and border are included in total width */
+    width: 100%;
+    margin-top: 20px;
+    border: 2px solid black;
+    padding: 20px;
+    background-color: white;
+    box-sizing: border-box;
 }
-
 
 /* Styling for the form title */
 .form-title {
-    text-align: center; /* Centers the form title */
-    font-weight: bold; /* Bold font for title */
-    padding: 10px 0; /* Padding above and below the title */
-    border-bottom: 2px solid black; /* Border below title for separation */
-    font-size: 14px; /* Font size for form title */
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 2px solid black;
+    font-size: 16px;
 }
 
 /* Flexbox styling for rows in the form */
 .form-row {
-    display: flex; /* Flex container to align children */
-    border-bottom: 1px solid black; /* Border below each row */
-    padding: 5px 0; /* Padding for each row */
+    display: flex;
+    border-bottom: 1px solid black;
+    padding: 5px 0;
 }
 
 /* Individual cell styling within each form row */
 .form-cell {
-    padding: 5px; /* Inner padding for form cells */
-    border-right: 1px solid black; /* Right border for each cell */
-    display: flex; /* Flex display for inner elements */
-    align-items: flex-start; /* Aligns text to the top left */
-    justify-content: flex-start; /* Justifies text to the left */
-    text-align: left; /* Aligns text to the left */
-    flex-direction: column; /* Stacks label above input */
-    font-size: 12px; /* Makes text smaller */
+    padding: 5px;
+    border-right: 1px solid black;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    flex-direction: column;
+    font-size: 14px;
 }
 
 /* Class for cells with more space */
 .large {
-    flex: 2; /* Takes more space in the row */
+    flex: 2;
 }
 
-/* Classes for medium and small cells */
-.small, .medium {
-    flex: 1; /* Equal space for medium and small cells */
+/* Class for medium-sized cells */
+.medium {
+    flex: 1.5;
+}
+
+/* Class for smaller-sized cells */
+.small {
+    flex: 1;
 }
 
 /* Removes the right border for the last cell in each row */
 .form-cell:last-child {
-    border-right: none; /* No right border for the last cell */
+    border-right: none;
 }
 
-/* Styling for the form sections */
-.form-section {
-    padding: 10px 0; /* Padding for each section */
-    font-size: 12px; /* Font size for section text */
-}
-
-/* Styling for text inputs and text area */
+/* Styling for the text inputs and text area */
 textarea, input[type="text"] {
-    width: 100%; /* Full width for input fields */
-    border: 1px solid black; /* Border around inputs */
-    padding: 3px; /* Inner padding for input text */
-    font-family: Arial, sans-serif; /* Consistent font */
-    margin-top: 2px; /* Margin above input fields */
-    box-sizing: border-box; /* Includes padding in width calculation */
-    font-size: 12px; /* Font size for input text */
+    width: 100%;
+    border: 1px solid black;
+    padding: 3px;
+    margin-top: 2px;
+    box-sizing: border-box;
 }
 
 /* Specific styling for the text area */
 textarea {
-    height: 60px; /* Fixed height for text area */
-    resize: none; /* Prevents resizing */
+    height: 70px;
+    resize: none;
 }
 
-/* Styling for the footer section */
+/* Footer section styling */
 .form-footer {
-    display: flex; /* Flexbox for footer alignment */
-    justify-content: space-between; /* Aligns items to both left and right */
-    padding-bottom: 10px; /* Padding at the bottom of the footer */
-    font-size: 12px; /* Font size for footer text */
-    margin-top: 5px; /* Space above the footer */
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    font-size: 12px;
+    margin-top: 5px;
 }
 
-/* Left alignment for footer text */
-.footer-left {
-    text-align: left; /* Aligns footer text to the left */
+
+/*PROFILE*/
+/* Define custom classes for each phase */
+.phase-green {
+    border: 2px solid green;
+    background-color: #d4edda;
 }
 
-/* Right alignment for footer text */
-.footer-right {
-    text-align: right; /* Aligns footer text to the right */
+.phase-white {
+    border: 2px solid lightgray;
+    background-color: white;
+}
+
+.phase-yellow {
+    border: 2px solid yellow;
+    background-color: #fff3cd;
+}
+
+.phase-blue {
+    border: 2px solid blue;
+    background-color: #cce5ff;
+}
+
+.phase-red {
+    border: 2px solid red;
+    background-color: #f8d7da;
 }

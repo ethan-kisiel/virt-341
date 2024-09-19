@@ -17,7 +17,7 @@ This project uses [WTForms](https://pypi.org/project/WTForms/) for form creation
 This project uses [Segno](https://pypi.org/project/segno/) for generating QR codes.
 
 
-# Project Architecture
+# File Structure
 ```
 .
 ├── src/
