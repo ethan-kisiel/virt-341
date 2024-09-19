@@ -23,6 +23,7 @@ from managers.database_manager import DatabaseManager
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "ctrlaltelite"
 
+
 # create form class
 class RegisterForm(FlaskForm):
     fname = StringField("Whats your name", validators=[DataRequired()])
@@ -31,6 +32,7 @@ class RegisterForm(FlaskForm):
     email = StringField("Whats your name", validators=[DataRequired()])
     pwd = StringField("Whats your name", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
 
 ## register blueprints:
 app.register_blueprint(organization_bp, url_prefix="/organization")
@@ -41,7 +43,6 @@ app.register_blueprint(student_bp, url_prefix="/student")
 # student/<int: student_id>/
 
 
-
 @app.route("/")
 def index():
     """Initial view
@@ -50,6 +51,9 @@ def index():
     argument -- description
     Return: Template
     """
+
+    print(DatabaseManager.get_account("test_email@gmail.com"))
+
     return render_template(
         "index.html", include_navbar=True
     )  # found in /src/templates/index.html
@@ -83,14 +87,16 @@ def register():
     email = None
     pwd = None
     form = RegisterForm()
-    return render_template("register.html",
-                           fname = fname,
-                           mname = mname,
-                           lname = lname,
-                           email = email,
-                           pwd = pwd,
-                           form = form,
-                           include_navbar = True)  # found in /src/templates/index.html
+    return render_template(
+        "register.html",
+        fname=fname,
+        mname=mname,
+        lname=lname,
+        email=email,
+        pwd=pwd,
+        form=form,
+        include_navbar=True,
+    )  # found in /src/templates/index.html
 
 
 if __name__ == "__main__":
