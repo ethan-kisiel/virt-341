@@ -120,6 +120,7 @@ class User(Base):
     middle_initial: Mapped[str] = mapped_column(String(3))
 
     grade: Mapped[str] = mapped_column(String(3))
+    phone: Mapped[str] = mapped_column(String(16), nullable=True)
 
     role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"), nullable=True)
     role: Mapped["Role"] = relationship("Role")
