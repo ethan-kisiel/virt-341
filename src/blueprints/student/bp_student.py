@@ -31,6 +31,18 @@ def home():
     """
     return render_template('341-form.html')
 
+@student_bp.route('/<int:student_id>/341form')
+def home():
+    """Home endpoint
+
+    Keyword arguments:
+    None
+
+    Return: 
+    Renders the 341-form template
+    """
+    return render_template('341-form.html')
+
 
 @student_bp.route("/")
 def index():
