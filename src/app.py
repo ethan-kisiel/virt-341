@@ -16,10 +16,6 @@ from blueprints.student.bp_student import student_bp
 from managers.config_manager import ConfigManager
 from managers.database_manager import DatabaseManager
 
-ConfigManager.load_config("config.ini")
-DatabaseManager.set_database_url(ConfigManager.config.database_url)
-
-
 app = Flask(__name__)
 
 ## register blueprints:
@@ -29,6 +25,7 @@ app.register_blueprint(student_bp, url_prefix="/student")
 # student/
 #       profile, 341, analytics,
 # student/<int: student_id>/
+
 
 @app.route("/")
 def index():
@@ -40,6 +37,7 @@ def index():
     """
     return render_template("index.html")  # found in /src/templates/index.html
 
+
 @app.route("/login")
 def login():
     """Initial view
@@ -49,6 +47,7 @@ def login():
     Return: Template
     """
     return render_template("login.html")  # found in /src/templates/index.html
+
 
 @app.route("/register")
 def register():
@@ -60,7 +59,13 @@ def register():
     """
     return render_template("register.html")  # found in /src/templates/index.html
 
+
 if __name__ == "__main__":
+
+    ConfigManager.load_config("config.ini")
+    DatabaseManager.set_database_url(ConfigManager.config.database_url)
+    DatabaseManager.create_tables()
+
     app.debug = ConfigManager.config.is_development
 
     # host = ConfigManager.config.ip

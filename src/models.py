@@ -44,10 +44,10 @@ class Form341(Base):
 
     datetime: Mapped[dt] = mapped_column(DateTime)
 
-    reporting_individual_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    reporting_individual_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     reporting_individual: Mapped["User"] = relationship("User")
 
-    student_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    student_id: Mapped[int] = mapped_column(ForeignKey("students.id"))
     student: Mapped["Student"] = relationship("Student", back_populates="form_341s")
 
 
@@ -62,10 +62,13 @@ class Student(Base):
 
     phase: Mapped[int] = mapped_column(Integer(), default=0)
 
-    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     user: Mapped["User"] = relationship("User")
 
     form_341s: Mapped["Form341"] = relationship("Form341", back_populates="student")
+
+    def __repr__(self):
+        return f"<Student: [phase: {self.phase}]"
 
 
 class Role(Base):
@@ -79,6 +82,9 @@ class Role(Base):
 
     role_name: Mapped[str] = mapped_column(String(30), nullable=True, unique=True)
     role_permission: Mapped[int] = mapped_column(Integer(), nullable=True, unique=True)
+
+    def __repr__(self):
+        return f"<Role: [role_name: {self.role_name}, role_permission: {self.role_permission}]>"
 
 
 class Organization(Base):
@@ -95,6 +101,9 @@ class Organization(Base):
     # TODO: add admin account(s) field
 
     users: Mapped["User"] = relationship("User", back_populates="organization")
+
+    def __repr__(self):
+        return f"<Organization: [name: {self.name}]>"
 
 
 class User(Base):
