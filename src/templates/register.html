@@ -1,13 +1,15 @@
-<html lang="en"></html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}{% endblock %}</title>
-        <link href="{{ url_for('static', filename='css/base_styles.css') }}" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    </head>
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+{% block head_injection %}
+    <link href="{{ url_for('static', filename='css/base_styles.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
 <div class="container mt-5" style="max-width: 600px;">
-    <form action="action_page.php" method="post" class="needs-validation" novalidate>
+    <form method="POST" action="{{ url_for('register') }}" class="needs-validation" novalidate>
+        {{ form.hidden_tag() }} 
+
         <div class="mb-3">
             <h1 class="text-center">Register</h1>
             <p class="text-center">Please fill in this form to create an account.</p>
@@ -15,48 +17,111 @@
         </div>
 
         <div class="mb-3">
-            <label for="name" class="form-label"><b>Full Name</b></label>
-            <input type="name" class="form-control" id="fname" placeholder="First Name" name="name" required>
-            <input type="name" class="form-control" id="mname" placeholder="Middle Name(s)" name="name" required>
-            <input type="name" class="form-control" id="lname" placeholder="Last Name" name="name" required>
+            <label for="fname" class="form-label"><b>First Name</b></label>
+            {{ form.fname(class="form-control", placeholder="First Name") }}
+            {% if form.fname.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.fname.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="mname" class="form-label"><b>Middle Name</b></label>
+            {{ form.mname(class="form-control", placeholder="Middle Name") }}
+            {% if form.mname.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.mname.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="lname" class="form-label"><b>Last Name</b></label>
+            {{ form.lname(class="form-control", placeholder="Last Name") }}
+            {% if form.lname.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.lname.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
 
         <div class="mb-3">
             <label for="email" class="form-label"><b>Email</b></label>
-            <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email" required>
-            <div class="invalid-feedback">
-                Please enter a valid email address.
-            </div>
+            {{ form.email(class="form-control", placeholder="Enter Email", type="email") }}
+            {% if form.email.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
 
         <div class="mb-3">
-            <label for="psw" class="form-label"><b>Password</b></label>
-            <input type="password" class="form-control" id="psw" placeholder="Enter Password" name="psw" required>
-            <div class="invalid-feedback">
-                Please enter a password.
-            </div>
+            <label for="pwd" class="form-label"><b>Password</b></label>
+            {{ form.pwd(class="form-control", placeholder="Enter Password") }}
+            {% if form.pwd.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.pwd.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
 
         <div class="mb-3">
-            <label for="psw-repeat" class="form-label"><b>Repeat Password</b></label>
-            <input type="password" class="form-control" id="psw-repeat" placeholder="Repeat Password" name="psw-repeat" required>
-            <div class="invalid-feedback">
-                Please repeat your password.
-            </div>
+            <label for="confirm_pwd" class="form-label"><b>Repeat Password</b></label>
+            {{ form.confirm_pwd(class="form-control", placeholder="Repeat Password") }}
+            {% if form.confirm_pwd.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.confirm_pwd.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
 
         <hr>
 
         <div class="mb-3">
-            <p>By creating an account you agree to our <a href="https://www.google.com/search?client=firefox-b-1-d&sca_esv=5ee2dcc9703b3f64&sca_upv=1&sxsrf=ADLYWIIQT3OtYzFYrpaMwUS41Jg7IFm7PA:1726672034069&q=dickbutt+image+site&udm=2&fbs=AEQNm0Aa4sjWe7Rqy32pFwRj0UkWd8nbOJfsBGGB5IQQO6L3J7pRxUp2pI1mXV9fBsfh39JqJxzRlphkmT2MeVSzs3MQEN5DgZmMeykT7pJra3boNLZnu_5tndbt0B1M3XLn1qbCrHVm5u-tncY-lmea9PiStNZ9eJS94DUI766pUVC1fpio1ZP_3qV2amahtpN19jVnfw-T_BjghPRTftMGLk6z20h08A&sa=X&ved=2ahUKEwjHx-_J4syIAxU2NNAFHV-iIEsQtKgLegQIERAB&biw=1152&bih=503&dpr=1.67">Terms & Privacy</a>.</p>
+            <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
         </div>
 
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary w-100" onclick=register()>Register</button>
+            {{ form.submit(class="btn btn-primary w-100")}}
         </div>
     </form>
 
     <div class="container text-center mt-3">
-        <p>Already have an account? <a href="http://127.0.0.1:5000/login">Sign in</a>.</p>
+        <p>Already have an account? <a href="{{ url_for('login') }}">Sign in</a>.</p>
     </div>
 </div>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script>
+{% endblock %}
