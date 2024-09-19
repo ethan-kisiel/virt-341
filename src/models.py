@@ -61,6 +61,7 @@ def __init__(self, comment, place, datetime, reporting_individual_id, student_id
 def __repr__(self):
     return f"<form341(comment={self.comment}, place={self.place}, datetime={self.datetime}, reporting_individual_id={self.reporting_individual_id}, student_id={self.student_id})>"
 
+
 class Student(Base):
     """
     Represents the organization which users can be assigned to
@@ -109,6 +110,7 @@ class Role(Base):
                  
     def __repr__(self):
         return f"<Role(id={self.id}, role_name={self.role_name}, role_permission={self.role_permission})>"
+
 
 class Organization(Base):
     """
@@ -183,6 +185,9 @@ class Account(Base, UserMixin):
 
     __tablename__ = "accounts"
 
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    user: Mapped["User"] = relationship("User")
+    
     email: Mapped[str] = mapped_column(String(100), primary_key=True)
 
     # this is the password hash
