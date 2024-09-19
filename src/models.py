@@ -46,11 +46,11 @@ class Form341(Base):
     datetime: Mapped[dt] = mapped_column(DateTime)
 
     reporting_individual_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    reporting_individual: Mapped["User"] = relationship("User")
+    reporting_individual: Mapped["User"] = relationship("User", foreign_keys=[reporting_individual_id])
+
 
     student_id: Mapped[int] = mapped_column(ForeignKey("students.id"))
-    student: Mapped["Student"] = relationship("Student", back_populates="form_341s")
-    
+    student: Mapped["Student"] = relationship("Student", back_populates="form_341s", foreign_keys=[student_id])
 def __init__(self, comment, place, datetime, reporting_individual_id, student_id):
     self.comment = comment 
     self.place = place
@@ -74,10 +74,12 @@ class Student(Base):
     phase: Mapped[int] = mapped_column(Integer(), default=0)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    user: Mapped["User"] = relationship("User")
-    
+    user: Mapped["User"] = relationship("User", foreign_keys=[user_id])
+
+
     supervisor_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    supervisor: Mapped["User"] = relationship("User")
+    supervisor: Mapped["User"] = relationship("User", foreign_keys=[supervisor_id])
+   
 
     form_341s: Mapped["Form341"] = relationship("Form341", back_populates="student")
 
