@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('bp_student.static', filename='css/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Home Button -->
+        <div class="mb-4">    
+            <!-- need to add route for homepage in place of 'home' -->
+            <a href="{{ url_for('bp_student.home') }}" class="btn btn-secondary">Home</a>
+        </div>
+
+        <!-- Form for adding student profile information -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">Add Student Profile</div>
+            <div class="card-body">
+                <form id="addStudentProfileForm" method="POST" action="/submit">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" class="form-control" id="firstName" name="firstName" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="middleInitial">Middle Initial</label>
+                                <input type="text" class="form-control" id="middleInitial" name="middleInitial" maxlength="1">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="classFlight">Class/Flight</label>
+                                <input type="text" class="form-control" id="classFlight" name="classFlight">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="organization">Organization</label>
+                                <input type="text" class="form-control" id="organization" name="organization">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rank">Rank</label>
+                                <input type="text" class="form-control" id="rank" name="rank" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="payGrade">Pay Grade</label>
+                                <input type="text" class="form-control" id="payGrade" name="payGrade" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="arrivalTime">Date Arrived</label>
+                                <input type="datetime-local" class="form-control" id="arrivalTime" name="arrivalTime" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="currentMTL">Current MTL</label>
+                                <input type="text" class="form-control" id="currentMTL" name="currentMTL">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studentPhase">Current Phase</label>
+                        <select class="form-control" id="studentPhase" name="studentPhase" onchange="this.className = 'form-control ' + this.options[this.selectedIndex].className;">
+                            <option value="" disabled selected>Select student phase</option>
+                            <option value="green" class="phase-green">Phase I - Green Card</option>
+                            <option value="white" class="phase-white">Phase II - White Card</option>
+                            <option value="yellow" class="phase-yellow">Phase III - Yellow Card</option>
+                            <option value="blue" class="phase-blue">Phase IV - Blue Card</option>
+                            <option value="red" class="phase-red">Phase V - Red Card</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Submit Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS, jQuery, and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

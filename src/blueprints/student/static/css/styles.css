@@ -6,113 +6,153 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #6972f0; 
+    background-color: #6972f0;
 }
 
-.container{
+/* Container for main elements */
+.container {
     padding: 20px;
-    margin-bottom: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: rgb(171, 183, 221);
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+
+/* Navigation button container styling */
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* Styling each button box */
+.button-box {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.button-box .btn {
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+}
+
+/* Input box for student's current phase */
+.phase-container {
     max-width: 600px;
     margin: 0 auto;
-    border: 2px solid black; 
-    box-sizing: border-box; 
-    background-color: rgb(171, 183, 221); 
 }
 
 /* Container for the form with border and padding */
 .form-container {
-    width: 100%; 
-    max-width: 600px; 
-    margin: 0 auto; 
-    margin-top: 10px;
-    border: 2px solid black; 
-    padding: 10px; 
-    background-color: white; 
-    box-sizing: border-box; 
+    width: 100%;
+    margin-top: 20px;
+    border: 2px solid black;
+    padding: 20px;
+    background-color: white;
+    box-sizing: border-box;
 }
-
 
 /* Styling for the form title */
 .form-title {
-    text-align: center; 
-    font-weight: bold; 
-    padding: 10px 0; 
-    border-bottom: 2px solid black; 
-    font-size: 14px; 
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 2px solid black;
+    font-size: 16px;
 }
 
 /* Flexbox styling for rows in the form */
 .form-row {
-    display: flex; 
-    border-bottom: 1px solid black; 
+    display: flex;
+    border-bottom: 1px solid black;
     padding: 5px 0;
 }
 
 /* Individual cell styling within each form row */
 .form-cell {
-    padding: 5px; 
-    border-right: 1px solid black; 
-    display: flex; 
-    align-items: flex-start; 
-    justify-content: flex-start; 
-    text-align: left; 
-    flex-direction: column; 
-    font-size: 12px; 
+    padding: 5px;
+    border-right: 1px solid black;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    flex-direction: column;
+    font-size: 14px;
 }
 
 /* Class for cells with more space */
 .large {
-    flex: 2; /* Takes more space in the row */
+    flex: 2;
 }
 
-/* Classes for medium and small cells */
-.small, .medium {
-    flex: 1; 
+/* Class for medium-sized cells */
+.medium {
+    flex: 1.5;
+}
+
+/* Class for smaller-sized cells */
+.small {
+    flex: 1;
 }
 
 /* Removes the right border for the last cell in each row */
 .form-cell:last-child {
-    border-right: none; 
+    border-right: none;
 }
 
-/* Styling for the form sections */
-.form-section {
-    padding: 10px 0; 
-    font-size: 12px; 
-}
-
-/* Styling for text inputs and text area */
+/* Styling for the text inputs and text area */
 textarea, input[type="text"] {
-    width: 100%; 
+    width: 100%;
     border: 1px solid black;
     padding: 3px;
-    font-family: Arial, sans-serif; 
-    margin-top: 2px; 
-    box-sizing: border-box; 
-    font-size: 12px;
+    margin-top: 2px;
+    box-sizing: border-box;
 }
 
 /* Specific styling for the text area */
 textarea {
     height: 70px;
-    resize: none; 
+    resize: none;
 }
 
-/* Styling for the footer section */
+/* Footer section styling */
 .form-footer {
-    display: flex; 
-    justify-content: space-between; 
-    padding-bottom: 10px; 
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
     font-size: 12px;
-    margin-top: 5px; 
+    margin-top: 5px;
 }
 
-/* Left alignment for footer text */
-.footer-left {
-    text-align: left;
+
+/*PROFILE*/
+/* Define custom classes for each phase */
+.phase-green {
+    border: 2px solid green;
+    background-color: #d4edda;
 }
 
-/* Right alignment for footer text */
-.footer-right {
-    text-align: right; 
+.phase-white {
+    border: 2px solid lightgray;
+    background-color: white;
+}
+
+.phase-yellow {
+    border: 2px solid yellow;
+    background-color: #fff3cd;
+}
+
+.phase-blue {
+    border: 2px solid blue;
+    background-color: #cce5ff;
+}
+
+.phase-red {
+    border: 2px solid red;
+    background-color: #f8d7da;
 }
