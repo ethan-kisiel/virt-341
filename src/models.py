@@ -6,13 +6,18 @@ TODO:
     - finish/flesh out relationships
 """
 
+from datetime import datetime as dt
+
 from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import ForeignKey
+from sqlalchemy import DateTime
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
+
+from flask_login import UserMixin
 
 
 class Base(DeclarativeBase):
@@ -35,19 +40,15 @@ class Form341(Base):
     # date_time: Mapped[dt] TODO: Figure out how to map a datetime
 
     comment: Mapped[str] = mapped_column(String(1000))
-    place: Mapped[str] = mapped_column(String(80))
+    place: Mapped[str] = mapped_column(String(120))
 
+    datetime: Mapped[dt] = mapped_column(DateTime)
 
-class Phase(Base):
-    """
-    Represents the organization which users can be assigned to
-    """
+    reporting_individual_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    reporting_individual: Mapped["User"] = relationship("User")
 
-    __tablename__ = "phases"
-
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-
-    name: Mapped[str] = mapped_column(String(100))
+    student_id: Mapped[int] = mapped_column(ForeignKey("students.id"))
+    student: Mapped["Student"] = relationship("Student", back_populates="form_341s")
 
 
 class Student(Base):
@@ -57,13 +58,17 @@ class Student(Base):
 
     __tablename__ = "students"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
 
-    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    phase: Mapped[int] = mapped_column(Integer(), default=0)
+
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     user: Mapped["User"] = relationship("User")
 
-    phase_id: Mapped[int] = mapped_column(ForeignKey("phase.id"))
-    phase: Mapped["Phase"] = relationship("Phase")
+    form_341s: Mapped["Form341"] = relationship("Form341", back_populates="student")
+
+    def __repr__(self):
+        return f"<Student: [phase: {self.phase}]"
 
 
 class Role(Base):
@@ -73,10 +78,13 @@ class Role(Base):
 
     __tablename__ = "roles"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
 
-    role_name: Mapped[str] = mapped_column(String(30))
-    role_permission: Mapped[int] = mapped_column(Integer)
+    role_name: Mapped[str] = mapped_column(String(30), nullable=True, unique=True)
+    role_permission: Mapped[int] = mapped_column(Integer(), nullable=True, unique=True)
+
+    def __repr__(self):
+        return f"<Role: [role_name: {self.role_name}, role_permission: {self.role_permission}]>"
 
 
 class Organization(Base):
@@ -86,13 +94,16 @@ class Organization(Base):
 
     __tablename__ = "organizations"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
 
-    name: Mapped[str] = mapped_column(String(100))
+    name: Mapped[str] = mapped_column(String(100), unique=True)
 
     # TODO: add admin account(s) field
 
     users: Mapped["User"] = relationship("User", back_populates="organization")
+
+    def __repr__(self):
+        return f"<Organization: [name: {self.name}]>"
 
 
 class User(Base):
@@ -102,15 +113,16 @@ class User(Base):
 
     __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
 
     last_name: Mapped[str] = mapped_column(String(40))
     first_name: Mapped[str] = mapped_column(String(100))
     middle_initial: Mapped[str] = mapped_column(String(3))
 
     grade: Mapped[str] = mapped_column(String(3))
+    phone: Mapped[str] = mapped_column(String(16), nullable=True)
 
-    role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"))
+    role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"), nullable=True)
     role: Mapped["Role"] = relationship("Role")
 
     organization_id: Mapped[int] = mapped_column(ForeignKey("organizations.id"))
@@ -118,13 +130,24 @@ class User(Base):
         "Organization", back_populates="users"
     )
 
+    def __repr__(self) -> str:
+        lf = f"last_name: {self.last_name}, first_name: {self.first_name},"
+        mi = f"middle_initial: {self.middle_initial},"
 
-class Account(Base):
+        return f"<User: [{' '.join([lf, mi])} grade: {self.grade}]>"
+
+
+class Account(Base, UserMixin):
     """
     Represents Accounts, which contain just account/login related info
     """
 
-    email: Mapped[str] = mapped_column(String(100))
+    __tablename__ = "accounts"
+
+    email: Mapped[str] = mapped_column(String(100), primary_key=True)
 
     # this is the password hash
     countersign: Mapped[str] = mapped_column(String(100))
+
+    def __repr__(self) -> str:
+        return f"<Account: [email: {self.email}]>"
