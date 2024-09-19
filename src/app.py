@@ -9,10 +9,22 @@ includes routes, flask app, etc
 
 from flask import Flask
 from flask import render_template
+from flask import url_for
+from flask import redirect
+from flask import request
 from wtforms import StringField
 from wtforms import SubmitField
+from wtforms import PasswordField
 from wtforms.validators import DataRequired
+from wtforms.validators import EqualTo
+from wtforms.validators import Email
 from flask_wtf import FlaskForm
+from flask_login import UserMixin
+from flask_login import login_user
+from flask_login import LoginManager
+from flask_login import login_required
+from flask_login import logout_user
+from flask_login import current_user
 
 from blueprints.organization.bp_organization import organization_bp
 from blueprints.student.bp_student import student_bp
@@ -26,11 +38,12 @@ app.config["SECRET_KEY"] = "ctrlaltelite"
 
 # create form class
 class RegisterForm(FlaskForm):
-    fname = StringField("Whats your name", validators=[DataRequired()])
-    mname = StringField("Whats your name", validators=[DataRequired()])
-    lname = StringField("Whats your name", validators=[DataRequired()])
-    email = StringField("Whats your name", validators=[DataRequired()])
-    pwd = StringField("Whats your name", validators=[DataRequired()])
+    fname = StringField("First Name", validators=[DataRequired()])
+    mname = StringField("Middle Name", validators=[DataRequired()])
+    lname = StringField("Last Name", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired(), Email(message="Please enter a valid email address")])
+    pwd = PasswordField("Password", validators=[DataRequired(), EqualTo('confirm_pwd', message="Passwords must match")])
+    confirm_pwd = PasswordField("Repeat Password", validators=[DataRequired(), EqualTo('pwd', message="Passwords must match")])
     submit = SubmitField("Submit")
 
 
@@ -72,7 +85,7 @@ def login():
     )  # found in /src/templates/index.html
 
 
-@app.route("/register")
+@app.route("/register", methods=["GET","POST"])
 def register():
     """Initial view
 
@@ -81,22 +94,28 @@ def register():
     Return: Template
     """
 
-    fname = None
-    mname = None
-    lname = None
-    email = None
-    pwd = None
     form = RegisterForm()
-    return render_template(
-        "register.html",
-        fname=fname,
-        mname=mname,
-        lname=lname,
-        email=email,
-        pwd=pwd,
-        form=form,
-        include_navbar=True,
-    )  # found in /src/templates/index.html
+
+    if request.method == "POST":
+        print(form.validate_on_submit())
+    if form.validate_on_submit():
+        fname = form.fname.data
+        form.fname.data = ''
+        mname = form.mname.data
+        form.mname.data = ''
+        lname = form.lname.data
+        form.lname.data = ''
+        email = form.email.data
+        form.email.data = ''
+        pwd = form.pwd.data
+        form.pwd.data = ''
+
+        print(url_for('login'))
+        return redirect(url_for('login'))
+
+    return render_template("register.html",
+                           form = form,
+                           include_navbar = True)  # found in /src/templates/index.html
 
 
 if __name__ == "__main__":
