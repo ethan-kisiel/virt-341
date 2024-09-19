@@ -35,7 +35,9 @@ def index():
     argument -- description
     Return: Template
     """
-    return render_template("index.html")  # found in /src/templates/index.html
+    return render_template(
+        "index.html", include_navbar=True
+    )  # found in /src/templates/index.html
 
 
 @app.route("/login")
@@ -46,7 +48,9 @@ def login():
     argument -- description
     Return: Template
     """
-    return render_template("login.html")  # found in /src/templates/index.html
+    return render_template(
+        "login.html", include_navbar=True
+    )  # found in /src/templates/index.html
 
 
 @app.route("/register")
@@ -57,7 +61,9 @@ def register():
     argument -- description
     Return: Template
     """
-    return render_template("register.html")  # found in /src/templates/index.html
+    return render_template(
+        "register.html", include_navbar=True
+    )  # found in /src/templates/index.html
 
 
 if __name__ == "__main__":
