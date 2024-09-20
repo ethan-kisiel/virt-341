@@ -10,7 +10,7 @@ body {
 }
 
 /* Container for main elements */
-.container {
+#container-341 {
     padding: 20px;
     max-width: 800px;
     margin: 0 auto;
@@ -27,9 +27,7 @@ body {
 
 /* Styling each button box */
 .button-box {
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 10px;
+    padding: 0px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
 }
