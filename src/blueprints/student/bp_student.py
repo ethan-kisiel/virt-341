@@ -32,7 +32,7 @@ def home():
     return render_template('341-form.html')
 
 @student_bp.route('/<int:student_id>/341form')
-def home():
+def form341():
     """Home endpoint
 
     Keyword arguments:
