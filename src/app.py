@@ -12,6 +12,7 @@ from flask import render_template
 from flask import url_for
 from flask import redirect
 from flask import request
+from wtforms import validators
 
 from flask_login import login_required
 from flask_login import login_user
@@ -105,12 +106,26 @@ def register():
     argument -- description
     Return: Template
     """
-
     form = RegisterForm()
 
     if request.method == "POST":
-        print(form.validate_on_submit())
+        fname = None
+        mname = None
+        lname = None
+        email = None
+        pwd = None
+        new_account = None
+        new_user = None
         if form.validate_on_submit():
+
+            print("Form Data:")
+            print(f"First Name: {form.fname.data}")
+            print(f"Middle Name: {form.mname.data}")
+            print(f"Last Name: {form.lname.data}")
+            print(f"Email: {form.email.data}")
+            print(f"Password: {form.pwd.data}")
+
+
             fname = form.fname.data
             mname = form.mname.data
             lname = form.lname.data
@@ -121,9 +136,10 @@ def register():
                     "last_name":lname
                     }
         new_account = {"email":email,
-                       "countersign":pwd}
+                    "countersign":pwd}
         
-        DatabaseManager.create_user(new_user,new_account)
+        DatabaseManager.add_user(new_user)
+        DatabaseManager.add_account(new_account)
         return redirect(url_for("login"))
 
     return render_template(

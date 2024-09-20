@@ -37,6 +37,31 @@ def create_account(session, account_data: dict):
     except Exception as e:
         print(e)
 
+def create_user(session, user_data: dict):
+    """function that creates an account object on the session, given
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+#change these
+    try:
+        user = Account(
+            first_name=user_data.get("first_name"), 
+            middle_initial=user_data.get("middle_initial"),
+            last_name=user_data.get("last_name")
+        )
+
+        session.add(user)
+
+        session.commit()
+
+    except ValueError:
+        
+        print("Value error")
+    except Exception as e:
+        print(e)
+
 
 class DatabaseManager:
     """
@@ -95,13 +120,15 @@ class DatabaseManager:
         cls.with_connection(Base.metadata.create_all)
 
     @classmethod
-    def create_user(cls):
+    def add_user(cls,new_user:dict):
         """sumary_line
 
         Keyword arguments:
         argument -- description
         Return: return_description
         """
+        print(f"account added: {new_user}")
+        cls.with_session(create_user, new_user)
 
     @classmethod
     def add_account(cls, account_data: dict) -> Account:
@@ -111,7 +138,7 @@ class DatabaseManager:
         argument -- description
         Return: return_description
         """
-
+        print(f"account added: {account_data}")
         cls.with_session(create_account, account_data)
 
     @classmethod
