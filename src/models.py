@@ -155,9 +155,9 @@ class User(Base):
 
     last_name: Mapped[str] = mapped_column(String(40))
     first_name: Mapped[str] = mapped_column(String(100))
-    middle_initial: Mapped[str] = mapped_column(String(3))
+    middle_initial: Mapped[str] = mapped_column(String(3), nullable=True)
 
-    grade: Mapped[str] = mapped_column(String(3))
+    grade: Mapped[str] = mapped_column(String(3), nullable=True)
     phone: Mapped[str] = mapped_column(String(16), nullable=True)
 
     role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"), nullable=True)
