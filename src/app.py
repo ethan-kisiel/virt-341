@@ -109,11 +109,6 @@ def register():
     form = RegisterForm()
 
     if request.method == "POST":
-        fname = form.fname.data
-        mname = form.mname.data
-        lname = form.lname.data
-        email = form.email.data
-        pwd = form.pwd.data
 
         print("Form Data:")
         print(f"First Name: {form.fname.data}")
@@ -123,10 +118,15 @@ def register():
         print(f"Password: {form.pwd.data}")
 
 
-
+        fname = form.fname.data
+        mname = form.mname.data
+        lname = form.lname.data
+        email = form.email.data
+        pwd = form.pwd.data
         new_user = {"first_name":fname, 
                     "middle_initial":mname, 
-                    "last_name":lname}
+                    "last_name":lname
+                    }
         new_account = {"email":email,
                     "countersign":pwd}
         
@@ -146,6 +146,7 @@ if __name__ == "__main__":
     DatabaseManager.create_tables()
 
     DatabaseManager.add_account({"email": "email", "countersign": "countersign"})
+    DatabaseManager.add_user({"first_name": "first_name", "middle_initial": "middle_initial",  "last_name": "last_name"})
 
     app.debug = ConfigManager.config.is_development
 
