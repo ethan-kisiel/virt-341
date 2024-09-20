@@ -122,9 +122,8 @@ def register():
                     }
         new_account = {"email":email,
                        "countersign":pwd}
-
         
-
+        DatabaseManager.create_user(new_user,new_account)
         return redirect(url_for("login"))
 
     return render_template(
