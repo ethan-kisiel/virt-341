@@ -15,6 +15,29 @@ from models import Student
 from models import Form341
 
 
+def create_account(session, account_data: dict):
+    """function that creates an account object on the session, given
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+
+    try:
+        account = Account(
+            email=account_data.get("email"), countersign=account_data.get("countersign")
+        )
+
+        session.add(account)
+
+        session.commit()
+
+    except ValueError:
+        print("Value error")
+    except Exception as e:
+        print(e)
+
+
 class DatabaseManager:
     """
     Handles database interactions
@@ -72,6 +95,26 @@ class DatabaseManager:
         cls.with_connection(Base.metadata.create_all)
 
     @classmethod
+    def create_user(cls):
+        """sumary_line
+
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+
+    @classmethod
+    def add_account(cls, account_data: dict) -> Account:
+        """sumary_line
+
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+
+        cls.with_session(create_account, account_data)
+
+    @classmethod
     def get_user(cls, pk: int) -> User | None:
         """sumary_line
 
@@ -80,15 +123,6 @@ class DatabaseManager:
         Return: return_description
         """
         return cls.with_session(lambda session, pk: session.get(User, pk), pk)
-
-    @classmethod
-    def create_user(cls):
-        """sumary_line
-
-        Keyword arguments:
-        argument -- description
-        Return: return_description
-        """
 
     @classmethod
     def get_account(cls, email: str) -> Account | None:
@@ -113,21 +147,3 @@ class DatabaseManager:
         """
 
         return cls.with_session(lambda session, pk: session.get(Student, pk), pk)
-
-    @classmethod
-    def get_341s_by_date(cls, dt) -> list[Form341]:
-        """sumary_line
-
-        Keyword arguments:
-        argument -- description
-        Return: return_description
-        """
-
-    @classmethod
-    def create_341_for_student(cls, form: Form341):
-        """sumary_line
-
-        Keyword arguments:
-        argument -- description
-        Return: return_description
-        """

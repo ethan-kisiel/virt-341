@@ -204,7 +204,7 @@ class Account(Base, UserMixin):
     # this is the password hash
     countersign: Mapped[str] = mapped_column(String(100))
 
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=True)
     user: Mapped["User"] = relationship("User")
 
     def __init__(self, email, countersign):

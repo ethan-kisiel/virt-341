@@ -130,6 +130,8 @@ if __name__ == "__main__":
     DatabaseManager.set_database_url(ConfigManager.config.database_url)
     DatabaseManager.create_tables()
 
+    DatabaseManager.add_account({"email": "email", "countersign": "countersign"})
+
     app.debug = ConfigManager.config.is_development
 
     # host = ConfigManager.config.ip
