@@ -93,7 +93,7 @@ def login():
                 return redirect(url_for("index"))
 
     return render_template(
-        "login.html", form=form, include_navbar=True
+        "login.html", form=form, include_navbar=False
     )  # found in /src/templates/index.html
 
 
@@ -116,11 +116,19 @@ def register():
             lname = form.lname.data
             email = form.email.data
             pwd = form.pwd.data
+        new_user = {"first_name":fname, 
+                    "middle_initial":mname, 
+                    "last_name":lname
+                    }
+        new_account = {"email":email,
+                       "countersign":pwd}
+
+        
 
         return redirect(url_for("login"))
 
     return render_template(
-        "register.html", form=form, include_navbar=True
+        "register.html", form=form, include_navbar=False
     )  # found in /src/templates/index.html
 
 
