@@ -12,7 +12,7 @@ from flask import render_template
 from flask import url_for
 from flask import redirect
 from flask import request
-from wtforms import validators
+from flask_wtf import FlaskForm
 
 from flask_login import login_required
 from flask_login import login_user
@@ -98,7 +98,7 @@ def login():
     )  # found in /src/templates/index.html
 
 
-@app.route("/register", methods=["GET", "POST"])
+@app.route("/register", methods=["GET","POST"])
 def register():
     """Initial view
 
@@ -109,32 +109,24 @@ def register():
     form = RegisterForm()
 
     if request.method == "POST":
-        fname = None
-        mname = None
-        lname = None
-        email = None
-        pwd = None
-        new_account = None
-        new_user = None
-        if form.validate_on_submit():
+        fname = form.fname.data
+        mname = form.mname.data
+        lname = form.lname.data
+        email = form.email.data
+        pwd = form.pwd.data
 
-            print("Form Data:")
-            print(f"First Name: {form.fname.data}")
-            print(f"Middle Name: {form.mname.data}")
-            print(f"Last Name: {form.lname.data}")
-            print(f"Email: {form.email.data}")
-            print(f"Password: {form.pwd.data}")
+        print("Form Data:")
+        print(f"First Name: {form.fname.data}")
+        print(f"Middle Name: {form.mname.data}")
+        print(f"Last Name: {form.lname.data}")
+        print(f"Email: {form.email.data}")
+        print(f"Password: {form.pwd.data}")
 
 
-            fname = form.fname.data
-            mname = form.mname.data
-            lname = form.lname.data
-            email = form.email.data
-            pwd = form.pwd.data
+
         new_user = {"first_name":fname, 
                     "middle_initial":mname, 
-                    "last_name":lname
-                    }
+                    "last_name":lname}
         new_account = {"email":email,
                     "countersign":pwd}
         
