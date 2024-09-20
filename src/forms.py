@@ -36,3 +36,20 @@ class RegisterForm(FlaskForm):
         validators=[DataRequired(), EqualTo("pwd", message="Passwords must match")],
     )
     submit = SubmitField("Submit")
+
+
+class LoginForm(FlaskForm):
+    email = StringField(
+        "Email",
+        validators=[
+            DataRequired(),
+            Email(message="Please enter a valid email address"),
+        ],
+    )
+    pwd = PasswordField(
+        "Password",
+        validators=[
+            DataRequired(),
+        ],
+    )
+    submit = SubmitField("Submit")

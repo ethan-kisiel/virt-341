@@ -213,3 +213,11 @@ class Account(Base, UserMixin):
 
     def __repr__(self) -> str:
         return f"<Account(email={self.email}, countersign={self.countersign})>"
+
+    @property
+    def id(self):
+        """
+        computed property for flask login to read
+        """
+
+        return self.email
