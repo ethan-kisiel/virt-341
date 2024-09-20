@@ -16,6 +16,7 @@ from flask import request
 from flask_login import login_required
 from flask_login import login_user
 from flask_login import logout_user
+from utils import generate_qr_code 
 
 from blueprints.organization.bp_organization import organization_bp
 from blueprints.student.bp_student import student_bp
@@ -44,6 +45,14 @@ login_manager.init_app(app)  # init login manager
 #       profile, 341, analytics,
 # student/<int: student_id>/
 
+@app.route('/generate_qr', methods=['POST'])
+def generate_qr():
+   
+    data = request.form.get('data')
+
+    img_io = generate_qr_code(data)
+
+    return send_file(img_io, mimetype='image/png')
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
@@ -145,3 +154,4 @@ if __name__ == "__main__":
     # port = ConfigManager.config.port
 
     app.run()  # TODO get control of host and port
+
