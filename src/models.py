@@ -136,13 +136,13 @@ class Organization(Base):
 
     users: Mapped["User"] = relationship("User", back_populates="organization")
 
-    def __init__(self, id, name, class_flight):
+    def __init__(self, id, name, organization_name):
         self.id = id
         self.name = name
-        self.class_flight = class_flight
+        self.organization_name = organization_name 
 
     def __repr__(self):
-        return f"<Organization(id={self.id}, name={self.organization_name}>"
+        return f"<Organization(id={self.id}, name={self.name}, organization_name={self.organization_name}>"
 
 
 class User(Base):
@@ -164,30 +164,11 @@ class User(Base):
     role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"), nullable=True)
     role: Mapped["Role"] = relationship("Role")
 
-    organization_id: Mapped[int] = mapped_column(ForeignKey("organizations.id"))
+    organization_id: Mapped[int] = mapped_column(ForeignKey("organizations.id"), nullable=True)
     organization: Mapped["Organization"] = relationship(
         "Organization", back_populates="users"
     )
 
-    def __init__(
-        self,
-        id: int,
-        last_name: str,
-        first_name: str,
-        middle_initial: str,
-        grade: str,
-        phone: str,
-        role_id: int,
-        organization_id: int,
-    ):
-        self.id = id
-        self.last_name = last_name
-        self.first_name = first_name
-        self.middle_initial = middle_initial
-        self.grade = grade
-        self.phone = phone
-        self.role_id = role_id
-        self.organization_id = organization_id
 
     def __repr__(self) -> str:
         return f"<User(id={self.id}, last_name={self.last_name}, first_name={self.first_name}, middle_initial={self.middle_initial}, grade={self.grade}, phone={self.phone}, role_id={self.role_id}, organization_id={self.organization_id})>"

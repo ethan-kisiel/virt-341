@@ -45,6 +45,7 @@ login_manager.init_app(app)  # init login manager
 #       profile, 341, analytics,
 # student/<int: student_id>/
 
+
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     """
@@ -69,6 +70,20 @@ def index():
     )  # found in /src/templates/index.html
 
 
+@app.route("/logout")
+@login_required
+def logout():
+    """Logs out user
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+
+    logout_user()
+    return redirect(url_for("index"))
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Initial view
@@ -91,13 +106,14 @@ def login():
             if user is not None and user.countersign == pwd:
                 login_user(user)
                 return redirect(url_for("index"))
+            
 
     return render_template(
         "login.html", form=form, include_navbar=False
     )  # found in /src/templates/index.html
 
 
-@app.route("/register", methods=["GET","POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     """Initial view
 
@@ -114,22 +130,26 @@ def register():
         print(f"Middle Name: {form.mname.data}")
         print(f"Last Name: {form.lname.data}")
         print(f"Email: {form.email.data}")
+        print(f"Phone: {form.phone.data}")
         print(f"Password: {form.pwd.data}")
-
 
         fname = form.fname.data
         mname = form.mname.data
         lname = form.lname.data
+        phone = form.phone.data
         email = form.email.data
         pwd = form.pwd.data
-        new_user = {"first_name":fname, 
-                    "middle_initial":mname, 
-                    "last_name":lname
-                    }
-        new_account = {"email":email,
-                    "countersign":pwd}
-        
-        DatabaseManager.add_user(new_user)
+
+        new_user = {
+            "first_name": fname,
+            "middle_initial": mname,
+            "last_name": lname,
+            "phone_number": phone,
+        }
+
+        user = DatabaseManager.add_user(new_user)
+
+        new_account = {"email": email, "countersign": pwd, "user_id": user.id}
         DatabaseManager.add_account(new_account)
         return redirect(url_for("login"))
 
@@ -144,13 +164,9 @@ if __name__ == "__main__":
     DatabaseManager.set_database_url(ConfigManager.config.database_url)
     DatabaseManager.create_tables()
 
-    DatabaseManager.add_account({"email": "email", "countersign": "countersign"})
-    DatabaseManager.add_user({"first_name": "first_name", "middle_initial": "middle_initial",  "last_name": "last_name"})
-
     app.debug = ConfigManager.config.is_development
 
     # host = ConfigManager.config.ip
     # port = ConfigManager.config.port
 
     app.run()  # TODO get control of host and port
-
