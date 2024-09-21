@@ -70,6 +70,20 @@ def index():
     )  # found in /src/templates/index.html
 
 
+@app.route("/logout")
+@login_required
+def logout():
+    """Logs out user
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+
+    logout_user()
+    return redirect(url_for("index"))
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Initial view

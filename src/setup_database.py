@@ -12,4 +12,4 @@ def main():
     """
 
     ## CREATE ROLES
-    ## CREATE 
+    ## CREATE STUDENTS

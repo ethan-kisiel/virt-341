@@ -7,6 +7,7 @@ from typing import Callable
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
+from sqlalchemy.orm import joinedload
 
 from models import Base
 from models import Account
@@ -167,7 +168,10 @@ class DatabaseManager:
         """
 
         return cls.with_session(
-            lambda session, email: session.get(Account, email), email
+            lambda session, email: session.query(Account)
+            .options(joinedload(Account.user))
+            .get(email),
+            email,
         )
 
     @classmethod

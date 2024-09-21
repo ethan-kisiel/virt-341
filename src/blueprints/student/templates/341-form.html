@@ -1,4 +1,5 @@
 {% extends 'base.html'%}
+
 {% block title %}Excellence/Discrepancy Report Form{% endblock %}
 
 {% block head_injection %}
@@ -110,28 +111,22 @@
         </div>
     </div>
 </div>
+
+<div class="container mt-4" id="container-341">
+    <div class="qr-code-section">
+        <h3>Scan QR Code to Access This Form:</h3>
+        <img src="{{ url_for('bp_student.generate_student_qr', student_id=student.student_id) }}" alt="Student QR Code">
+        <p>First Name: {{ student.user.first_name }}</p>
+        <p>Last Name: {{ student.user.last_name }}</p>
+        <p>Rank: {{ student.user.rank }}</p>
+        <p>Class Flight: {{ student.user.class_flight }}</p>
+        <p>Organization: {{ student.user.organization }}</p>
+        <p>MTL: {{ student.user.mtl }}</p>
+    </div>
+</div>
 {% endblock %}
 
 
 {% block body_bottom_injection %}
 <script src="{{ url_for('bp_student.static', filename='js/341-form.js') }}"></script>
-{% endblock %}
-
-{% extends 'base.html' %}
-{% block title %}Excellence/Discrepancy Report Form{% endblock %}
-
-{% block content %}
-<div class="container mt-4" id="container-341">
-
-    <div class="qr-code-section">
-        <h3>Scan QR Code to Access This Form:</h3>
-        <img src="{{ url_for('bp_student.generate_student_qr', student_id=student.student_id) }}" alt="Student QR Code">
-        <p>First Name: {{ student.first_name }}</p>
-        <p>Last Name: {{ student.last_name }}</p>
-        <p>Rank: {{ student.rank }}</p>
-        <p>Class Flight: {{ student.class_flight }}</p>
-        <p>Organization: {{ student.organization }}</p>
-        <p>MTL: {{ student.mtl }}</p>
-    </div>
-</div>
 {% endblock %}

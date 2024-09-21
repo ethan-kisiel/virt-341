@@ -14,14 +14,14 @@
     <body>
       {% if include_navbar %}
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#">ORGANIZATION</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+              <ul class="navbar-nav me-auto">
+                <!-- <li class="nav-item active">
                   <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
@@ -40,6 +40,19 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link disabled" href="#">Disabled</a>
+                </li> -->
+
+                {% if current_user %}
+                <li class="nav-item">
+                  <a class="nav-link" href="#">{{ current_user.user.first_name }}   {{ current_user.user.middle_initial }}  {{ current_user.user.last_name}}</a>
+                </li>
+                {% endif %}
+              </ul>
+
+
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                 </li>
               </ul>
 
