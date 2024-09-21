@@ -45,6 +45,7 @@ login_manager.init_app(app)  # init login manager
 #       profile, 341, analytics,
 # student/<int: student_id>/
 
+
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     """
@@ -97,7 +98,7 @@ def login():
     )  # found in /src/templates/index.html
 
 
-@app.route("/register", methods=["GET","POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     """Initial view
 
@@ -117,22 +118,23 @@ def register():
         print(f"Phone: {form.phone.data}")
         print(f"Password: {form.pwd.data}")
 
-
         fname = form.fname.data
         mname = form.mname.data
         lname = form.lname.data
         phone = form.phone.data
         email = form.email.data
         pwd = form.pwd.data
-        new_user = {"first_name":fname, 
-                    "middle_initial":mname, 
-                    "last_name":lname,
-                    "phone_number":phone
-                    }
-        new_account = {"email":email,
-                    "countersign":pwd}
-        
-        DatabaseManager.add_user(new_user)
+
+        new_user = {
+            "first_name": fname,
+            "middle_initial": mname,
+            "last_name": lname,
+            "phone_number": phone,
+        }
+
+        user = DatabaseManager.add_user(new_user)
+
+        new_account = {"email": email, "countersign": pwd, "user_id": user.id}
         DatabaseManager.add_account(new_account)
         return redirect(url_for("login"))
 
@@ -147,13 +149,9 @@ if __name__ == "__main__":
     DatabaseManager.set_database_url(ConfigManager.config.database_url)
     DatabaseManager.create_tables()
 
-    DatabaseManager.add_account({"email": "email", "countersign": "countersign"})
-    DatabaseManager.add_user({"first_name": "first_name", "middle_initial": "middle_initial",  "last_name": "last_name", "phone": "phone"})
-
     app.debug = ConfigManager.config.is_development
 
     # host = ConfigManager.config.ip
     # port = ConfigManager.config.port
 
     app.run()  # TODO get control of host and port
-
