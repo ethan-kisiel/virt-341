@@ -45,7 +45,6 @@ login_manager.init_app(app)  # init login manager
 #       profile, 341, analytics,
 # student/<int: student_id>/
 
-
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     """
@@ -154,3 +153,4 @@ if __name__ == "__main__":
     # port = ConfigManager.config.port
 
     app.run()  # TODO get control of host and port
+

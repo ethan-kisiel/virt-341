@@ -79,7 +79,7 @@ class Student(Base):
 
     phase: Mapped[int] = mapped_column(Integer(), default=0)
 
-    class_flight: Mapped[str] = mapped_column(String(30), nullable=True, unique=True)
+    class_flight: Mapped[str] = mapped_column(String(30), nullable=True)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     user: Mapped["User"] = relationship("User", foreign_keys=[user_id])
@@ -94,11 +94,12 @@ class Student(Base):
     ):
         self.id = id
         self.phase = phase
+        self.class_flight = class_flight
         self.user_id = user_id
         self.supervisor_id = supervisor_id
 
     def __repr__(self):
-        return f"<Student(id={self.id}, phase={self.phase}, user_id={self.user_id}, supervisor_id={self.supervisor_id})>"
+        return f"<Student(id={self.id}, phase={self.phase}, class_flight={self.class_flight}, user_id={self.user_id}, supervisor_id={self.supervisor_id})>"
 
 
 class Role(Base):
