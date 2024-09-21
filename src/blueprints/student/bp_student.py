@@ -7,7 +7,7 @@ Student specific views
 from flask import request, send_file, url_for, redirect
 from flask import Blueprint
 from flask import render_template
-
+from flask_login import current_user
 
 from flask_login import login_required
 
@@ -35,41 +35,77 @@ def home():
     return render_template("341-form.html")
 
 
-@student_bp.route("/<int:student_id>/341form")
-@login_required
-def form341(student_id: int):
-    """
-    Renders the pre-filled 341 form for a specific student.
+# @student_bp.route("/<int:student_id>/341form")
+# @login_required
+# def form341(student_id: int):
+#     """
+#     Renders the pre-filled 341 form for a specific student.
 
-    Keyword arguments:
-    student_id -- an integer representing the student's unique ID
+#     Keyword arguments:
+#     student_id -- an integer representing the student's unique ID
+
+#     Return:
+#     Renders the 341-form template with pre-filled student data
+#     """
+#     student = DatabaseManager.get_student(student_id)
+    
+#     if not student:
+#         return redirect(url_for("bp_student.home"))
+
+#     return render_template("341-form.html", student=student)
+
+@student_bp.route("/341form")
+@login_required
+def form341():
+    """
+    Renders the pre-filled 341 form for the current logged-in user's account.
 
     Return:
     Renders the 341-form template with pre-filled student data
     """
-    student = DatabaseManager.get_student(student_id)
+    student = DatabaseManager.get_student_by_account(current_user.email)
+
     if not student:
         return redirect(url_for("bp_student.home"))
 
     return render_template("341-form.html", student=student)
 
 
-@student_bp.route("/<int:student_id>/generate_qr")
+@student_bp.route("/generate_qr")
 @login_required
-def generate_student_qr(student_id: int):
+def generate_student_qr():
     """
-    Generates a QR code that links to the student's 341 form.
-
-    Keyword arguments:
-    student_id -- an integer representing the student's unique ID
+    Generates a QR code that links to the logged-in student's 341 form.
 
     Return:
     Sends the generated QR code as an image file
     """
-    qr_data_url = url_for("bp_student.form341", student_id=student_id, _external=True)
+    student = DatabaseManager.get_student_by_account(current_user.email)
+
+    if not student:
+        return redirect(url_for("bp_student.home"))
+
+    qr_data_url = url_for("bp_student.form341", _external=True)
     img_io = generate_qr_code(qr_data_url)
 
     return send_file(img_io, mimetype="image/png")
+
+# @student_bp.route("/<int:student_id>/generate_qr")
+# @login_required
+# def generate_student_qr(student_id: int):
+#     """
+#     Generates a QR code that links to the student's 341 form.
+
+#     Keyword arguments:
+#     student_id -- an integer representing the student's unique ID
+
+#     Return:
+#     Sends the generated QR code as an image file
+#     """
+#     qr_data_url = url_for("bp_student.form341", student_id=student_id, _external=True)
+#     img_io = generate_qr_code(qr_data_url)
+
+#     return send_file(img_io, mimetype="image/png")
 
 
 @student_bp.route("/")
