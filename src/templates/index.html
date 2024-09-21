@@ -5,7 +5,90 @@
 {% endblock %}
 
 {% block content %}
-    <p>
-        Example of creating a template that extends the base template
-    </p>
+<div class="container mt-5">
+
+  <!-- Form for updating user and account information -->
+  <div class="card mb-4">
+      <div class="card-header bg-primary text-white">Account & User Information</div>
+      <div class="card-body">
+          <form id="updateUserAccountForm" method="POST" action="/update_account">
+
+              <!-- Email and Password (Account info) -->
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="email">Email</label>
+                          <input type="email" class="form-control" id="email" name="email" value="{{ 'account.email' }}" required>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="password">Password</label>
+                          <input type="password" class="form-control" id="password" name="password" required>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- First Name, Middle Initial, Last Name (User info) -->
+              <div class="row">
+                  <div class="col-md-4">
+                      <div class="form-group">
+                          <label for="firstName">First Name</label>
+                          <input type="text" class="form-control" id="firstName" name="firstName" value="{{ 'user.first_name' }}" required>
+                      </div>
+                  </div>
+                  <div class="col-md-2">
+                      <div class="form-group">
+                          <label for="middleInitial">Middle Initial</label>
+                          <input type="text" class="form-control" id="middleInitial" name="middleInitial" value="{{ 'user.middle_initial' }}">
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="lastName">Last Name</label>
+                          <input type="text" class="form-control" id="lastName" name="lastName" value="{{ 'user.last_name' }}" required>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Grade, Phone -->
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="grade">Grade</label>
+                          <input type="text" class="form-control" id="grade" name="grade" value="{{ 'user.grade' }}">
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="phone">Phone</label>
+                          <input type="text" class="form-control" id="phone" name="phone" value="{{ 'user.phone' }}">
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Role and Organization -->
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="role">Role</label>
+                          <input type="text" class="form-control" id="role" name="role" value="{{ 'user.role.name' }}">
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="organization">Organization</label>
+                          <input type="text" class="form-control" id="organization" name="organization" value="{{ 'user.organization.name' }}">
+                      </div>
+                  </div>
+              </div>
+
+
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-success">Save</button>
+          </form>
+      </div>
+  </div>
+</div>
+
 {% endblock %}

@@ -110,4 +110,6 @@ def reports(student_id: int):
     Return:
     Renders the reports template for the student with the given ID
     """
+
+    student = DatabaseManager.get_student()
     return render_template("reports.html", student_id=student_id)
