@@ -30,9 +30,9 @@ def home():
     None
 
     Return:
-    Renders the 341-form template
+    Renders the profile template
     """
-    return render_template("341-form.html")
+    return render_template("profile.html")
 
 
 # @student_bp.route("/<int:student_id>/341form")
@@ -71,7 +71,7 @@ def form341():
     return render_template("341-form.html", student=student)
 
 
-@student_bp.route("/generate_qr")
+@student_bp.route("/generate-qr")
 @login_required
 def generate_student_qr():
     """
@@ -90,7 +90,7 @@ def generate_student_qr():
 
     return send_file(img_io, mimetype="image/png")
 
-# @student_bp.route("/<int:student_id>/generate_qr")
+# @student_bp.route("/<int:student_id>/generate-qr")
 # @login_required
 # def generate_student_qr(student_id: int):
 #     """
@@ -121,18 +121,29 @@ def index():
     return render_template("341-form.html")
 
 
-@student_bp.route("/<int:student_id>/profile")
+# @student_bp.route("/<int:student_id>/profile")
+# @login_required
+# def profile(student_id: int):
+#     """Endpoint to render student profile page
+
+#     Keyword arguments:
+#     student_id -- an integer representing the primary key of the student user
+
+#     Return:
+#     Renders the profile template for the student with the given ID
+#     """
+#     return render_template("profile.html", student_id=student_id)
+
+@student_bp.route("/profile", methods=["GET", "POST"])
 @login_required
-def profile(student_id: int):
-    """Endpoint to render student profile page
+def profile():
+    if request.method == "POST":
+        form_data = request.form
+        student = DatabaseManager.create_student(form_data)
 
-    Keyword arguments:
-    student_id -- an integer representing the primary key of the student user
+        return redirect(url_for("bp_student.home"))
 
-    Return:
-    Renders the profile template for the student with the given ID
-    """
-    return render_template("profile.html", student_id=student_id)
+    return render_template("profile.html")
 
 
 @student_bp.route("/<int:student_id>/reports")
