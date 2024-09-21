@@ -17,6 +17,7 @@ from flask_wtf import FlaskForm
 from flask_login import login_required
 from flask_login import login_user
 from flask_login import logout_user
+from flask_login import current_user
 
 from blueprints.organization.bp_organization import organization_bp
 from blueprints.student.bp_student import student_bp
@@ -65,9 +66,7 @@ def index():
     Return: Template
     """
 
-    return render_template(
-        "index.html", include_navbar=True
-    )  # found in /src/templates/index.html
+    return redirect(url_for("profile"))
 
 
 @app.route("/logout")
@@ -155,6 +154,28 @@ def register():
     return render_template(
         "register.html", form=form, include_navbar=False
     )  # found in /src/templates/index.html
+
+
+#### ROUTE FOR USER PROFILE
+@app.route("/profile")
+@app.route("/profile/<int:user_id>")
+@login_required
+def profile(user_id=None):
+    """user profile
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+    # IF USER ID == NONE : USE CURRENT USER AS USER
+    account = current_user.user
+
+    account = None
+    user = None
+
+    return render_template(
+        "profile.html", account=account, user=user, include_navbar=True
+    )
 
 
 if __name__ == "__main__":

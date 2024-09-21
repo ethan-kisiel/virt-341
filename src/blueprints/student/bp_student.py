@@ -82,12 +82,13 @@ def index():
     Return:
     Renders the 341-form template
     """
-    return render_template("341-form.html")
+    return redirect(url_for("profile"))
 
 
-@student_bp.route("/<int:student_id>/profile")
+@student_bp.route("/profile")
+@student_bp.route("/profile/<int:student_id>")
 @login_required
-def profile(student_id: int):
+def profile(student_id: int = None):
     """Endpoint to render student profile page
 
     Keyword arguments:
@@ -96,20 +97,25 @@ def profile(student_id: int):
     Return:
     Renders the profile template for the student with the given ID
     """
+
+    # IF STUDENT_ID == NONE : STUDENT = get student from current user
+
+    student = None  # get the student from the db
+
     return render_template("profile.html", student_id=student_id)
 
 
-@student_bp.route("/<int:student_id>/reports")
-@login_required
-def reports(student_id: int):
-    """Endpoint to render student reports page
+# @student_bp.route("/<int:student_id>/reports")
+# @login_required
+# def reports(student_id: int):
+#     """Endpoint to render student reports page
 
-    Keyword arguments:
-    student_id -- an integer representing the primary key of the student user
+#     Keyword arguments:
+#     student_id -- an integer representing the primary key of the student user
 
-    Return:
-    Renders the reports template for the student with the given ID
-    """
+#     Return:
+#     Renders the reports template for the student with the given ID
+#     """
 
-    student = DatabaseManager.get_student()
-    return render_template("reports.html", student_id=student_id)
+#     student = DatabaseManager.get_student()
+#     return render_template("reports.html", student_id=student_id)
