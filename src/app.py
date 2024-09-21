@@ -114,17 +114,20 @@ def register():
         print(f"Middle Name: {form.mname.data}")
         print(f"Last Name: {form.lname.data}")
         print(f"Email: {form.email.data}")
+        print(f"Phone: {form.phone.data}")
         print(f"Password: {form.pwd.data}")
 
 
         fname = form.fname.data
         mname = form.mname.data
         lname = form.lname.data
+        phone = form.phone.data
         email = form.email.data
         pwd = form.pwd.data
         new_user = {"first_name":fname, 
                     "middle_initial":mname, 
-                    "last_name":lname
+                    "last_name":lname,
+                    "phone_number":phone
                     }
         new_account = {"email":email,
                     "countersign":pwd}
@@ -145,7 +148,7 @@ if __name__ == "__main__":
     DatabaseManager.create_tables()
 
     DatabaseManager.add_account({"email": "email", "countersign": "countersign"})
-    DatabaseManager.add_user({"first_name": "first_name", "middle_initial": "middle_initial",  "last_name": "last_name"})
+    DatabaseManager.add_user({"first_name": "first_name", "middle_initial": "middle_initial",  "last_name": "last_name", "phone": "phone"})
 
     app.debug = ConfigManager.config.is_development
 

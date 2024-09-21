@@ -24,6 +24,7 @@ class RegisterForm(FlaskForm):
             Email(message="Please enter a valid email address"),
         ],
     )
+    phone = StringField("Phone", validators=[DataRequired()])
     pwd = PasswordField(
         "Password",
         validators=[

@@ -38,7 +38,7 @@ def create_account(session, account_data: dict):
         print(e)
 
 def create_user(session, user_data: dict):
-    """function that creates an account object on the session, given
+    """function that creates a user object on the session, given
 
     Keyword arguments:
     argument -- description
@@ -46,10 +46,11 @@ def create_user(session, user_data: dict):
     """
 #change these
     try:
-        user = Account(
+        user = User(
             first_name=user_data.get("first_name"), 
             middle_initial=user_data.get("middle_initial"),
-            last_name=user_data.get("last_name")
+            last_name=user_data.get("last_name"),
+            phone=user_data.get("phone")
         )
 
         session.add(user)
