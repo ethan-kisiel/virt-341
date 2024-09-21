@@ -115,13 +115,13 @@
 <div class="container mt-4" id="container-341">
     <div class="qr-code-section">
         <h3>Scan QR Code to Access This Form:</h3>
-        <img src="{{ url_for('bp_student.generate_student_qr', student_id=student.student_id) }}" alt="Student QR Code">
+        <img src="{{ url_for('bp_student.generate_student_qr', student_id=student.id) }}" alt="Student QR Code">
         <p>First Name: {{ student.user.first_name }}</p>
         <p>Last Name: {{ student.user.last_name }}</p>
         <p>Rank: {{ student.user.rank }}</p>
-        <p>Class Flight: {{ student.user.class_flight }}</p>
+        <p>Class Flight: {{ student.class_flight }}</p>
         <p>Organization: {{ student.user.organization }}</p>
-        <p>MTL: {{ student.user.mtl }}</p>
+        <p>MTL: {{ student.supervisor.first_name }} {{ student.supervisor.last_name }}</p>
     </div>
 </div>
 {% endblock %}

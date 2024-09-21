@@ -136,13 +136,13 @@ class Organization(Base):
 
     users: Mapped["User"] = relationship("User", back_populates="organization")
 
-    def __init__(self, id, name, class_flight):
+    def __init__(self, id, name, organization_name):
         self.id = id
         self.name = name
-        self.class_flight = class_flight
+        self.organization_name = organization_name 
 
     def __repr__(self):
-        return f"<Organization(id={self.id}, name={self.organization_name}>"
+        return f"<Organization(id={self.id}, name={self.name}, organization_name={self.organization_name}>"
 
 
 class User(Base):

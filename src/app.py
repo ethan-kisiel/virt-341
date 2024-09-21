@@ -105,6 +105,7 @@ def login():
             if user is not None and user.countersign == pwd:
                 login_user(user)
                 return redirect(url_for("index"))
+            
 
     return render_template(
         "login.html", form=form, include_navbar=False

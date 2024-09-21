@@ -184,3 +184,18 @@ class DatabaseManager:
         """
 
         return cls.with_session(lambda session, pk: session.get(Student, pk), pk)
+
+    @classmethod
+    def get_student_by_account(cls, email: str) -> Student | None:
+        """
+        Fetch a student by the account's email using the associated user.
+
+        Keyword arguments:
+        email -- the account's email address
+        Return: Student object or None
+        """
+        return cls.with_session(lambda session, email: session.query(Student)
+            .join(User, Student.user_id == User.id)
+            .join(Account, Account.user_id == User.id)
+            .filter(Account.email == email)
+            .first(), email)
