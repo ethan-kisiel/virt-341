@@ -192,7 +192,7 @@ def profile(user_id=None):
     organizations = DatabaseManager.get_organizations()
 
     form.role.choices = [(role.id, role.role_name) for role in roles]
-    form.role.choices.insert(0, (None, "Unassigned"))
+    form.role.choices.insert(0, (None, "Unassigned"))  # add an unassigned role
     form.organization.choices = [
         (organization.id, organization.organization_name)
         for organization in organizations
@@ -209,9 +209,9 @@ def profile(user_id=None):
 
         form.phone.data = user.phone
         form.rank.data = user.rank
-        form.role.data = user.role
+        form.role.data = str(user.role_id)
 
-        form.organization.data = user.organization
+        form.organization.data = str(user.organization_id)
 
         if (
             current_user.user.role is None
