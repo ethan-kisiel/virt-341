@@ -7,6 +7,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms import SubmitField
 from wtforms import PasswordField
+from wtforms import DateField
 from wtforms.validators import DataRequired
 from wtforms.validators import EqualTo
 from wtforms.validators import Email
@@ -54,3 +55,18 @@ class LoginForm(FlaskForm):
         ],
     )
     submit = SubmitField("Submit")
+
+
+class UpdateAccount(FlaskForm):
+    fname = StringField('First Name', validators=[DataRequired()])
+    mname = StringField('Middle Inital', validators=[DataRequired()])
+    lname = StringField('Last Name', validators=[DataRequired()])
+    clsflt = StringField('Last Name', validators=[DataRequired()])
+    org = StringField('Last Name', validators=[DataRequired()])
+    rank = StringField('Last Name', validators=[DataRequired()])
+    pgrade = StringField('Last Name', validators=[DataRequired()])
+    datearv = DateField()
+    mtl = StringField()
+    phase = StringField()
+    
+    submit = SubmitField('Update Account')
