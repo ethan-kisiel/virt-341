@@ -130,6 +130,7 @@ class User(Base):
     first_name: Mapped[str] = mapped_column(String(100))
     middle_initial: Mapped[str] = mapped_column(String(3), nullable=True)
 
+    rank:  Mapped[str] = mapped_column(String(4), nullable=True)
     grade: Mapped[str] = mapped_column(String(3), nullable=True)
     phone: Mapped[str] = mapped_column(String(16), nullable=True)
 

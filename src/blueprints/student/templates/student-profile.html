@@ -9,33 +9,33 @@
 {% block content %}
 <div class="container mt-5">
     <!-- Home Button -->
-    <div class="mb-4">
+    <!-- <div class="mb-4"> -->
         <!-- need to add route for homepage in place of 'home' -->
-        <a href="{{ url_for('bp_student.home') }}" class="btn btn-secondary">Home</a>
-    </div>
+        <!-- <a href="" class="btn btn-secondary">Home</a>
+    </div> -->
 
     <!-- Form for adding student profile information -->
     <div class="card mb-4">
-        <div class="card-header bg-primary text-white">Add Student Profile</div>
+        <div class="card-header bg-primary text-white">Student Profile</div>
         <div class="card-body">
             <form id="addStudentProfileForm" method="POST" action="/submit">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="firstName">First Name</label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" required>
+                            <input type="text" class="form-control" id="firstName" name="firstName" value="{{ user.first_name }}" disabled>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="middleInitial">Middle Initial</label>
-                            <input type="text" class="form-control" id="middleInitial" name="middleInitial" maxlength="1">
+                            <input type="text" class="form-control" id="middleInitial" name="middleInitial" maxlength="1" disabled>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="lastName">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" name="lastName" required>
+                            <input type="text" class="form-control" id="lastName" name="lastName" disabled>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="organization">Organization</label>
-                            <input type="text" class="form-control" id="organization" name="organization">
+                            <input type="text" class="form-control" id="organization" name="organization" disabled>
                         </div>
                     </div>
                 </div>
@@ -73,14 +73,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="arrivalTime">Date Arrived</label>
-                            <input type="datetime-local" class="form-control" id="arrivalTime" name="arrivalTime" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
                             <label for="currentMTL">Current MTL</label>
-                            <input type="text" class="form-control" id="currentMTL" name="currentMTL">
+                            <input type="text" class="form-control" id="currentMTL" name="currentMTL", value="{{ student.supervisor.first_name }}">
                         </div>
                     </div>
                 </div>
@@ -88,32 +82,15 @@
                 <div class="form-group">
                     <label for="studentPhase">Current Phase</label>
                     <select class="form-control" id="studentPhase" name="studentPhase" onchange="this.className = 'form-control ' + this.options[this.selectedIndex].className;">
-                        <option value="" disabled selected>Select student phase</option>
-                        <option value="green" class="phase-green">Phase I - Green Card</option>
-                        <option value="white" class="phase-white">Phase II - White Card</option>
-                        <option value="yellow" class="phase-yellow">Phase III - Yellow Card</option>
-                        <option value="blue" class="phase-blue">Phase IV - Blue Card</option>
-                        <option value="red" class="phase-red">Phase V - Red Card</option>
+                        <option value="{{ student.phase }}" disabled selected>Select student phase</option>
+                        <option value="0" class="phase-green">Phase I - Green Card</option>
+                        <option value="1" class="phase-white">Phase II - White Card</option>
+                        <option value="2" class="phase-yellow">Phase III - Yellow Card</option>
+                        <option value="3" class="phase-blue">Phase IV - Blue Card</option>
+                        <option value="4" class="phase-red">Phase V - Red Card</option>
                     </select>
                 </div>
-                <div class="row mt-3">
-                <div class="col-md-6 text-start">
-                    <form action="{{ url_for('bp_student.save_profile', student_id=student.id) }}" method="post">
-                        <input type="text" name="firstName" value="{{ student.user.first_name }}">
-                        <input type="text" name="lastName" value="{{ student.user.last_name }}">
-                        <input type="text" name="MiddleInitial" value="{{ student.user.middle_initial }}">
-                        <input type="text" name="Rank" value="{{ student.user.grade }}">
-                        <input type="text" name="ClassFlight" value="{{ student.user.ClassFlight }}">
-                        <input type="text" name="Organization" value="{{ student.user.Organization }}">
-                        <input type="text" name="MTL" value="{{ student.supervisor.first_name }} {{ student.supervisor.last_name }}">
-    
-                        <button type="submit">Save</button>
-                    </form>               
-                <div class="col-md-6 text-end">
-                    <form action="{{ url_for('bp_student.delete_profile', student_id=student.id) }}" method="post">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </div>
+
             </div>
         </div>
     </div>
