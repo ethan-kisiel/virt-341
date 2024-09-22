@@ -213,6 +213,30 @@ def create_role(session, role_data: dict):
         print("Value error")
     except Exception as e:
         print(e)
+        
+def delete_student(session, student_id: int):
+    """Deletes a student object by student_id
+
+    Keyword arguments:
+    student_id -- the ID of the student to be deleted
+    Return: None
+    """
+    try:
+        student = session.get(Student, student_id)
+
+        if student:
+            session.delete(student)
+            session.commit()
+        else:
+            raise ValueError("Student not found")
+
+    except ValueError as e:
+        print(e)
+    except Exception as e:
+        print(e)
+
+
+ 
 
 
 class DatabaseManager:
@@ -480,3 +504,9 @@ class DatabaseManager:
         """
 
         cls.with_session(delete_organization, organization_id)
+
+    @classmethod
+    def remove_student(cls, student_id: int):
+        """Removes a student by ID"""
+        cls.with_session(delete_student, student_id)
+    
