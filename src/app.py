@@ -167,20 +167,21 @@ def profile(user_id=None):
     argument -- description
     Return: return_description
     """
-    # IF USER ID == NONE : USE CURRENT USER AS USER
+
     if user_id is not None:
-        # account = DatabaseManager.get_user()
         account = None
         user = None
     else:
         account = current_user
         user = current_user.user
 
+
     roles = DatabaseManager.get_roles()
 
     return render_template(
         "profile.html", account=account, user=user, roles=roles, include_navbar=True
     )
+
 
 
 if __name__ == "__main__":
