@@ -172,10 +172,13 @@ def profile(user_id=None):
     """
 
     if user_id is not None:
-        account = DatabaseManager.get_account_by_user_id(
-            user_id
-        )  # TODO Implement get account by user
-        user = account.user
+        try:
+            account = DatabaseManager.get_account_by_user_id(
+                user_id
+            )  # TODO Implement get account by user
+            user = account.user
+        except AttributeError:
+            return "404 Not found.", 404
     else:
         account = current_user
         user = current_user.user
@@ -223,6 +226,19 @@ def profile(user_id=None):
             form.role.render_kw = DISABLED_KWARGS
 
             form.organization.render_kw = DISABLED_KWARGS
+
+    else:  # request is POST at this point
+        if form.validate_on_submit():
+            user_data = {
+                "last_name": form.last_name.data,
+                "first_name": form.first_name.data,
+                "middle_initial": form.middle_initial.data,
+                "rank": form.rank.data,
+                "role_id": int(form.role.data),
+                "organization_id": int(form.organization.data),
+            }
+
+            DatabaseManager.update_user(user.id, user_data)
 
     roles = DatabaseManager.get_roles()
 

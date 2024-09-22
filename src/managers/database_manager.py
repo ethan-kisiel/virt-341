@@ -4,6 +4,7 @@ Manages all database interactions
 
 from typing import Any
 from typing import Callable
+from typing import TypeVar
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
@@ -16,6 +17,31 @@ from models import Student
 from models import Role
 from models import Organization
 from models import Form341
+
+
+T = TypeVar("T")
+
+
+def update_object(session, model_type: T, pk: int | str, data: dict) -> T:
+    """
+    Updates an object of type T with a given primary key pk with the given data
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+
+    try:
+        obj = session.get(model_type, pk)
+
+        for k, v in data.items():
+            setattr(obj, k, v)
+
+        session.commit()
+
+        return obj
+    except ValueError:
+        print("Value error")
 
 
 def create_account(session, account_data: dict):
@@ -400,13 +426,15 @@ class DatabaseManager:
         )
 
     @classmethod
-    def update_user(cls, user_data: dict):
+    def update_user(cls, user_id: int, user_data: dict):
         """update a user with a given user_data
 
         Keyword arguments:
         argument -- description
         Return: return_description
         """
+
+        cls.with_session(update_object, User, user_id, user_data)
 
     @classmethod
     def update_student(cls, student_id, updated_data):
