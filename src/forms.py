@@ -57,16 +57,15 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Submit")
 
 
-class UpdateAccount(FlaskForm):
-    fname = StringField('First Name', validators=[DataRequired()])
-    mname = StringField('Middle Inital', validators=[DataRequired()])
-    lname = StringField('Last Name', validators=[DataRequired()])
-    clsflt = StringField('Last Name', validators=[DataRequired()])
-    org = StringField('Last Name', validators=[DataRequired()])
-    rank = StringField('Last Name', validators=[DataRequired()])
-    pgrade = StringField('Last Name', validators=[DataRequired()])
-    datearv = DateField()
-    mtl = StringField()
-    phase = StringField()
-    
-    submit = SubmitField('Update Account')
+class StudentProfileForm(FlaskForm):
+    firstName = StringField("First Name", validators=[DataRequired()])
+    middleInitial = StringField("Middle Initial", validators=[DataRequired()])
+    lastName = StringField("Last Name", validators=[DataRequired()])
+    classFlight = StringField("Class/Flight")
+    organization = StringField("Organization")
+    rank = StringField("Rank", validators=[DataRequired()])
+    payGrade = StringField("Pay Grade", validators=[DataRequired()])
+    arrivalTime = DateField("Date Arrived", validators=[DataRequired()])
+    currentMTL = StringField("Current MTL", validators=[DataRequired()])
+    studentPhase = StringField("Current Phase", validators=[DataRequired()])
+    submit = SubmitField("Save")
