@@ -95,7 +95,6 @@ def index():
 def profile(student_id: int = None):
     """Endpoint to render student profile page
 
-
         return redirect(url_for("bp_student.home"))
 
     Return:
