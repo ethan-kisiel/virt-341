@@ -11,7 +11,7 @@
 <div class="card mb-4">
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
         <span>Account & User Information</span>
-        <button type="button" class="btn btn-primary btn-sm">Student Profile</button>  <!-- Gray button added here -->
+            <a type="button" class="btn btn-primary btn-sm" href="{{ url_for ('bp_student.profile')}}">Student Profile</a>  <!-- Gray button added here -->
     </div>
     <div class="card-body">
         <form id="updateUserAccountForm" method="POST" action="#">
