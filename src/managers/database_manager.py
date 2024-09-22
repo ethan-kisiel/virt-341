@@ -275,8 +275,7 @@ class DatabaseManager:
             user_id,
         )
 
-            .first(), email)
-
+    
   
     def update_student(self, student_id, updated_data):
         student = self.get_student(student_id)
