@@ -14,6 +14,7 @@ from models import Account
 from models import User
 from models import Student
 from models import Role
+from models import Organization
 from models import Form341
 
 
@@ -222,11 +223,21 @@ class DatabaseManager:
         """Gets all roles
 
         Keyword arguments:
+        Return: List[Role]
+        """
+
+        return cls.with_session(lambda session: session.query(Role).all())
+
+    @classmethod
+    def get_organizations(cls):
+        """sumary_line
+
+        Keyword arguments:
         argument -- description
         Return: return_description
         """
 
-        return cls.with_session(lambda session: session.query(Role).all())
+        return cls.with_session(lambda session: session.query(Organization).all())
 
     @classmethod
     def get_student_by_account(cls, email: str) -> Student | None:
