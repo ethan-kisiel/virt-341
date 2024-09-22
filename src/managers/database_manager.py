@@ -294,6 +294,10 @@ class DatabaseManager:
         return cls.with_session(create_account, account_data)
 
     @classmethod
+    def add_student(cls, student):
+        pass
+
+    @classmethod
     def add_role(cls, role_data: dict):
         """adds a role object"""
         return cls.with_session(create_role, role_data)
@@ -399,6 +403,7 @@ class DatabaseManager:
             lambda session, email: session.query(Student)
             .options(
                 joinedload(Student.supervisor),
+                joinedload(Student.user).joinedload(User.organization),
             )
             .join(User, Student.user_id == User.id)
             .join(Account, Account.user_id == User.id)
