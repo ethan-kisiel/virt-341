@@ -21,20 +21,6 @@ student_bp = Blueprint(
 
 
 
-@student_bp.route("/home")
-@login_required
-def home():
-    """Home endpoint
-
-    Keyword arguments:
-    None
-
-    Return:
-    Renders the profile template
-    """
-    return render_template("profile.html")
-
-
 # @student_bp.route("/<int:student_id>/341form")
 # @login_required
 # def form341(student_id: int):

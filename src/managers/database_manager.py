@@ -202,7 +202,7 @@ class DatabaseManager:
 
         return cls.with_session(
             lambda session, email: session.query(Account)
-            .options(joinedload(Account.user).joinedload(User.role))
+            .options(joinedload(Account.user).joinedload(User.role),joinedload(Account.user).joinedload(User.organization))
             .get(email),
             email,
         )
@@ -275,9 +275,6 @@ class DatabaseManager:
             user_id,
         )
 
-            .first(), email)
-
-  
     def update_student(self, student_id, updated_data):
         student = self.get_student(student_id)
         if student:

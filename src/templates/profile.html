@@ -13,22 +13,6 @@
       <div class="card-body">
           <form id="updateUserAccountForm" method="POST" action="/update_account">
 
-              <!-- Email and Password (Account info) -->
-              <div class="row">
-                  <div class="col-md-6">
-                      <div class="form-group">
-                          <label for="email">Email</label>
-                          <input type="email" class="form-control" id="email" name="email" value="{{ account.email }}" required>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                      <div class="form-group">
-                          <label for="password">Password</label>
-                          <input type="password" class="form-control" id="password" name="password" required>
-                      </div>
-                  </div>
-              </div>
-
               <!-- First Name, Middle Initial, Last Name (User info) -->
               <div class="row">
                   <div class="col-md-4">
@@ -51,12 +35,12 @@
                   </div>
               </div>
 
-              <!-- Grade, Phone -->
+              <!-- Email and Phone -->
               <div class="row">
                   <div class="col-md-6">
                       <div class="form-group">
-                          <label for="grade">Grade</label>
-                          <input type="text" class="form-control" id="grade" name="grade" value="{{ user.grade }}">
+                          <label for="email">Email</label>
+                          <input type="email" class="form-control" id="email" name="email" value="{{ account.email }}" required>
                       </div>
                   </div>
                   <div class="col-md-6">
@@ -67,27 +51,27 @@
                   </div>
               </div>
 
-              <!-- Role and Organization -->
+              <!--Grade, Role, and Organization-->
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label for="role">Role</label>
-                        <select class="form-control" id="role" name="role" required>
-                            <!-- Loop through the roles to populate the select options -->
-                            {% for role in roles %}
-                                <option value="{{ role.id }}" {% if current_user.user.role.id == role.id %} selected {% endif %}>{{ role.role_name }}</option>
-                            {% endfor %}
-                        </select>
+                        <label for="grade">Grade</label>
+                        <input type="text" class="form-control" id="grade" name="grade" value="{{ user.grade }}" required>
                     </div>
                 </div>
-                  <div class="col-md-6">
-                      <div class="form-group">
-                          <label for="organization">Organization</label>
-                          <input type="text" class="form-control" id="organization" name="organization" value="{{ 'user.organization' }}">
-                      </div>
-                  </div>
-              </div>
-
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="role">Role</label>
+                        <input type="text" class="form-control" id="role" name="role" value="{{ user.role }}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="organization">Organization</label>
+                        <input type="text" class="form-control" id="organization" name="organization" value="{{ user.organization }}" required>
+                    </div>
+                </div>
+            </div>              
 
               <br>
             <div class="row mt-3">
