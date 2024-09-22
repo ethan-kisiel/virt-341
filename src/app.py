@@ -168,15 +168,17 @@ def profile(user_id=None):
     argument -- description
     Return: return_description
     """
-    # IF USER ID == NONE : USE CURRENT USER AS USER
-    account = current_user.user
-
-    account = None
-    user = None
+    if user_id is not None:
+        account = None
+        user = None
+    else:
+        account = current_user
+        user = current_user.user
 
     return render_template(
         "profile.html", account=account, user=user, include_navbar=True
     )
+
 
 
 if __name__ == "__main__":

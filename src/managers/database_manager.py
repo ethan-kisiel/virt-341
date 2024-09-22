@@ -199,3 +199,13 @@ class DatabaseManager:
             .join(Account, Account.user_id == User.id)
             .filter(Account.email == email)
             .first(), email)
+
+  
+    def update_student(self, student_id, updated_data):
+        student = self.get_student(student_id)
+        if student:
+            student.first_name = updated_data.get("first_name")
+            student.last_name = updated_data.get("last_name")
+            self.db.session.commit()
+            return True
+        return False
