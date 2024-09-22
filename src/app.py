@@ -201,6 +201,10 @@ def profile(user_id=None):
     form.organization.choices.insert(0, (None, "Unassigned"))
 
     if request.method == "GET":
+
+        if user_id == current_user.user_id:
+            return redirect(url_for("profile"))
+
         form.first_name.data = user.first_name
         form.middle_initial.data = user.middle_initial
         form.last_name.data = user.last_name
@@ -234,9 +238,14 @@ def profile(user_id=None):
                 "first_name": form.first_name.data,
                 "middle_initial": form.middle_initial.data,
                 "rank": form.rank.data,
+                "phone": form.phone.data,
                 "role_id": int(form.role.data),
                 "organization_id": int(form.organization.data),
             }
+
+            # if the user doesn't have edit privelages
+            if current_user.user.role_id not in [0, 1, 2]:
+                user_data = {"phone": form.phone.data}
 
             DatabaseManager.update_user(user.id, user_data)
 

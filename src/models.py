@@ -110,7 +110,7 @@ class Student(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     user: Mapped["User"] = relationship("User", foreign_keys=[user_id])
 
-    supervisor_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    supervisor_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=True)
     supervisor: Mapped["User"] = relationship("User", foreign_keys=[supervisor_id])
 
     form_341s: Mapped["Form341"] = relationship("Form341", back_populates="student")
