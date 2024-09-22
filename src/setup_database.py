@@ -21,6 +21,11 @@ def main():
         "organization_name": "336 TRS",
     }
 
+    try:
+        DatabaseManager.add_organization(organization_data)
+    except Exception as e:
+        print(e)
+
     roles_data = [
         {"role_name": "Admin", "role_permission": 0},
         {"role_name": "Flight Chief", "role_permission": 1},
@@ -30,7 +35,10 @@ def main():
     ]
 
     for rd in roles_data:
-        DatabaseManager.add_role(rd)
+        try:
+            DatabaseManager.add_role(rd)
+        except Exception as e:
+            pass
 
 
 if __name__ == "__main__":

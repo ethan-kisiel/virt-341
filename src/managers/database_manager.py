@@ -4,6 +4,7 @@ Manages all database interactions
 
 from typing import Any
 from typing import Callable
+from typing import TypeVar
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
@@ -16,6 +17,31 @@ from models import Student
 from models import Role
 from models import Organization
 from models import Form341
+
+
+T = TypeVar("T")
+
+
+def update_object(session, model_type: T, pk: int | str, data: dict) -> T:
+    """
+    Updates an object of type T with a given primary key pk with the given data
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+
+    try:
+        obj = session.get(model_type, pk)
+
+        for k, v in data.items():
+            setattr(obj, k, v)
+
+        session.commit()
+
+        return obj
+    except ValueError:
+        print("Value error")
 
 
 def create_account(session, account_data: dict):
@@ -56,7 +82,7 @@ def create_user(session, user_data: dict):
             first_name=user_data.get("first_name"),
             middle_initial=user_data.get("middle_initial"),
             last_name=user_data.get("last_name"),
-            phone=user_data.get("phone"),
+            phone=user_data.get("phone_number"),
         )
 
         session.add(user)
@@ -64,6 +90,50 @@ def create_user(session, user_data: dict):
         session.commit()
 
         return user
+
+    except ValueError:
+
+        print("Value error")
+    except Exception as e:
+        print(e)
+
+
+def delete_user(session, user_id: int):
+    """function that deletes a user object on the session, given
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+    # change these
+    try:
+        user = session.get(User, user_id)
+
+        session.delete(user)
+
+        session.commit()
+
+    except ValueError:
+
+        print("Value error")
+    except Exception as e:
+        print(e)
+
+
+def delete_account(session, email: str):
+    """function that deletes an account  object on the session, given
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+    # change these
+    try:
+        user = session.get(Account, email)
+
+        session.delete(user)
+
+        session.commit()
 
     except ValueError:
 
@@ -94,8 +164,33 @@ def delete_organization(session, organization_id: int):
         print(e)
 
 
-def create_role(session, role_data: dict):
+def create_organization(session, organization_data: dict):
     """function that creates a user object on the session, given
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+    # change these
+    try:
+        organization = Organization(
+            organization_name=organization_data.get("organization_name"),
+        )
+
+        session.add(organization)
+
+        session.commit()
+
+        return organization
+
+    except ValueError:
+        print("Value error")
+    except Exception as e:
+        print(e)
+
+
+def create_role(session, role_data: dict):
+    """function that creates a role object on the session, given
 
     Keyword arguments:
     argument -- description
@@ -204,6 +299,12 @@ class DatabaseManager:
         return cls.with_session(create_role, role_data)
 
     @classmethod
+    def add_organization(cls, organization_data: dict):
+        """adds organization object"""
+
+        return cls.with_session(create_organization, organization_data)
+
+    @classmethod
     def get_user(cls, pk: int) -> User | None:
         """sumary_line
 
@@ -265,6 +366,27 @@ class DatabaseManager:
         return cls.with_session(lambda session: session.query(Organization).all())
 
     @classmethod
+    def get_account_by_user_id(cls, user_id: int):
+        """Gets an accont object based on a user id
+
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+
+        return cls.with_session(
+            lambda session, user_id: session.query(Account)
+            .options(
+                joinedload(Account.user).joinedload(User.role),
+                joinedload(Account.user).joinedload(User.organization),
+            )
+            .join(User, Account.user_id == User.id)
+            .filter(Account.user_id == user_id)
+            .first(),
+            user_id,
+        )
+
+    @classmethod
     def get_student_by_account(cls, email: str) -> Student | None:
         """
         Fetch a student by the account's email using the associated user.
@@ -304,13 +426,15 @@ class DatabaseManager:
         )
 
     @classmethod
-    def update_user(cls, user_data: dict):
+    def update_user(cls, user_id: int, user_data: dict):
         """update a user with a given user_data
 
         Keyword arguments:
         argument -- description
         Return: return_description
         """
+
+        cls.with_session(update_object, User, user_id, user_data)
 
     @classmethod
     def update_student(cls, student_id, updated_data):
@@ -329,13 +453,17 @@ class DatabaseManager:
         #     return True
         # return False
 
-    def remove_user(self, user_id: dict):
+    @classmethod
+    def remove_user(cls, user_id: int, email: str):
         """sumary_line
 
         Keyword arguments:
         argument -- description
         Return: return_description
         """
+
+        cls.with_session(delete_account, email)
+        cls.with_session(delete_user, user_id)
 
     @classmethod
     def remove_organization(cls, organization_id: int):
