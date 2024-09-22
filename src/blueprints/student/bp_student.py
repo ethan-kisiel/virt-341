@@ -118,3 +118,59 @@ def generate_student_qr(student_id: int = None):
     img_io = generate_qr_code(qr_data_url)
 
     return send_file(img_io, mimetype="image/png")
+
+@student_bp.route("/341-form", methods=["GET", "POST"])
+@login_required
+def form_341():
+    """Excellence/Discrepancy Report Form
+
+    Handle the 341 report form submission and rendering.
+
+    Keyword arguments:
+    Return: Rendered form or handle form submission
+    """
+    form = Form341()
+    student = DatabaseManager.get_student_by_account(current_user.email)
+
+    if request.method == "GET":
+        # Pre-fill form fields with current student's data
+        form.student_phase.data = DatabaseManager.get_student_phase(current_user.id)
+        form.organization.data = current_user.organization
+        form.name.data = f"{current_user.last_name} - {current_user.first_name} - {current_user.middle_initial}"
+        form.grade.data = student.grade if student else None
+        form.class_flight.data = student.class_flight if student else None
+
+        return render_template(
+            "341-form.html",
+            form=form,
+            student=student,
+        )
+
+    elif request.method == "POST":
+        if form.validate_on_submit():
+            # Collect form data and save it to the database
+            form_data = {
+                "name": form.name.data,
+                "grade": form.grade.data,
+                "organization": form.organization.data,
+                "class_flight": form.class_flight.data,
+                "excellence_discrepancy": form.excellence_discrepancy.data,
+                "time": form.time.data,
+                "date": form.date.data,
+                "place": form.place.data,
+                "reporting_name": form.reporting_name.data,
+                "signature": form.signature.data,
+                "student_phase": form.student_phase.data,
+            }
+
+            DatabaseManager.submit_341_report(current_user.id, form_data)
+
+
+            return redirect(url_for("bp_student.form_341"))
+
+    # Handle any form errors
+    return render_template(
+        "341-form.html",
+        form=form,
+        student=student,
+    )

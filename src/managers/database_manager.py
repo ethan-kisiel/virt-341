@@ -431,6 +431,21 @@ class DatabaseManager:
         )
 
     @classmethod
+    def get_student_phase(cls, student_id: int) -> str | None:
+        """Fetch a student's phase by the student's ID.
+
+        Keyword arguments:
+        student_id -- the student's ID
+        Return: the student's phase as a string, or None if not found
+        """
+        return cls.with_session(
+            lambda session, student_id: session.query(Student.phase)
+            .filter(Student.id == student_id)
+            .scalar(),
+            student_id,
+        )
+
+    @classmethod
     def update_user(cls, user_id: int, user_data: dict):
         """update a user with a given user_data
 
