@@ -35,6 +35,25 @@ def home():
     return render_template("profile.html")
 
 
+# @student_bp.route("/<int:student_id>/341form")
+# @login_required
+# def form341(student_id: int):
+#     """
+#     Renders the pre-filled 341 form for a specific student.
+
+#     Keyword arguments:
+#     student_id -- an integer representing the student's unique ID
+
+#     Return:
+#     Renders the 341-form template with pre-filled student data
+#     """
+#     student = DatabaseManager.get_student(student_id)
+
+#     if not student:
+#         return redirect(url_for("bp_student.home"))
+
+#     return render_template("341-form.html", student=student)
+
 
 @student_bp.route("/341form")
 @login_required
@@ -74,6 +93,23 @@ def generate_student_qr():
     return send_file(img_io, mimetype="image/png")
 
 
+# @student_bp.route("/<int:student_id>/generate-qr")
+# @login_required
+# def generate_student_qr(student_id: int):
+#     """
+#     Generates a QR code that links to the student's 341 form.
+
+#     Keyword arguments:
+#     student_id -- an integer representing the student's unique ID
+
+#     Return:
+#     Sends the generated QR code as an image file
+#     """
+#     qr_data_url = url_for("bp_student.form341", student_id=student_id, _external=True)
+#     img_io = generate_qr_code(qr_data_url)
+
+#     return send_file(img_io, mimetype="image/png")
+
 
 @student_bp.route("/")
 def index():
@@ -86,7 +122,6 @@ def index():
     Renders the 341-form template
     """
     return redirect(url_for("bp_student.profile"))
-
 
 
 @student_bp.route("/profile")
@@ -154,7 +189,6 @@ def delete_profile(student_id: int):
     DatabaseManager.delete_student(student_id)
 
     return redirect(url_for("bp_student.home"))
-
 
 
 # @student_bp.route("/<int:student_id>/reports")
