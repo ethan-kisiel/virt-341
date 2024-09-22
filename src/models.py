@@ -145,6 +145,10 @@ class User(Base):
         "Organization", back_populates="users"
     )
 
+    @property
+    def qualified_name(self) -> str:
+        return f"{self.rank} {self.last_name}, {self.first_name}, {self.middle_initial}".upper()
+
     def __repr__(self) -> str:
         return f"<User(id={self.id}, last_name={self.last_name}, first_name={self.first_name}, middle_initial={self.middle_initial}, grade={self.grade}, phone={self.phone}, role_id={self.role_id}, organization_id={self.organization_id})>"
 

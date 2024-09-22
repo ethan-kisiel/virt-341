@@ -56,7 +56,7 @@ def create_user(session, user_data: dict):
             first_name=user_data.get("first_name"),
             middle_initial=user_data.get("middle_initial"),
             last_name=user_data.get("last_name"),
-            phone=user_data.get("phone"),
+            phone=user_data.get("phone_number"),
         )
 
         session.add(user)

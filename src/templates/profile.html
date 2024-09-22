@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}USER PROFILE{% endblock %}</h1>
+  <h1>{% block title %}{{ user.qualified_name }}{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,7 @@
         <button type="button" class="btn btn-primary btn-sm">Student Profile</button>  <!-- Gray button added here -->
     </div>
     <div class="card-body">
-        <form id="updateUserAccountForm" method="POST" action="{{ url_for('profile') }}">
+        <form id="updateUserAccountForm" method="POST" action="#">
             {{ form.hidden_tag() }}
 
             <!-- First Name, Middle Initial, Last Name (User info) -->
@@ -95,9 +95,15 @@
 </div>
 
 <script>
-    function deleteUser()
+    async function deleteUser()
     {
+        const request = new Request("#", {
+        method: "DELETE",
+        });
 
+        await fetch(request).then(() => {
+            location.reload();
+        });
     }
 </script>
 
