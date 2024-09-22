@@ -48,11 +48,12 @@ def home():
 #     Renders the 341-form template with pre-filled student data
 #     """
 #     student = DatabaseManager.get_student(student_id)
-    
+
 #     if not student:
 #         return redirect(url_for("bp_student.home"))
 
 #     return render_template("341-form.html", student=student)
+
 
 @student_bp.route("/341form")
 @login_required
@@ -90,6 +91,7 @@ def generate_student_qr():
 
     return send_file(img_io, mimetype="image/png")
 
+
 # @student_bp.route("/<int:student_id>/generate-qr")
 # @login_required
 # def generate_student_qr(student_id: int):
@@ -118,8 +120,7 @@ def index():
     Return:
     Renders the 341-form template
     """
-    return redirect(url_for("profile"))
-
+    return redirect(url_for("bp_student.profile"))
 
 
 @student_bp.route("/profile")
@@ -140,7 +141,6 @@ def profile(student_id: int = None):
     student = None  # get the student from the db
 
     return render_template("profile.html", student=student)
-
 
 
 # @student_bp.route("/<int:student_id>/reports")

@@ -105,7 +105,6 @@ def login():
             if user is not None and user.countersign == pwd:
                 login_user(user)
                 return redirect(url_for("index"))
-            
 
     return render_template(
         "login.html", form=form, include_navbar=False
@@ -169,13 +168,18 @@ def profile(user_id=None):
     Return: return_description
     """
     # IF USER ID == NONE : USE CURRENT USER AS USER
-    account = current_user.user
+    if user_id is not None:
+        # account = DatabaseManager.get_user()
+        account = None
+        user = None
+    else:
+        account = current_user
+        user = current_user.user
 
-    account = None
-    user = None
+    roles = DatabaseManager.get_roles()
 
     return render_template(
-        "profile.html", account=account, user=user, include_navbar=True
+        "profile.html", account=account, user=user, roles=roles, include_navbar=True
     )
 
 

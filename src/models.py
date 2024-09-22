@@ -55,17 +55,8 @@ class Form341(Base):
         "Student", back_populates="form_341s", foreign_keys=[student_id]
     )
 
-
-def __init__(self, comment, place, datetime, reporting_individual_id, student_id):
-    self.comment = comment
-    self.place = place
-    self.datetime = datetime
-    self.reporting_individual_id = reporting_individual_id
-    self.student_id = student_id
-
-
-def __repr__(self):
-    return f"<form341(comment={self.comment}, place={self.place}, datetime={self.datetime}, reporting_individual_id={self.reporting_individual_id}, student_id={self.student_id})>"
+    def __repr__(self):
+        return f"<form341(comment={self.comment}, place={self.place}, datetime={self.datetime}, reporting_individual_id={self.reporting_individual_id}, student_id={self.student_id})>"
 
 
 class Student(Base):
@@ -89,15 +80,6 @@ class Student(Base):
 
     form_341s: Mapped["Form341"] = relationship("Form341", back_populates="student")
 
-    def __init__(
-        self, id, phase: int, class_flight: str, user_id: int, supervisor_id: int
-    ):
-        self.id = id
-        self.phase = phase
-        self.class_flight = class_flight
-        self.user_id = user_id
-        self.supervisor_id = supervisor_id
-
     def __repr__(self):
         return f"<Student(id={self.id}, phase={self.phase}, class_flight={self.class_flight}, user_id={self.user_id}, supervisor_id={self.supervisor_id})>"
 
@@ -112,12 +94,7 @@ class Role(Base):
     id: Mapped[int] = mapped_column(Integer(), primary_key=True)
 
     role_name: Mapped[str] = mapped_column(String(30), nullable=True, unique=True)
-    role_permission: Mapped[int] = mapped_column(Integer(), nullable=True, unique=True)
-
-    def __init__(self, id, role_name, role_permission):
-        self.id = id
-        self.role_name = role_name
-        self.role_permission = role_permission
+    role_permission: Mapped[int] = mapped_column(Integer(), nullable=True, unique=False)
 
     def __repr__(self):
         return f"<Role(id={self.id}, role_name={self.role_name}, role_permission={self.role_permission})>"
@@ -136,13 +113,8 @@ class Organization(Base):
 
     users: Mapped["User"] = relationship("User", back_populates="organization")
 
-    def __init__(self, id, name, organization_name):
-        self.id = id
-        self.name = name
-        self.organization_name = organization_name 
-
     def __repr__(self):
-        return f"<Organization(id={self.id}, name={self.name}, organization_name={self.organization_name}>"
+        return f"<Organization(id={self.id}, name={self.organization_name}, organization_name={self.organization_name}>"
 
 
 class User(Base):
@@ -164,11 +136,12 @@ class User(Base):
     role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"), nullable=True)
     role: Mapped["Role"] = relationship("Role")
 
-    organization_id: Mapped[int] = mapped_column(ForeignKey("organizations.id"), nullable=True)
+    organization_id: Mapped[int] = mapped_column(
+        ForeignKey("organizations.id"), nullable=True
+    )
     organization: Mapped["Organization"] = relationship(
         "Organization", back_populates="users"
     )
-
 
     def __repr__(self) -> str:
         return f"<User(id={self.id}, last_name={self.last_name}, first_name={self.first_name}, middle_initial={self.middle_initial}, grade={self.grade}, phone={self.phone}, role_id={self.role_id}, organization_id={self.organization_id})>"
@@ -188,10 +161,6 @@ class Account(Base, UserMixin):
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=True)
     user: Mapped["User"] = relationship("User")
-
-    def __init__(self, email, countersign):
-        self.countersign = countersign
-        self.email = email
 
     def __repr__(self) -> str:
         return f"<Account(email={self.email}, countersign={self.countersign})>"

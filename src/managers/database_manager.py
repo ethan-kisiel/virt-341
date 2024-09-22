@@ -13,6 +13,7 @@ from models import Base
 from models import Account
 from models import User
 from models import Student
+from models import Role
 from models import Form341
 
 
@@ -65,6 +66,32 @@ def create_user(session, user_data: dict):
 
     except ValueError:
 
+        print("Value error")
+    except Exception as e:
+        print(e)
+
+
+def create_role(session, role_data: dict):
+    """function that creates a user object on the session, given
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+    # change these
+    try:
+        role = Role(
+            role_name=role_data.get("role_name"),
+            role_permission=role_data.get("role_permission"),
+        )
+
+        session.add(role)
+
+        session.commit()
+
+        return role
+
+    except ValueError:
         print("Value error")
     except Exception as e:
         print(e)
@@ -149,6 +176,11 @@ class DatabaseManager:
         return cls.with_session(create_account, account_data)
 
     @classmethod
+    def add_role(cls, role_data: dict):
+        """adds a role object"""
+        return cls.with_session(create_role, role_data)
+
+    @classmethod
     def get_user(cls, pk: int) -> User | None:
         """sumary_line
 
@@ -169,7 +201,7 @@ class DatabaseManager:
 
         return cls.with_session(
             lambda session, email: session.query(Account)
-            .options(joinedload(Account.user))
+            .options(joinedload(Account.user).joinedload(User.role))
             .get(email),
             email,
         )
@@ -186,6 +218,17 @@ class DatabaseManager:
         return cls.with_session(lambda session, pk: session.get(Student, pk), pk)
 
     @classmethod
+    def get_roles(cls):
+        """Gets all roles
+
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+
+        return cls.with_session(lambda session: session.query(Role).all())
+
+    @classmethod
     def get_student_by_account(cls, email: str) -> Student | None:
         """
         Fetch a student by the account's email using the associated user.
@@ -194,8 +237,29 @@ class DatabaseManager:
         email -- the account's email address
         Return: Student object or None
         """
-        return cls.with_session(lambda session, email: session.query(Student)
+        return cls.with_session(
+            lambda session, email: session.query(Student)
             .join(User, Student.user_id == User.id)
             .join(Account, Account.user_id == User.id)
             .filter(Account.email == email)
-            .first(), email)
+            .first(),
+            email,
+        )
+
+    @classmethod
+    def get_student_by_user_id(cls, user_id: int) -> Student | None:
+        """
+        Fetch a student by the user id using the associated user.
+
+        Keyword arguments:
+        user_id -- the user's id
+        Return: Student object or None
+        """
+
+        return cls.with_session(
+            lambda session, user_id: session.query(Student)
+            .join(User, Student.user_id == User.id)
+            .filter(User.id == user_id)
+            .first(),
+            user_id,
+        )
