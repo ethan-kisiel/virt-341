@@ -96,10 +96,28 @@
                         <option value="red" class="phase-red">Phase V - Red Card</option>
                     </select>
                 </div>
-
-                <button type="submit" class="btn btn-success">Submit Profile</button>
-            </form>
+                <div class="row mt-3">
+                <div class="col-md-6 text-start">
+                    <form action="{{ url_for('bp_student.save_profile', student_id=student.id) }}" method="post">
+                        <input type="text" name="firstName" value="{{ student.user.first_name }}">
+                        <input type="text" name="lastName" value="{{ student.user.last_name }}">
+                        <input type="text" name="MiddleInitial" value="{{ student.user.middle_initial }}">
+                        <input type="text" name="Rank" value="{{ student.user.grade }}">
+                        <input type="text" name="ClassFlight" value="{{ student.user.ClassFlight }}">
+                        <input type="text" name="Organization" value="{{ student.user.Organization }}">
+                        <input type="text" name="MTL" value="{{ student.supervisor.first_name }} {{ student.supervisor.last_name }}">
+    
+                        <button type="submit">Save</button>
+                    </form>               
+                <div class="col-md-6 text-end">
+                    <form action="{{ url_for('bp_student.delete_profile', student_id=student.id) }}" method="post">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 {% endblock %}
+
+

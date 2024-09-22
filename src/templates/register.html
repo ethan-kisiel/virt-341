@@ -17,27 +17,30 @@
         </div>
 
         <div class="mb-3">
-            <label for="fname" class="form-label"><b>First Name</b></label>
-            {{ form.fname(class="form-control", placeholder="First Name") }}
-            {% if form.fname.errors %}
-                <div class="invalid-feedback">
-                    {% for error in form.fname.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
+            <div class="row">
+                <div class="col-md-8">
+                    <label for="fname" class="form-label"><b>First Name</b></label>
+                    {{ form.fname(class="form-control", placeholder="First Name") }}
+                    {% if form.fname.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.fname.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
-        </div>
-
-        <div class="mb-3">
-            <label for="mname" class="form-label"><b>Middle Name</b></label>
-            {{ form.mname(class="form-control", placeholder="Middle Name") }}
-            {% if form.mname.errors %}
-                <div class="invalid-feedback">
-                    {% for error in form.mname.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
+                <div class="col-md-4">
+                    <label for="mname" class="form-label"><b>Middle Initial</b></label>
+                    {{ form.mname(class="form-control", placeholder="Middle Initial") }}
+                    {% if form.mname.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.mname.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
+            </div>
         </div>
 
         <div class="mb-3">
@@ -58,6 +61,18 @@
             {% if form.email.errors %}
                 <div class="invalid-feedback">
                     {% for error in form.email.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="phone" class="form-label"><b>Phone Number</b></label>
+            {{ form.phone(class="form-control", placeholder="Enter Phone Number") }}
+            {% if form.phone.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.phone.errors %}
                         <p>{{ error }}</p>
                     {% endfor %}
                 </div>

@@ -12,17 +12,10 @@ from flask import render_template
 from flask import url_for
 from flask import redirect
 from flask import request
-from wtforms import StringField
-from wtforms import SubmitField
-from wtforms import PasswordField
-from wtforms.validators import DataRequired
-from wtforms.validators import EqualTo
-from wtforms.validators import Email
 from flask_wtf import FlaskForm
-from flask_login import UserMixin
-from flask_login import login_user
-from flask_login import LoginManager
+
 from flask_login import login_required
+from flask_login import login_user
 from flask_login import logout_user
 from flask_login import current_user
 
@@ -32,31 +25,39 @@ from blueprints.student.bp_student import student_bp
 from managers.config_manager import ConfigManager
 from managers.database_manager import DatabaseManager
 
+from forms import RegisterForm
+from forms import LoginForm
+
+
+from login_util import login_manager
+
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "ctrlaltelite"
-
-
-# create form class
-class RegisterForm(FlaskForm):
-    fname = StringField("First Name", validators=[DataRequired()])
-    mname = StringField("Middle Name", validators=[DataRequired()])
-    lname = StringField("Last Name", validators=[DataRequired()])
-    email = StringField("Email", validators=[DataRequired(), Email(message="Please enter a valid email address")])
-    pwd = PasswordField("Password", validators=[DataRequired(), EqualTo('confirm_pwd', message="Passwords must match")])
-    confirm_pwd = PasswordField("Repeat Password", validators=[DataRequired(), EqualTo('pwd', message="Passwords must match")])
-    submit = SubmitField("Submit")
 
 
 ## register blueprints:
 app.register_blueprint(organization_bp, url_prefix="/organization")
 app.register_blueprint(student_bp, url_prefix="/student")
 
+login_manager.init_app(app)  # init login manager
+
 # student/
 #       profile, 341, analytics,
 # student/<int: student_id>/
 
 
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    """
+    Unauthorized users will be sent to login screen
+    """
+
+    return redirect(url_for("login"))
+
+
 @app.route("/")
+@login_required
 def index():
     """Initial view
 
@@ -65,11 +66,21 @@ def index():
     Return: Template
     """
 
-    print(DatabaseManager.get_account("test_email@gmail.com"))
+    return redirect(url_for("profile"))
 
-    return render_template(
-        "index.html", include_navbar=True
-    )  # found in /src/templates/index.html
+
+@app.route("/logout")
+@login_required
+def logout():
+    """Logs out user
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+
+    logout_user()
+    return redirect(url_for("index"))
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -80,12 +91,27 @@ def login():
     argument -- description
     Return: Template
     """
+
+    form = LoginForm()
+    if request.method == "POST":
+        print(form.email.data)
+        print(form.pwd.data)
+        if form.validate_on_submit():
+            email = form.email.data
+            pwd = form.pwd.data
+
+            user = DatabaseManager.get_account(email)
+            print(pwd)
+            if user is not None and user.countersign == pwd:
+                login_user(user)
+                return redirect(url_for("index"))
+
     return render_template(
-        "login.html", include_navbar=True
+        "login.html", form=form, include_navbar=False
     )  # found in /src/templates/index.html
 
 
-@app.route("/register", methods=["GET","POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     """Initial view
 
@@ -93,29 +119,69 @@ def register():
     argument -- description
     Return: Template
     """
-
     form = RegisterForm()
 
     if request.method == "POST":
-        print(form.validate_on_submit())
-    if form.validate_on_submit():
+
+        print("Form Data:")
+        print(f"First Name: {form.fname.data}")
+        print(f"Middle Name: {form.mname.data}")
+        print(f"Last Name: {form.lname.data}")
+        print(f"Email: {form.email.data}")
+        print(f"Phone: {form.phone.data}")
+        print(f"Password: {form.pwd.data}")
+
         fname = form.fname.data
-        form.fname.data = ''
         mname = form.mname.data
-        form.mname.data = ''
         lname = form.lname.data
-        form.lname.data = ''
+        phone = form.phone.data
         email = form.email.data
-        form.email.data = ''
         pwd = form.pwd.data
-        form.pwd.data = ''
 
-        print(url_for('login'))
-        return redirect(url_for('login'))
+        new_user = {
+            "first_name": fname,
+            "middle_initial": mname,
+            "last_name": lname,
+            "phone_number": phone,
+        }
 
-    return render_template("register.html",
-                           form = form,
-                           include_navbar = True)  # found in /src/templates/index.html
+        user = DatabaseManager.add_user(new_user)
+
+        new_account = {"email": email, "countersign": pwd, "user_id": user.id}
+        DatabaseManager.add_account(new_account)
+        return redirect(url_for("login"))
+
+    return render_template(
+        "register.html", form=form, include_navbar=False
+    )  # found in /src/templates/index.html
+
+
+#### ROUTE FOR USER PROFILE
+@app.route("/profile")
+@app.route("/profile/<int:user_id>")
+@login_required
+def profile(user_id=None):
+    """user profile
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+
+    if user_id is not None:
+        account = None
+        user = None
+    else:
+        account = current_user
+        user = current_user.user
+
+
+    roles = DatabaseManager.get_roles()
+
+    return render_template(
+        "profile.html", account=account, user=user, roles=roles, include_navbar=True
+    )
+
 
 
 if __name__ == "__main__":
