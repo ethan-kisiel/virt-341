@@ -19,6 +19,8 @@ from flask_login import login_user
 from flask_login import logout_user
 from flask_login import current_user
 
+from constants import DISABLED_KWARGS
+
 from blueprints.organization.bp_organization import organization_bp
 from blueprints.student.bp_student import student_bp
 
@@ -27,6 +29,7 @@ from managers.database_manager import DatabaseManager
 
 from forms import RegisterForm
 from forms import LoginForm
+from forms import UserAccountForm
 
 
 from login_util import login_manager
@@ -157,8 +160,8 @@ def register():
 
 
 #### ROUTE FOR USER PROFILE
-@app.route("/profile")
-@app.route("/profile/<int:user_id>")
+@app.route("/profile", methods=["GET", "POST", "DELETE"])
+@app.route("/profile/<int:user_id>", methods=["GET", "POST", "DELETE"])
 @login_required
 def profile(user_id=None):
     """user profile
@@ -169,19 +172,68 @@ def profile(user_id=None):
     """
 
     if user_id is not None:
-        account = None
-        user = None
+        account = DatabaseManager.get_account_by_user_id(
+            user_id
+        )  # TODO Implement get account by user
+        user = account.user
     else:
         account = current_user
         user = current_user.user
 
+    if request.method == "DELETE":
+        DatabaseManager.remove_user(user.id, account.id)
+
+    form = UserAccountForm()
+
+    roles = DatabaseManager.get_roles()
+    organizations = DatabaseManager.get_organizations()
+
+    form.role.choices = [(role.id, role.role_name) for role in roles]
+    form.role.choices.insert(0, (None, "Unassigned"))
+    form.organization.choices = [
+        (organization.id, organization.organization_name)
+        for organization in organizations
+    ]
+
+    form.organization.choices.insert(0, (None, "Unassigned"))
+
+    if request.method == "GET":
+        form.first_name.data = user.first_name
+        form.middle_initial.data = user.middle_initial
+        form.last_name.data = user.last_name
+
+        form.email.data = account.email
+
+        form.phone.data = user.phone
+        form.rank.data = user.rank
+        form.role.data = user.role
+
+        form.organization.data = user.organization
+
+        if (
+            current_user.user.role is None
+            or current_user.user.role.role_permission not in [0, 1, 2]
+        ):
+            form.first_name.render_kw = DISABLED_KWARGS
+            form.middle_initial.render_kw = DISABLED_KWARGS
+            form.last_name.render_kw = DISABLED_KWARGS
+
+            form.email.render_kw = DISABLED_KWARGS
+            form.rank.render_kw = DISABLED_KWARGS
+            form.role.render_kw = DISABLED_KWARGS
+
+            form.organization.render_kw = DISABLED_KWARGS
 
     roles = DatabaseManager.get_roles()
 
     return render_template(
-        "profile.html", account=account, user=user, roles=roles, include_navbar=True
+        "profile.html",
+        account=account,
+        user=user,
+        roles=roles,
+        form=form,
+        include_navbar=True,
     )
-
 
 
 if __name__ == "__main__":

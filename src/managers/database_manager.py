@@ -72,6 +72,50 @@ def create_user(session, user_data: dict):
         print(e)
 
 
+def delete_user(session, user_id: int):
+    """function that deletes a user object on the session, given
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+    # change these
+    try:
+        user = session.get(User, user_id)
+
+        session.delete(user)
+
+        session.commit()
+
+    except ValueError:
+
+        print("Value error")
+    except Exception as e:
+        print(e)
+
+
+def delete_account(session, email: str):
+    """function that deletes an account  object on the session, given
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+    # change these
+    try:
+        user = session.get(Account, email)
+
+        session.delete(user)
+
+        session.commit()
+
+    except ValueError:
+
+        print("Value error")
+    except Exception as e:
+        print(e)
+
+
 def delete_organization(session, organization_id: int):
     """function that creates a user object on the session, given
 
@@ -94,8 +138,33 @@ def delete_organization(session, organization_id: int):
         print(e)
 
 
-def create_role(session, role_data: dict):
+def create_organization(session, organization_data: dict):
     """function that creates a user object on the session, given
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+    # change these
+    try:
+        organization = Organization(
+            organization_name=organization_data.get("organization_name"),
+        )
+
+        session.add(organization)
+
+        session.commit()
+
+        return organization
+
+    except ValueError:
+        print("Value error")
+    except Exception as e:
+        print(e)
+
+
+def create_role(session, role_data: dict):
+    """function that creates a role object on the session, given
 
     Keyword arguments:
     argument -- description
@@ -204,6 +273,12 @@ class DatabaseManager:
         return cls.with_session(create_role, role_data)
 
     @classmethod
+    def add_organization(cls, organization_data: dict):
+        """adds organization object"""
+
+        return cls.with_session(create_organization, organization_data)
+
+    @classmethod
     def get_user(cls, pk: int) -> User | None:
         """sumary_line
 
@@ -263,6 +338,27 @@ class DatabaseManager:
         """
 
         return cls.with_session(lambda session: session.query(Organization).all())
+
+    @classmethod
+    def get_account_by_user_id(cls, user_id: int):
+        """Gets an accont object based on a user id
+
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+
+        return cls.with_session(
+            lambda session, user_id: session.query(Account)
+            .options(
+                joinedload(Account.user).joinedload(User.role),
+                joinedload(Account.user).joinedload(User.organization),
+            )
+            .join(User, Account.user_id == User.id)
+            .filter(Account.user_id == user_id)
+            .first(),
+            user_id,
+        )
 
     @classmethod
     def get_student_by_account(cls, email: str) -> Student | None:
@@ -329,13 +425,17 @@ class DatabaseManager:
         #     return True
         # return False
 
-    def remove_user(self, user_id: dict):
+    @classmethod
+    def remove_user(cls, user_id: int, email: str):
         """sumary_line
 
         Keyword arguments:
         argument -- description
         Return: return_description
         """
+
+        cls.with_session(delete_account, email)
+        cls.with_session(delete_user, user_id)
 
     @classmethod
     def remove_organization(cls, organization_id: int):

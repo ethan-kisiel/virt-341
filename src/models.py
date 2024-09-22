@@ -27,6 +27,39 @@ class Base(DeclarativeBase):
     """
 
 
+class Role(Base):
+    """
+    Represents the role that a user might have
+    """
+
+    __tablename__ = "roles"
+
+    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
+
+    role_name: Mapped[str] = mapped_column(String(30), nullable=True, unique=True)
+    role_permission: Mapped[int] = mapped_column(Integer(), nullable=True, unique=False)
+
+    def __repr__(self):
+        return f"<Role(id={self.id}, role_name={self.role_name}, role_permission={self.role_permission})>"
+
+
+class Organization(Base):
+    """
+    Represents the organization which users can be assigned to
+    """
+
+    __tablename__ = "organizations"
+
+    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
+
+    organization_name: Mapped[str] = mapped_column(String(100), unique=True)
+
+    users: Mapped["User"] = relationship("User", back_populates="organization")
+
+    def __repr__(self):
+        return f"<Organization(id={self.id}, name={self.organization_name}, organization_name={self.organization_name}>"
+
+
 class Form341(Base):
     """
     Represents the 341 forms
@@ -72,6 +105,8 @@ class Student(Base):
 
     class_flight: Mapped[str] = mapped_column(String(30), nullable=True)
 
+    grade: Mapped[str] = mapped_column(String(3), nullable=True)
+
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     user: Mapped["User"] = relationship("User", foreign_keys=[user_id])
 
@@ -82,39 +117,6 @@ class Student(Base):
 
     def __repr__(self):
         return f"<Student(id={self.id}, phase={self.phase}, class_flight={self.class_flight}, user_id={self.user_id}, supervisor_id={self.supervisor_id})>"
-
-
-class Role(Base):
-    """
-    Represents the role that a user might have
-    """
-
-    __tablename__ = "roles"
-
-    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
-
-    role_name: Mapped[str] = mapped_column(String(30), nullable=True, unique=True)
-    role_permission: Mapped[int] = mapped_column(Integer(), nullable=True, unique=False)
-
-    def __repr__(self):
-        return f"<Role(id={self.id}, role_name={self.role_name}, role_permission={self.role_permission})>"
-
-
-class Organization(Base):
-    """
-    Represents the organization which users can be assigned to
-    """
-
-    __tablename__ = "organizations"
-
-    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
-
-    organization_name: Mapped[str] = mapped_column(String(100), unique=True)
-
-    users: Mapped["User"] = relationship("User", back_populates="organization")
-
-    def __repr__(self):
-        return f"<Organization(id={self.id}, name={self.organization_name}, organization_name={self.organization_name}>"
 
 
 class User(Base):
@@ -130,8 +132,7 @@ class User(Base):
     first_name: Mapped[str] = mapped_column(String(100))
     middle_initial: Mapped[str] = mapped_column(String(3), nullable=True)
 
-    rank:  Mapped[str] = mapped_column(String(4), nullable=True)
-    grade: Mapped[str] = mapped_column(String(3), nullable=True)
+    rank: Mapped[str] = mapped_column(String(4), nullable=True)
     phone: Mapped[str] = mapped_column(String(16), nullable=True)
 
     role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"), nullable=True)
