@@ -72,6 +72,28 @@ def create_user(session, user_data: dict):
         print(e)
 
 
+def delete_organization(session, organization_id: int):
+    """function that creates a user object on the session, given
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+    # change these
+    try:
+        organization = session.get(Organization, organization_id)
+
+        session.delete(organization)
+
+        session.commit()
+
+    except ValueError:
+
+        print("Value error")
+    except Exception as e:
+        print(e)
+
+
 def create_role(session, role_data: dict):
     """function that creates a user object on the session, given
 
@@ -202,7 +224,10 @@ class DatabaseManager:
 
         return cls.with_session(
             lambda session, email: session.query(Account)
-            .options(joinedload(Account.user).joinedload(User.role))
+            .options(
+                joinedload(Account.user).joinedload(User.role),
+                joinedload(Account.user).joinedload(User.organization),
+            )
             .get(email),
             email,
         )
@@ -250,6 +275,9 @@ class DatabaseManager:
         """
         return cls.with_session(
             lambda session, email: session.query(Student)
+            .options(
+                joinedload(Student.supervisor),
+            )
             .join(User, Student.user_id == User.id)
             .join(Account, Account.user_id == User.id)
             .filter(Account.email == email)
@@ -275,15 +303,47 @@ class DatabaseManager:
             user_id,
         )
 
-            .first(), email)
+    @classmethod
+    def update_user(cls, user_data: dict):
+        """update a user with a given user_data
 
-  
-    def update_student(self, student_id, updated_data):
-        student = self.get_student(student_id)
-        if student:
-            student.first_name = updated_data.get("first_name")
-            student.last_name = updated_data.get("last_name")
-            self.db.session.commit()
-            return True
-        return False
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
 
+    @classmethod
+    def update_student(cls, student_id, updated_data):
+        """Update student
+
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+
+        # student = self.get_student(student_id)
+        # if student:
+        #     student.first_name = updated_data.get("first_name")
+        #     student.last_name = updated_data.get("last_name")
+        #     self.db.session.commit()
+        #     return True
+        # return False
+
+    def remove_user(self, user_id: dict):
+        """sumary_line
+
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+
+    @classmethod
+    def remove_organization(cls, organization_id: int):
+        """sumary_line
+
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+
+        cls.with_session(delete_organization, organization_id)
