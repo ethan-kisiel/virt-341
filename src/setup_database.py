@@ -2,6 +2,7 @@
 Sets up the database to have necessary data for demonstrating the website
 """
 import json
+import os
 from managers.database_manager import DatabaseManager
 from managers.config_manager import ConfigManager
 
@@ -43,14 +44,23 @@ def main():
    
       
 
-with open('/mnt/data/user_data.json', 'r') as file:
-    user_data = json.load(file)["users"] 
-
-    for ud in user_data:
-        try:
-            DatabaseManager.add_user(ud)
-        except Exception as e:
-            pass
+    with open('src/user_data.json', 'r') as file:
+        user_data = json.loads(file.read())["users"] 
+        print(user_data)
+        for ud in user_data:
+            try:
+                DatabaseManager.add_user(ud)
+            except Exception as e:
+                pass
+            
+    with open('src/account_data.json', 'r') as file:
+        account_data = json.loads(file.read())["accounts"] 
+        print(account_data)
+        for ad in account_data:
+            try:
+                DatabaseManager.add_account(ad)
+            except Exception as e:
+                pass
 
 
 
