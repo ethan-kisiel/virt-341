@@ -76,7 +76,8 @@ class Form341(Base):
     comment: Mapped[str] = mapped_column(String(1000))
     place: Mapped[str] = mapped_column(String(120))
 
-    datetime: Mapped[dt] = mapped_column(DateTime)
+    date: Mapped[str] = mapped_column(String(50))
+    time: Mapped[int] = mapped_column(Integer())
 
     reporting_individual_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     reporting_individual: Mapped["User"] = relationship(

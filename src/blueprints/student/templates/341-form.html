@@ -20,7 +20,7 @@
         <!-- Form Title Section -->
         <div class="form-title">EXCELLENCE/DISCREPANCY REPORT</div>
 
-        <form method="POST" action="/submit">
+        <form method="POST" action="">
             {{ form.hidden_tag() }}
 
             <!-- Name and Grade (Read-only) -->
@@ -72,7 +72,7 @@
             <div class="form-row">
                 <div class="form-cell large">
                     <label for="reporting-name">PRINTED NAME OF REPORTING INDIVIDUAL</label>
-                    {{ form.reporting_name(class="form-control", id="reporting-name") }}
+                    {{ form.reporting_individual(class="form-control", id="reporting-name") }}
                 </div>
             </div>
             <div class="form-cell large">

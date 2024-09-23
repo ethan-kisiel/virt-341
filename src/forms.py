@@ -9,6 +9,8 @@ from wtforms import SubmitField
 from wtforms import PasswordField
 from wtforms import TextAreaField
 from wtforms import SelectField
+from wtforms import DateField
+from wtforms import IntegerField
 
 from wtforms.validators import DataRequired
 from wtforms.validators import EqualTo
@@ -148,7 +150,7 @@ class StudentProfileForm(FlaskForm):
     submit = SubmitField("Save")
 
 
-class Form341(FlaskForm):
+class Form341Form(FlaskForm):
 
     student_phase = StringField("Student Phase", render_kw={"readonly": True})
 
@@ -176,13 +178,14 @@ class Form341(FlaskForm):
     )
 
     # Time, Date, and Place section (editable)
-    time = StringField("Time", validators=[DataRequired()])
-    date = StringField("Date", validators=[DataRequired()])
+    time = IntegerField("Time", validators=[DataRequired()])
+    date = DateField("Date", validators=[DataRequired()])
     place = StringField("Place", validators=[Optional()])
 
-    # Reporting individual section (editable)
-    reporting_name = StringField(
-        "Printed Name of Reporting Individual", validators=[DataRequired()]
+    reporting_individual = SelectField(
+        "Reporting Individual",
+        choices=[],  # Example choices
+        validators=[Optional()],
     )
 
     # Signature field (editable)

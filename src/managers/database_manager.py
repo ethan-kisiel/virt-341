@@ -98,6 +98,37 @@ def create_user(session, user_data: dict):
         print(e)
 
 
+def create_341(session, obj_data: dict):
+    """function that creates a user object on the session, given
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+    # change these
+    try:
+        form341 = Form341(
+            comment=obj_data.get("comment"),
+            place=obj_data.get("place"),
+            date=obj_data.get("date"),
+            time=obj_data.get("time"),
+            reporting_individual_id=obj_data.get("reporting_individual"),
+            student_id=obj_data.get("student_id"),
+        )
+
+        session.add(form341)
+
+        session.commit()
+
+        return form341
+
+    except ValueError:
+
+        print("Value error")
+    except Exception as e:
+        print(e)
+
+
 def delete_user(session, user_id: int):
     """function that deletes a user object on the session, given
 
@@ -331,6 +362,10 @@ class DatabaseManager:
         return cls.with_session(create_organization, organization_data)
 
     @classmethod
+    def add_341(cls, obj_data: dict):
+        return cls.with_session(create_341, obj_data)
+
+    @classmethod
     def get_user(cls, pk: int) -> User | None:
         """sumary_line
 
@@ -368,7 +403,16 @@ class DatabaseManager:
         Return: return_description
         """
 
-        return cls.with_session(lambda session, pk: session.get(Student, pk), pk)
+        return cls.with_session(
+            lambda session, pk: session.query(Student)
+            .options(
+                joinedload(Student.user).joinedload(User.organization),
+                joinedload(Student.supervisor),
+            )
+            .filter(Student.id == pk)
+            .first(),
+            pk,
+        )
 
     @classmethod
     def get_roles(cls):
