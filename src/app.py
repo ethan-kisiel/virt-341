@@ -201,15 +201,14 @@ def profile(user_id=None):
 
     form.organization.choices.insert(0, (None, "Unassigned"))
 
-    if request.method == "GET":
-        user_student = DatabaseManager.get_student_by_user_id(user.id)
+    user_student = DatabaseManager.get_student_by_user_id(user.id)
 
-        if user_student is not None:
-            student_profile_url = url_for(
-                "bp_student.profile", student_id=user_student.id
-            )
-        else:
-            student_profile_url = None
+    if user_student is not None:
+        student_profile_url = url_for("bp_student.profile", student_id=user_student.id)
+    else:
+        student_profile_url = None
+
+    if request.method == "GET":
 
         print("GET")
         if user_id == current_user.user_id:
@@ -302,4 +301,4 @@ if __name__ == "__main__":
     # host = ConfigManager.config.ip
     # port = ConfigManager.config.port
 
-    app.run()  # TODO get control of host and port
+    app.run(host="10.1.72.126", port=8080)  # TODO get control of host and port
