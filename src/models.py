@@ -27,63 +27,6 @@ class Base(DeclarativeBase):
     """
 
 
-class Form341(Base):
-    """
-    Represents the 341 forms
-    """
-
-    __tablename__ = "form341s"
-
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-
-    # TODO: Add relationships for reporting authority and the student
-
-    # date_time: Mapped[dt] TODO: Figure out how to map a datetime
-
-    comment: Mapped[str] = mapped_column(String(1000))
-    place: Mapped[str] = mapped_column(String(120))
-
-    datetime: Mapped[dt] = mapped_column(DateTime)
-
-    reporting_individual_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    reporting_individual: Mapped["User"] = relationship(
-        "User", foreign_keys=[reporting_individual_id]
-    )
-
-    student_id: Mapped[int] = mapped_column(ForeignKey("students.id"))
-    student: Mapped["Student"] = relationship(
-        "Student", back_populates="form_341s", foreign_keys=[student_id]
-    )
-
-    def __repr__(self):
-        return f"<form341(comment={self.comment}, place={self.place}, datetime={self.datetime}, reporting_individual_id={self.reporting_individual_id}, student_id={self.student_id})>"
-
-
-class Student(Base):
-    """
-    Represents the organization which users can be assigned to
-    """
-
-    __tablename__ = "students"
-
-    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
-
-    phase: Mapped[int] = mapped_column(Integer(), default=0)
-
-    class_flight: Mapped[str] = mapped_column(String(30), nullable=True)
-
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    user: Mapped["User"] = relationship("User", foreign_keys=[user_id])
-
-    supervisor_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    supervisor: Mapped["User"] = relationship("User", foreign_keys=[supervisor_id])
-
-    form_341s: Mapped["Form341"] = relationship("Form341", back_populates="student")
-
-    def __repr__(self):
-        return f"<Student(id={self.id}, phase={self.phase}, class_flight={self.class_flight}, user_id={self.user_id}, supervisor_id={self.supervisor_id})>"
-
-
 class Role(Base):
     """
     Represents the role that a user might have
@@ -117,6 +60,72 @@ class Organization(Base):
         return f"<Organization(id={self.id}, name={self.organization_name}, organization_name={self.organization_name}>"
 
 
+class Form341(Base):
+    """
+    Represents the 341 forms
+    """
+
+    __tablename__ = "form341s"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+
+    # TODO: Add relationships for reporting authority and the student
+
+    # date_time: Mapped[dt] TODO: Figure out how to map a datetime
+
+    comment: Mapped[str] = mapped_column(String(1000))
+    place: Mapped[str] = mapped_column(String(120))
+
+    date: Mapped[str] = mapped_column(String(50))
+    time: Mapped[int] = mapped_column(Integer())
+
+    reporting_individual_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    reporting_individual: Mapped["User"] = relationship(
+        "User", foreign_keys=[reporting_individual_id]
+    )
+
+    student_id: Mapped[int] = mapped_column(ForeignKey("students.id"))
+    student: Mapped["Student"] = relationship(
+        "Student", back_populates="form_341s", foreign_keys=[student_id]
+    )
+
+    def __repr__(self):
+        return f"<form341(comment={self.comment}, place={self.place}, datetime={self.datetime}, reporting_individual_id={self.reporting_individual_id}, student_id={self.student_id})>"
+
+
+class Student(Base):
+    """
+    Represents the organization which users can be assigned to
+    """
+
+    __tablename__ = "students"
+
+    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
+
+    phase: Mapped[int] = mapped_column(Integer(), default=0)
+
+    class_flight: Mapped[str] = mapped_column(String(30), nullable=True)
+
+    grade: Mapped[str] = mapped_column(String(3), nullable=True)
+
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    user: Mapped["User"] = relationship("User", foreign_keys=[user_id])
+
+    supervisor_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=True)
+    supervisor: Mapped["User"] = relationship("User", foreign_keys=[supervisor_id])
+
+    form_341s: Mapped["Form341"] = relationship("Form341", back_populates="student")
+
+    def __repr__(self):
+        return f"<Student(id={self.id}, phase={self.phase}, class_flight={self.class_flight}, user_id={self.user_id}, supervisor_id={self.supervisor_id})>"
+
+    @classmethod
+    def has_341(cls, student_id: int) -> bool:
+        """Checks if a student has 341 in database"""
+        return cls.with_session(
+            lambda session, student_id: session.query(Form341).filter_by(student_id=student_id).count() > 0,
+            student_id,
+        )
 class User(Base):
     """
     Represents the base/core user
@@ -130,8 +139,7 @@ class User(Base):
     first_name: Mapped[str] = mapped_column(String(100))
     middle_initial: Mapped[str] = mapped_column(String(3), nullable=True)
 
-    rank:  Mapped[str] = mapped_column(String(4), nullable=True)
-    grade: Mapped[str] = mapped_column(String(3), nullable=True)
+    rank: Mapped[str] = mapped_column(String(4), nullable=True)
     phone: Mapped[str] = mapped_column(String(16), nullable=True)
 
     role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"), nullable=True)
@@ -143,6 +151,10 @@ class User(Base):
     organization: Mapped["Organization"] = relationship(
         "Organization", back_populates="users"
     )
+
+    @property
+    def qualified_name(self) -> str:
+        return f"{self.rank} {self.last_name}, {self.first_name}, {self.middle_initial}".upper()
 
     def __repr__(self) -> str:
         return f"<User(id={self.id}, last_name={self.last_name}, first_name={self.first_name}, middle_initial={self.middle_initial}, grade={self.grade}, phone={self.phone}, role_id={self.role_id}, organization_id={self.organization_id})>"

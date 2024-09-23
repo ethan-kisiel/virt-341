@@ -8,96 +8,79 @@
 
 
 {% block content %}
-<div class="container mt-4" id= "container-341">
-    <!-- Navigation Buttons -->
-    <div class="button-container d-flex justify-content-center mb-4">
-        <div class="button-box mx-2">
-            <a href="{{ url_for('bp_student.home') }}" class="btn btn-secondary w-100">Home</a>
-        </div>
-        <div class="button-box mx-2">
-            <a href="{{ url_for('bp_student.profile', student_id=1) }}" class="btn btn-primary w-100">Profile</a>
-        </div>
-        <div class="button-box mx-2">
-            <a href="{{ url_for('bp_student.reports', student_id=1) }}" class="btn btn-success w-100">Reports</a>
-        </div>
-    </div>
+<div class="container mt-4" id="container-341">
 
     <!-- Phase Information -->
-    <div class="phase-container mb-4">
-        <input type="text" id="studentPhase" class="form-control" placeholder="Student's Current Phase" readonly>
-    </div>
 
     <!-- Form Container -->
     <div class="form-container">
         <!-- Form Title Section -->
         <div class="form-title">EXCELLENCE/DISCREPANCY REPORT</div>
 
-        <!-- Name and Grade Input Section -->
-        <div class="form-row">
-            <!-- Input for Name -->
-            <div class="form-cell large">
-                <label for="name">LAST NAME - FIRST NAME - MIDDLE INITIAL</label>
-                <input type="text" id="name" class="form-control">
-            </div>
-            <!-- Input for Grade -->
-            <div class="form-cell small">
-                <label for="grade">GRADE</label>
-                <input type="text" id="grade" class="form-control">
-            </div>
-        </div>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
 
-        <!-- Organization and Class/Flight Input Section -->
-        <div class="form-row">
-            <!-- Input for Organization -->
-            <div class="form-cell large">
-                <label for="organization">ORGANIZATION</label>
-                <input type="text" id="organization" class="form-control">
+            <!-- Name and Grade (Read-only) -->
+            <div class="form-row">
+                <div class="form-cell large">
+                    <label for="name">LAST NAME - FIRST NAME - MIDDLE INITIAL</label>
+                    {{ form.name(class="form-control", id="name", readonly=True) }}
+                </div>
+                <div class="form-cell small">
+                    <label for="grade">GRADE</label>
+                    {{ form.grade(class="form-control", id="grade", readonly=True) }}
+                </div>
             </div>
-            <!-- Input for Class/Flight -->
-            <div class="form-cell small">
-                <label for="class-flight">CLASS/FLIGHT (If Applicable)</label>
-                <input type="text" id="class-flight" class="form-control">
-            </div>
-        </div>
 
-        <!-- Description of Excellence/Discrepancy Section -->
-        <div class="form-section">
-            <label for="excellence-discrepancy">EXCELLENCE/EXHIBITED DISCREPANCY (Be specific)</label>
-            <textarea id="excellence-discrepancy" class="form-control"></textarea>
-        </div>
+            <!-- Organization and Class/Flight (Read-only) -->
+            <div class="form-row">
+                <div class="form-cell large">
+                    <label for="organization">ORGANIZATION</label>
+                    {{ form.organization(class="form-control", id="organization", readonly=True) }}
+                </div>
+                <div class="form-cell small">
+                    <label for="class-flight">CLASS/FLIGHT (If Applicable)</label>
+                    {{ form.class_flight(class="form-control", id="class-flight", readonly=True) }}
+                </div>
+            </div>
 
-        <!-- Time, Date, and Place Input Section -->
-        <div class="form-row">
-            <!-- Input for Time -->
-            <div class="form-cell medium">
-                <label for="time">TIME</label>
-                <input type="text" id="time" class="form-control">
+            <!-- Editable Fields -->
+            <!-- Excellence/Discrepancy (Editable) -->
+            <div class="form-section">
+                <label for="excellence-discrepancy">EXCELLENCE/EXHIBITED DISCREPANCY (Be specific)</label>
+                {{ form.excellence_discrepancy(class="form-control", id="excellence-discrepancy") }}
             </div>
-            <!-- Input for Date -->
-            <div class="form-cell medium">
-                <label for="date">DATE</label>
-                <input type="text" id="date" class="form-control">
-            </div>
-            <!-- Input for Place -->
-            <div class="form-cell medium">
-                <label for="place">PLACE</label>
-                <input type="text" id="place" class="form-control">
-            </div>
-        </div>
 
-        <!-- Reporting Individual's Name and Signature Section -->
-        <div class="form-row">
-            <!-- Input for Reporting Individual's Name -->
-            <div class="form-cell large">
-                <label for="reporting-name">PRINTED NAME OF REPORTING INDIVIDUAL</label>
-                <input type="text" id="reporting-name" class="form-control">
+            <!-- Time, Date, Place, and Reporting Name (Editable) -->
+            <div class="form-row">
+                <div class="form-cell medium">
+                    <label for="time">TIME</label>
+                    {{ form.time(class="form-control", id="time") }}
+                </div>
+                <div class="form-cell medium">
+                    <label for="date">DATE</label>
+                    {{ form.date(class="form-control", id="date") }}
+                </div>
+                <div class="form-cell medium">
+                    <label for="place">PLACE</label>
+                    {{ form.place(class="form-control", id="place") }}
+                </div>
             </div>
-            <!-- Input for Signature -->
+            <div class="form-row">
+                <div class="form-cell large">
+                    <label for="reporting-name">PRINTED NAME OF REPORTING INDIVIDUAL</label>
+                    {{ form.reporting_individual(class="form-control", id="reporting-name") }}
+                </div>
+            </div>
             <div class="form-cell large">
                 <label for="signature">SIGNATURE OF REPORTING INDIVIDUAL</label>
-                <input type="text" id="signature" class="form-control">
+                {{ form.signature(class="form-control", id="signature") }}
             </div>
-        </div>
+            </div>
+
+            <br>
+            <button type="submit" class="btn btn-secondary">Sign</button>
+        </form>
 
         <!-- Footer for Document Information -->
         <div class="form-footer">

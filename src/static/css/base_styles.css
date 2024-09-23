@@ -9,3 +9,61 @@ nav {
     margin: 1%;
     padding: 1%;
 }
+
+/* Custom styling for the top navigation bar */
+.navbar-custom {
+    background-color: #006de2; /* Blue background */
+    color: white;
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px;
+}
+
+
+/* Make the navbar brand and links white */
+.navbar-custom .navbar-brand {
+    color: white;
+    margin-left: 20px; /* More space on the left for organization name */
+    font-size: 1.25rem;
+}
+
+/* Make the navigation links white */
+.navbar-custom .nav-link {
+    color: white;
+}
+
+/* Add hover effect for the navbar links */
+.navbar-custom .nav-link:hover {
+    color: #000000; /* Lighter color on hover */
+}
+
+/* Style for the navbar-toggler icon (for mobile) */
+.navbar-custom .navbar-toggler-icon {
+    filter: invert(1); /* Make the toggler icon white */
+}
+
+/* Round the corners for the collapsed menu (for mobile) */
+.navbar-custom .collapse {
+    border-radius: 8px;
+}
+
+body {
+    position: relative;
+    height: 100vh; /* Ensures the body takes the full viewport height */
+    margin: 0; /* Removes default margin */
+    overflow: auto; /* Prevents overflow from the overlay */
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("/static/images/airforce.jpg");
+    background-size: 50%; /* Adjust size as needed */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    opacity: 0.1; /* Adjust this value for more or less fade */
+    z-index: -1; /* Places the overlay behind the body content */
+}
