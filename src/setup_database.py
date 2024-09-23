@@ -1,7 +1,7 @@
 """
 Sets up the database to have necessary data for demonstrating the website
 """
-
+import json
 from managers.database_manager import DatabaseManager
 from managers.config_manager import ConfigManager
 
@@ -30,8 +30,8 @@ def main():
         {"role_name": "Admin", "role_permission": 0},
         {"role_name": "Flight Chief", "role_permission": 1},
         {"role_name": "MTL", "role_permission": 2},
-        {"role_name": "Instructor", "role_permission": 2},
-        {"role_name": "Student", "role_permission": 3},
+        {"role_name": "Instructor", "role_permission": 3},
+        {"role_name": "Student", "role_permission": 4},
     ]
 
     for rd in roles_data:
@@ -39,8 +39,22 @@ def main():
             DatabaseManager.add_role(rd)
         except Exception as e:
             pass
+    
+   
+      
+
+with open('/mnt/data/user_data.json', 'r') as file:
+    user_data = json.load(file)["users"] 
+
+    for ud in user_data:
+        try:
+            DatabaseManager.add_user(ud)
+        except Exception as e:
+            pass
 
 
+
+    
 if __name__ == "__main__":
 
     ConfigManager.load_config("config.ini")
