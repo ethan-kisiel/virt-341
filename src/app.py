@@ -254,14 +254,24 @@ def profile(user_id=None):
                 "role_id": int(form.role.data),
                 "organization_id": int(form.organization.data),
             }
-            
+            student_data = {
+                "id": user.id,
+                "phase": 1,
+                "class_flight": "Present",
+                "grade": "E-1",
+                "user_id": user.id,
+                "supervisor_id": 0
+            }
             # if the user doesn't have edit privelages
             if current_user.user.role.role_permission not in [0, 1, 2]:
                 user_data = {"phone": form.phone.data}
-            
-            DatabaseManager.update_user(user.id, user_data)
 
-            flash("Profile saved successfully!", "success")
+
+
+            DatabaseManager.update_user(user.id, user_data)
+            DatabaseManager.add_student(student_data)
+            
+
             
     roles = DatabaseManager.get_roles()
 
