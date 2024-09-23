@@ -80,7 +80,7 @@
             <!-- Submit and Delete buttons -->
             <div class="row mt-3">
                 <div class="col-md-6">
-                    <button type="submit" class="btn btn-success">{{ form.submit.label.text }}</button>
+                    <button type="submit" name="saveButton" class="btn btn-success">{{ form.submit.label.text }}</button>
                 </div>
                 <div class="col-md-6 text-end">
                     <button type="button" class="btn btn-danger" name="delete" value="delete" onclick="deleteUser()">{{ form.delete.label.text }}</button>
@@ -102,6 +102,15 @@
             location.reload();
         });
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+            const saveButton = document.querySelector('button[name="saveButton"]');
+            saveButton.addEventListener('click', function(event) {
+                event.preventDefault(); 
+                alert('Profile saved successfully!');
+                document.getElementById('updateUserAccountForm').submit();
+            });
+        });
 </script>
 
 {% endblock %}
