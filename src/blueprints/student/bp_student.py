@@ -59,42 +59,6 @@ def form341(student_id: int):
     return render_template("341-form.html", student=student, form=form)
 
 
-# @student_bp.route("/profile")
-# @student_bp.route("/profile/<int:student_id>")
-# @login_required
-# def profile(student_id: int = None):
-#     """Endpoint to render student profile page
-
-#         return redirect(url_for("bp_student.home"))
-
-#     Return:
-#     Renders the profile template for the student with the given ID
-#     """
-#     form = StudentProfileForm()
-
-#     if student_id is None:
-#         student = DatabaseManager.get_student_by_account(current_user.email)
-#         user = current_user.user
-#     else:
-#         student = DatabaseManager.get_student(student_id)
-#         user = student.user
-
-#     if not student and student_id is not None:
-#         return "404 Not found", 404  # if looking for nonexistent student, send 404
-#     elif not student:
-#         return redirect(
-#             url_for("profile")
-#         )  # if looking at own student profile, send to user profile
-
-#     return render_template(
-#         "student-profile.html",
-#         student=student,
-#         user=user,
-#         form=form,
-#         include_navbar=True,
-#     )
-
-
 @student_bp.route("/profile", methods=["GET", "POST", "DELETE"])
 @student_bp.route("/profile/<int:student_id>", methods=["GET", "POST", "DELETE"])
 @login_required
@@ -214,8 +178,9 @@ def generate_student_qr(student_id: int = None):
         return redirect(
             url_for("profile")
         )  # if looking at own student profile, send to user profile
-
-    qr_data_url = url_for("bp_student.form341", _external=True)
+    student_id = student_id or student.id 
+    
+    qr_data_url = url_for("bp_student.form341", student_id=student_id, _external=True)
     img_io = generate_qr_code(qr_data_url)
 
     return send_file(img_io, mimetype="image/png")

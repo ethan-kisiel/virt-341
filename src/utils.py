@@ -6,9 +6,6 @@ from io import BytesIO
 from segno import make
 
 
-# TODO: Give this function a second parameter for a save location,
-# that way, we can save it to the persistent folder from the database manager
-
 def generate_qr_code(data):
     """
     Generates a QR code for the given data (URL or text) and returns it as a binary PNG image.
