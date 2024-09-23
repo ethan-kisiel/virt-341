@@ -84,6 +84,8 @@ def form341(student_id: int):
         }
 
         DatabaseManager.add_341(form_341_data)
+        student.has_341 = True
+        DatabaseManager.update_student(student.id, {"has_341": True})
 
     return render_template("341-form.html", student=student, form=form)
 
@@ -231,7 +233,7 @@ def form_341():
     Keyword arguments:
     Return: Rendered form or handle form submission
     """
-    form = Form341()
+    form = Form341Form()
     student = DatabaseManager.get_student_by_account(current_user.email)
 
     if request.method == "GET":

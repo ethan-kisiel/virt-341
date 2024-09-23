@@ -639,3 +639,11 @@ class DatabaseManager:
     def remove_student(cls, student_id: int):
         """Removes a student by ID"""
         cls.with_session(delete_student, student_id)
+
+    @classmethod
+    def has_341(cls, student_id: int) -> bool:
+        """Checks if a student has 341 in database"""
+        return cls.with_session(
+            lambda session, student_id: session.query(Form341).filter_by(student_id=student_id).count() > 0,
+            student_id,
+        )
