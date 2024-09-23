@@ -16,7 +16,9 @@ from managers.database_manager import DatabaseManager
 from utils import generate_qr_code
 
 from forms import StudentProfileForm
-from forms import Form341
+from forms import Form341Form
+
+from constants import DISABLED_KWARGS
 
 student_bp = Blueprint(
     "bp_student", __name__, template_folder="templates", static_folder="static"
@@ -36,7 +38,7 @@ def index():
     return redirect(url_for("bp_student.profile"))
 
 
-@student_bp.route("/<int:student_id>/341form")
+@student_bp.route("/<int:student_id>/341form", methods=["GET", "POST"])
 @login_required
 def form341(student_id: int):
     """
@@ -46,15 +48,39 @@ def form341(student_id: int):
     Renders the 341-form template with pre-filled student data
     """
 
-    form = Form341()
-    student = DatabaseManager.get_student_by_account(current_user.email)
+    form = Form341Form()
+    student = DatabaseManager.get_student(student_id)
 
     if not student and student_id is not None:
         return "404 Not found", 404  # if looking for nonexistent student, send 404
+
     elif not student:
         return redirect(
             url_for("profile")
         )  # if looking at own student profile, send to user profile
+
+    if request.method == "GET":
+        form.student_phase.data = f"{student.phase}"
+        form.name.data = f"{student.user.last_name}, {student.user.first_name}, {student.user.middle_initial}"
+        form.grade.data = f"{student.grade}"
+        form.organization.data = student.user.organization.organization_name
+        form.class_flight.data = student.class_flight
+    else:
+        # POST STUFF
+
+        if current_user.user.role.role_permission == 5:
+            return "FORBIDDEN", 403
+
+        form_341_data = {
+            "comment": form.excellence_discrepancy.data,
+            "place": form.place.data,
+            "date": form.date.data,
+            "time": form.time.data,
+            "reporting_individual": form.reporting_individual.data,
+            "student_id": student.id,
+        }
+
+        DatabaseManager.add_341(form_341_data)
 
     return render_template("341-form.html", student=student, form=form)
 
@@ -130,18 +156,17 @@ def profile(student_id=None):
 
         if current_user.user.role.role_permission not in [0, 1, 2]:
 
-            form.first_name.render_kw = {"disabled": True}
-            form.middle_initial.render_kw = {"disabled": True}
-            form.last_name.render_kw = {"disabled": True}
+            form.first_name.render_kw = DISABLED_KWARGS
+            form.middle_initial.render_kw = DISABLED_KWARGS
+            form.last_name.render_kw = DISABLED_KWARGS
+            form.rank.render_kw = DISABLED_KWARGS
+            form.organization.render_kw = DISABLED_KWARGS
 
-            form.rank.render_kw = {"disabled": True}
-            form.organization.render_kw = {"disabled": True}
+            form.class_flight.render_kw = DISABLED_KWARGS
 
-            form.class_flight.render_kw = {"disabled": True}
-
-            form.pay_grade.render_kw = {"disabled": True}
-            form.current_mtl.render_kw = {"disabled": True}
-            form.student_phase.render_kw = {"disabled": True}
+            form.pay_grade.render_kw = DISABLED_KWARGS
+            form.current_mtl.render_kw = DISABLED_KWARGS
+            form.student_phase.render_kw = DISABLED_KWARGS
     elif request.method == "POST":
         print("POST")
         if form.validate_on_submit():

@@ -9,6 +9,8 @@ from wtforms import SubmitField
 from wtforms import PasswordField
 from wtforms import TextAreaField
 from wtforms import SelectField
+from wtforms import DateField
+from wtforms import IntegerField
 
 from wtforms.validators import DataRequired
 from wtforms.validators import EqualTo
@@ -148,36 +150,48 @@ class StudentProfileForm(FlaskForm):
     submit = SubmitField("Save")
 
 
-class Form341(FlaskForm):
+class Form341Form(FlaskForm):
 
     student_phase = StringField("Student Phase", render_kw={"readonly": True})
 
-    # Name and Grade section
+    # Name and Grade section (read-only)
     name = StringField(
-        "Last Name - First Name - Middle Initial", validators=[DataRequired()]
+        "Last Name - First Name - Middle Initial",
+        validators=[DataRequired()],
+        render_kw={"readonly": True},
     )
-    grade = StringField("Grade", validators=[DataRequired()])
+    grade = StringField(
+        "Grade", validators=[DataRequired()], render_kw={"readonly": True}
+    )
 
-    # Organization and Class/Flight section
-    organization = StringField("Organization", validators=[Optional()])
-    class_flight = StringField("Class/Flight", validators=[Optional()])
+    # Organization and Class/Flight section (read-only)
+    organization = StringField(
+        "Organization", validators=[Optional()], render_kw={"readonly": True}
+    )
+    class_flight = StringField(
+        "Class/Flight", validators=[Optional()], render_kw={"readonly": True}
+    )
 
-    # Excellence/Discrepancy section
+    # Excellence/Discrepancy section (editable)
     excellence_discrepancy = TextAreaField(
         "Excellence/Exhibited Discrepancy (Be specific)", validators=[DataRequired()]
     )
 
-    # Time, Date, and Place section
-    time = StringField("Time", validators=[DataRequired()])
-    date = StringField("Date", validators=[DataRequired()])
+    # Time, Date, and Place section (editable)
+    time = IntegerField("Time", validators=[DataRequired()])
+    date = DateField("Date", validators=[DataRequired()])
     place = StringField("Place", validators=[Optional()])
 
-    # Reporting individual section
-    reporting_name = StringField(
-        "Printed Name of Reporting Individual", validators=[DataRequired()]
+    reporting_individual = SelectField(
+        "Reporting Individual",
+        choices=[],  # Example choices
+        validators=[Optional()],
     )
+
+    # Signature field (editable)
     signature = StringField(
-        "Signature of Reporting Individual", validators=[Optional()]
+        "Signature of Reporting Individual",
+        validators=[DataRequired()],  # Updated to make it required and editable
     )
 
     # Submit button
