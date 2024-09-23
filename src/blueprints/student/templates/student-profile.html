@@ -9,7 +9,10 @@
 {% block content %}
 <div class="container mt-5">
     <div class="card mb-4">
-        <div class="card-header bg-primary text-white">Student Profile</div>
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <span>Student Profile</span>
+                <a type="button" class="btn btn-primary btn-sm" href="{{ user_profile_url }}">User Profile</a>  <!-- Gray button added here -->
+            </div>
         <div class="card-body">
             <form id="addStudentProfileForm" method="POST" action="">
                 {{ form.hidden_tag() }}
