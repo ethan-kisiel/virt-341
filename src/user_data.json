@@ -94,8 +94,8 @@
         {"last_name": "Allen", "first_name": "Sophia", "middle_initial": "K", "rank": "SSgt", "phone": "555-0304", "role_id": 4, "organization_id": 1},
         {"last_name": "Young", "first_name": "Ethan", "middle_initial": "L", "rank": "TSgt", "phone": "555-0305", "role_id": 4, "organization_id": 1},
         {"last_name": "King", "first_name": "Mia", "middle_initial": "M", "rank": "MSgt", "phone": "555-0400", "role_id": 2, "organization_id": 2},
-        {"last_name": "Wright", "first_name": "Alexander", "middle_initial": "N", "rank": "MSgt", "phone": "555-0401", "role_id": 2, "organization_id": 2}
-
+        {"last_name": "Wright", "first_name": "Alexander", "middle_initial": "N", "rank": "MSgt", "phone": "555-0401", "role_id": 2, "organization_id": 2},
+        {"last_name": "Jones", "first_name": "Skyler", "middle_initial": "H", "rank": "TSgt", "phone": null, "role_id": 1, "organization_id": 1}
     ]
 }
       

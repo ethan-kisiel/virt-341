@@ -15,6 +15,7 @@
             "email": "joshua.semrock@us.af.mil",
             "countersign": "pass"
         },
+
         {
             "user_id": 4,
             "email": "john.smith@us.af.mil",
@@ -464,6 +465,12 @@
             "user_id": 93,
             "email": "alexander.wright@us.af.mil",
             "countersign": "pass"
+        },
+        {
+            "user_id": 94,
+            "email": "skyler.jones@us.af.mil",
+            "countersign": "pass"
         }
+        
     ]
 }
