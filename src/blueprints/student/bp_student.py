@@ -51,6 +51,9 @@ def form341(student_id: int):
     form = Form341Form()
     student = DatabaseManager.get_student(student_id)
 
+    mtls = DatabaseManager.get_mtls()
+    form.reporting_individual.choices = [(mtl.id, mtl.qualified_name) for mtl in mtls]
+
     if not student and student_id is not None:
         return "404 Not found", 404  # if looking for nonexistent student, send 404
 
@@ -136,7 +139,7 @@ def profile(student_id=None):
             current_user.email
         )
         # on get request populate form with existing data
-        if student_id == current_user_student.id:
+        if current_user_student is not None and student_id == current_user_student.id:
             return redirect(url_for("bp_student.profile"))
 
         form.first_name.data = user.first_name
@@ -152,7 +155,6 @@ def profile(student_id=None):
         form.current_mtl.data = str(student.supervisor_id)
 
         form.student_phase.data = str(student.phase)
-
 
         if current_user.user.role.role_permission not in [0, 1, 2]:
 
@@ -189,7 +191,7 @@ def profile(student_id=None):
         user=user,
         form=form,
         include_navbar=True,
-        show_save_button= current_user.user.role.role_permission != 3 
+        show_save_button=current_user.user.role.role_permission != 3,
     )
 
 
