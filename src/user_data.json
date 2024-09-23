@@ -96,6 +96,6 @@
         {"last_name": "King", "first_name": "Mia", "middle_initial": "M", "rank": "MSgt", "phone": "555-0400", "role_id": 2, "organization_id": 2},
         {"last_name": "Wright", "first_name": "Alexander", "middle_initial": "N", "rank": "MSgt", "phone": "555-0401", "role_id": 2, "organization_id": 2}
 
-
     ]
 }
+      

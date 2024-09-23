@@ -231,7 +231,7 @@ def form_341():
     Keyword arguments:
     Return: Rendered form or handle form submission
     """
-    form = Form341()
+    form = Form341Form()
     student = DatabaseManager.get_student_by_account(current_user.email)
 
     if request.method == "GET":
