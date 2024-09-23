@@ -9,3 +9,38 @@ nav {
     margin: 1%;
     padding: 1%;
 }
+
+/* Custom styling for the top navigation bar */
+.navbar-custom {
+    background-color: #006de2; /* Blue background */
+    color: white;
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px;
+}
+
+/* Make the navbar brand and links white */
+.navbar-custom .navbar-brand {
+    color: white;
+    margin-left: 20px; /* More space on the left for organization name */
+    font-size: 1.25rem;
+}
+
+/* Make the navigation links white */
+.navbar-custom .nav-link {
+    color: white;
+}
+
+/* Add hover effect for the navbar links */
+.navbar-custom .nav-link:hover {
+    color: #dcdcdc; /* Lighter color on hover */
+}
+
+/* Style for the navbar-toggler icon (for mobile) */
+.navbar-custom .navbar-toggler-icon {
+    filter: invert(1); /* Make the toggler icon white */
+}
+
+/* Round the corners for the collapsed menu (for mobile) */
+.navbar-custom .collapse {
+    border-radius: 8px;
+}

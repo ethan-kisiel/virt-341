@@ -13,38 +13,39 @@
 
       <body>
         {% if include_navbar %}
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              <a class="navbar-brand" href="#">{% if current_user.user.organization %}{{ current_user.user.organization.organization_name }}{% endif %}</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto">
+        <nav class="navbar navbar-expand-lg navbar-custom">
+          <a class="navbar-brand" href="#">{% if current_user.user.organization %}{{ current_user.user.organization.organization_name }}{% endif %}</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto">
                   {% if current_user %}
                   <li class="nav-item">
-                    <a class="nav-link" href="#">{{ current_user.user.first_name }} {{ current_user.user.middle_initial }} {{ current_user.user.last_name }}</a>
+                      <a class="nav-link" href="#">{{ current_user.user.first_name }} {{ current_user.user.middle_initial }} {{ current_user.user.last_name }}</a>
                   </li>
                   {% endif %}
-
+      
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+                      <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('bp_student.profile') }}">Student Profile</a>
+                      <a class="nav-link" href="{{ url_for('bp_student.profile') }}">Student Profile</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('bp_student.generate_student_qr') }}">QR Code</a>
+                      <a class="nav-link" href="{{ url_for('bp_student.generate_student_qr') }}">QR Code</a>
                   </li>
-                </ul>
-
-                <ul class="navbar-nav ms-auto">
+              </ul>
+      
+              <ul class="navbar-nav ms-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                      <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                   </li>
-                </ul>
-            </div>
-          </nav>
+              </ul>
+          </div>
+      </nav>
+      
         {% endif %}
 
         <section class="content">
