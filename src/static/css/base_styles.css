@@ -18,6 +18,7 @@ nav {
     padding: 10px;
 }
 
+
 /* Make the navbar brand and links white */
 .navbar-custom .navbar-brand {
     color: white;
@@ -49,7 +50,7 @@ body {
     position: relative;
     height: 100vh; /* Ensures the body takes the full viewport height */
     margin: 0; /* Removes default margin */
-    overflow: hidden; /* Prevents overflow from the overlay */
+    overflow: auto; /* Prevents overflow from the overlay */
 }
 
 body::before {
