@@ -215,6 +215,28 @@ def create_role(session, role_data: dict):
         print(e)
 
 
+def delete_student(session, student_id: int):
+    """Deletes a student object by student_id
+
+    Keyword arguments:
+    student_id -- the ID of the student to be deleted
+    Return: None
+    """
+    try:
+        student = session.get(Student, student_id)
+
+        if student:
+            session.delete(student)
+            session.commit()
+        else:
+            raise ValueError("Student not found")
+
+    except ValueError as e:
+        print(e)
+    except Exception as e:
+        print(e)
+
+
 class DatabaseManager:
     """
     Handles database interactions
@@ -359,6 +381,21 @@ class DatabaseManager:
         return cls.with_session(lambda session: session.query(Role).all())
 
     @classmethod
+    def get_mtls(cls):
+        """sumary_line
+
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+        return cls.with_session(
+            lambda session: session.query(User)
+            .join(Role)
+            .filter(Role.role_permission == 3)
+            .all()
+        )
+
+    @classmethod
     def get_organizations(cls):
         """sumary_line
 
@@ -431,6 +468,21 @@ class DatabaseManager:
         )
 
     @classmethod
+    def get_student_phase(cls, student_id: int) -> str | None:
+        """Fetch a student's phase by the student's ID.
+
+        Keyword arguments:
+        student_id -- the student's ID
+        Return: the student's phase as a string, or None if not found
+        """
+        return cls.with_session(
+            lambda session, student_id: session.query(Student.phase)
+            .filter(Student.id == student_id)
+            .scalar(),
+            student_id,
+        )
+
+    @classmethod
     def update_user(cls, user_id: int, user_data: dict):
         """update a user with a given user_data
 
@@ -480,3 +532,8 @@ class DatabaseManager:
         """
 
         cls.with_session(delete_organization, organization_id)
+
+    @classmethod
+    def remove_student(cls, student_id: int):
+        """Removes a student by ID"""
+        cls.with_session(delete_student, student_id)
