@@ -112,9 +112,11 @@ class StudentProfileForm(FlaskForm):
         "Organization", validators=[Optional()], render_kw={"disabled": True}
     )
 
-    rank = StringField("Rank", validators=[DataRequired()])
+    rank = StringField("Rank", validators=[Optional()], render_kw={"disabled": True})
 
-    pay_grade = StringField("Pay Grade", validators=[DataRequired()])
+    pay_grade = StringField(
+        "Pay Grade", validators=[Optional()], render_kw={"disabled": True}
+    )
 
     current_mtl = SelectField(
         "MTL",
@@ -126,18 +128,17 @@ class StudentProfileForm(FlaskForm):
         "Current Phase",
         choices=[
             ("", "Select student phase"),  # Placeholder for default select option
-            ("0", "Phase I - Green Card"),
-            ("1", "Phase II - White Card"),
-            ("2", "Phase III - Yellow Card"),
-            ("3", "Phase IV - Blue Card"),
-            ("4", "Phase V - Red Card"),
+            (0, "Phase I - Green Card"),
+            (1, "Phase II - White Card"),
+            (2, "Phase III - Yellow Card"),
+            (3, "Phase IV - Blue Card"),
+            (4, "Phase V - Red Card"),
         ],
         validators=[Optional()],
         coerce=str,
     )
 
     submit = SubmitField("Save")
-    delete = SubmitField("Delete")
 
 
 class Form341(FlaskForm):

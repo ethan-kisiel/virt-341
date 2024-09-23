@@ -59,42 +59,6 @@ def form341(student_id: int):
     return render_template("341-form.html", student=student, form=form)
 
 
-# @student_bp.route("/profile")
-# @student_bp.route("/profile/<int:student_id>")
-# @login_required
-# def profile(student_id: int = None):
-#     """Endpoint to render student profile page
-
-#         return redirect(url_for("bp_student.home"))
-
-#     Return:
-#     Renders the profile template for the student with the given ID
-#     """
-#     form = StudentProfileForm()
-
-#     if student_id is None:
-#         student = DatabaseManager.get_student_by_account(current_user.email)
-#         user = current_user.user
-#     else:
-#         student = DatabaseManager.get_student(student_id)
-#         user = student.user
-
-#     if not student and student_id is not None:
-#         return "404 Not found", 404  # if looking for nonexistent student, send 404
-#     elif not student:
-#         return redirect(
-#             url_for("profile")
-#         )  # if looking at own student profile, send to user profile
-
-#     return render_template(
-#         "student-profile.html",
-#         student=student,
-#         user=user,
-#         form=form,
-#         include_navbar=True,
-#     )
-
-
 @student_bp.route("/profile", methods=["GET", "POST", "DELETE"])
 @student_bp.route("/profile/<int:student_id>", methods=["GET", "POST", "DELETE"])
 @login_required
@@ -109,18 +73,18 @@ def profile(student_id=None):
 
     if student_id is not None:
         try:
+            # this endpoint is the current user looking at someone elses profile
             student = DatabaseManager.get_student(student_id)
             user = student.user
-            account = DatabaseManager.get_account_by_user_id(user.id)
         except AttributeError:
             return "404 Not found.", 404
     else:
+        # this endpoint is the current user looking at their student profile
         student = DatabaseManager.get_student_by_account(current_user.email)
         if not student:
             return "404 Not found.", 404
 
         user = student.user
-        account = current_user
 
     if request.method == "DELETE":
         DatabaseManager.delete_student(student.id)
@@ -128,17 +92,19 @@ def profile(student_id=None):
 
     form = StudentProfileForm()
 
+    mtls = DatabaseManager.get_mtls()
+
+    form.current_mtl.choices = [(mtl.id, mtl.qualified_name) for mtl in mtls]
+
+    organizations = DatabaseManager.get_organizations()
+
+    form.organization.choices = [  # populating the organization dropdown
+        (organization.id, organization.organization_name)
+        for organization in organizations
+    ]
+
     if request.method == "GET":
-
-        mtls = DatabaseManager.get_mtls()
-        form.current_mtl.choices = [(mtl.id, mtl.qualified_name) for mtl in mtls]
-
-        organizations = DatabaseManager.get_organizations()
-
-        form.organization.choices = [
-            (organization.id, organization.organization_name)
-            for organization in organizations
-        ]
+        print("GET")
 
         current_user_student = DatabaseManager.get_student_by_account(
             current_user.email
@@ -159,6 +125,8 @@ def profile(student_id=None):
 
         form.current_mtl.data = str(student.supervisor_id)
 
+        form.student_phase.data = str(student.phase)
+
         if current_user.user.role.role_permission in [0, 1, 2]:
             form.first_name.render_kw = {"disabled": True}
             form.middle_initial.render_kw = {"disabled": True}
@@ -168,16 +136,18 @@ def profile(student_id=None):
             form.organization.render_kw = {"disabled": True}
 
     elif request.method == "POST":
+        print("POST")
         if form.validate_on_submit():
+            print("form is valid")
             student_data = {
                 "rank": form.rank.data,
                 "class_flight": form.class_flight.data,
-                "supervisor_id": form.current_mtl.data,
-                "phase": form.student_phase.data,
+                "supervisor_id": int(form.current_mtl.data),
+                "phase": int(form.student_phase.data),
             }
 
-            if current_user.user.role_id not in [0, 1, 2]:
-                student_data = {"phone_number": form.phone_number.data}
+            if current_user.user.role.role_permission not in [0, 1, 2]:
+                student_data = {}
 
             DatabaseManager.update_student(student.id, student_data)
 
@@ -208,8 +178,9 @@ def generate_student_qr(student_id: int = None):
         return redirect(
             url_for("profile")
         )  # if looking at own student profile, send to user profile
-
-    qr_data_url = url_for("bp_student.form341", _external=True)
+    student_id = student_id or student.id 
+    
+    qr_data_url = url_for("bp_student.form341", student_id=student_id, _external=True)
     img_io = generate_qr_code(qr_data_url)
 
     return send_file(img_io, mimetype="image/png")
