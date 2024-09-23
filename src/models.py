@@ -119,7 +119,13 @@ class Student(Base):
     def __repr__(self):
         return f"<Student(id={self.id}, phase={self.phase}, class_flight={self.class_flight}, user_id={self.user_id}, supervisor_id={self.supervisor_id})>"
 
-
+    @classmethod
+    def has_341(cls, student_id: int) -> bool:
+        """Checks if a student has 341 in database"""
+        return cls.with_session(
+            lambda session, student_id: session.query(Form341).filter_by(student_id=student_id).count() > 0,
+            student_id,
+        )
 class User(Base):
     """
     Represents the base/core user

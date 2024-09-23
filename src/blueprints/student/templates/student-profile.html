@@ -90,33 +90,23 @@
             </form>
         </div>
     </div>
-    {% if student.has_341_form %}
+    {% if student.has_341 %}
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">341 Form Comments</div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="comments">Comments</label>
-                        {{ form.comments(class="form-control", id="comments") }}
-                    </div>
-                    <div class="form-group">
-                        <label for="datetime">Date and Time</label>
-                        {{ form.datetime(class="form-control", id="datetime") }}
-                    </div>
-                    <div class="form-group">
-                        <label for="location">Location</label>
-                        {{ form.location(class="form-control", id="location") }}
-                    </div>
-                    <div class="form-group">
-                        <label for="reporting_individual">Reporting Individual</label>
-                        {{ form.reporting_individual(class="form-control", id="reporting_individual") }}
-                    </div>
+                    <p>Comments: {{ student.comments }}</p>
+                    <p>Date and Time: {{ student.datetime }}</p>
+                    <p>Location: {{ student.location }}</p>
+                    <p>Reporting Individual: {{ student.reporting_individual }}</p>
                 </div>
             </div>
         </div>
     </div>
-    {% endif %}
+{% else %}
+    <p>No 341s to display</p>
+{% endif %}
 </div>
 {% endblock %}
 

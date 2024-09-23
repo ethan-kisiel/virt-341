@@ -83,6 +83,8 @@ def form341(student_id: int):
         }
 
         DatabaseManager.add_341(form_341_data)
+        student.has_341 = True
+        DatabaseManager.update_student(student.id, {"has_341": True})
 
     return render_template("341-form.html", student=student, form=form)
 
