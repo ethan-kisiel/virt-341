@@ -135,6 +135,7 @@ def profile(student_id=None):
     if request.method == "GET":
         print("GET")
 
+        user_profile_url = url_for("profile", user_id=user.id)
         current_user_student = DatabaseManager.get_student_by_account(
             current_user.email
         )
@@ -192,6 +193,7 @@ def profile(student_id=None):
         form=form,
         include_navbar=True,
         show_save_button=current_user.user.role.role_permission != 3,
+        user_profile_url=user_profile_url,
     )
 
 
@@ -231,7 +233,7 @@ def form_341():
     Keyword arguments:
     Return: Rendered form or handle form submission
     """
-    form = Form341()
+    form = Form341Form()
     student = DatabaseManager.get_student_by_account(current_user.email)
 
     if request.method == "GET":
