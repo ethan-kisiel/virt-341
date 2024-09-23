@@ -11,7 +11,7 @@
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">Student Profile</div>
         <div class="card-body">
-            <form id="addStudentProfileForm" method="POST" action="/submit">
+            <form id="addStudentProfileForm" method="POST" action="">
                 {{ form.hidden_tag() }}
 
                 <div class="row">
@@ -79,7 +79,11 @@
                     {{ form.student_phase(class="form-control", id="studentPhase", onchange="this.className = 'form-control ' + this.options[this.selectedIndex].className;") }}
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                {% if current_user.user.role.role_permission in [0, 1, 2] %}
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-success">{{ form.submit.label.text }}</button>
+                </div>
+                {% endif %}
             </form>
         </div>
     </div>

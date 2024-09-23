@@ -4,11 +4,24 @@
 {% block content %}
 <div class="container mt-5">
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="container mt-3">
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
 <!-- Form for updating user and account information -->
 <div class="card mb-4">
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
         <span>Account & User Information</span>
-        <button type="button" class="btn btn-primary btn-sm">Student Profile</button>  <!-- Gray button added here -->
+            <a type="button" class="btn btn-primary btn-sm" href="{{ url_for ('bp_student.profile')}}">Student Profile</a>  <!-- Gray button added here -->
     </div>
     <div class="card-body">
         <form id="updateUserAccountForm" method="POST" action="#">
@@ -80,7 +93,7 @@
             <!-- Submit and Delete buttons -->
             <div class="row mt-3">
                 <div class="col-md-6">
-                    <button type="submit" class="btn btn-success">{{ form.submit.label.text }}</button>
+                    <button type="submit" name="saveButton" class="btn btn-success">{{ form.submit.label.text }}</button>
                 </div>
                 <div class="col-md-6 text-end">
                     <button type="button" class="btn btn-danger" name="delete" value="delete" onclick="deleteUser()">{{ form.delete.label.text }}</button>
@@ -102,6 +115,15 @@
             location.reload();
         });
     }
+        // Auto-hide flashed messages after 5 seconds
+        setTimeout(function() {
+        let alertElements = document.querySelectorAll('.alert');
+        alertElements.forEach(function(alert) {
+            let alertInstance = new bootstrap.Alert(alert);
+            alertInstance.close();
+        });
+    }, 3000); // 3000ms = 3 seconds
+
 </script>
 
 {% endblock %}

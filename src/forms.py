@@ -95,45 +95,57 @@ class UserAccountForm(FlaskForm):
 class StudentProfileForm(FlaskForm):
 
     first_name = StringField(
-        "First Name", validators=[Optional()], render_kw={"disabled": True}
+        "First Name",
+        validators=[Optional()],  # render_kw={"disabled": True}
     )
     middle_initial = StringField(
         "Middle Initial",
         validators=[Optional()],
-        render_kw={"maxlength": 1, "disabled": True},
+        render_kw={"maxlength": 1},
     )
     last_name = StringField(
-        "Last Name", validators=[Optional()], render_kw={"disabled": True}
+        "Last Name",
+        validators=[Optional()],  # render_kw={"disabled": True}
     )
 
     class_flight = StringField("Class/Flight", validators=[Optional()])
 
     organization = StringField(
-        "Organization", validators=[Optional()], render_kw={"disabled": True}
+        "Organization",
+        validators=[Optional()],  # render_kw={"disabled": True}
     )
 
-    rank = StringField("Rank", validators=[DataRequired()])
+    rank = StringField(
+        "Rank",
+        validators=[Optional()],  # render_kw={"disabled": True}
+    )
 
-    pay_grade = StringField("Pay Grade", validators=[DataRequired()])
+    pay_grade = StringField(
+        "Pay Grade",
+        validators=[Optional()],  # render_kw={"disabled": True}
+    )
 
-    current_mtl = StringField("Current MTL", validators=[Optional()])
+    current_mtl = SelectField(
+        "MTL",
+        choices=[],  # Example choices
+        validators=[Optional()],
+    )
 
     student_phase = SelectField(
         "Current Phase",
         choices=[
             ("", "Select student phase"),  # Placeholder for default select option
-            ("0", "Phase I - Green Card"),
-            ("1", "Phase II - White Card"),
-            ("2", "Phase III - Yellow Card"),
-            ("3", "Phase IV - Blue Card"),
-            ("4", "Phase V - Red Card"),
+            (0, "Phase I - Green Card"),
+            (1, "Phase II - White Card"),
+            (2, "Phase III - Yellow Card"),
+            (3, "Phase IV - Blue Card"),
+            (4, "Phase V - Red Card"),
         ],
         validators=[Optional()],
         coerce=str,
     )
 
     submit = SubmitField("Save")
-    delete = SubmitField("Delete")
 
 
 class Form341(FlaskForm):
