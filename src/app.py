@@ -202,6 +202,15 @@ def profile(user_id=None):
     form.organization.choices.insert(0, (None, "Unassigned"))
 
     if request.method == "GET":
+        user_student = DatabaseManager.get_student_by_user_id(user.id)
+
+        if user_student is not None:
+            student_profile_url = url_for(
+                "bp_student.profile", student_id=user_student.id
+            )
+        else:
+            student_profile_url = None
+
         print("GET")
         if user_id == current_user.user_id:
             return redirect(url_for("profile"))
@@ -235,7 +244,7 @@ def profile(user_id=None):
     else:  # request is POST at this point
         print("POST ")
         if form.validate_on_submit():
-            if form.organization.data == 'None':
+            if form.organization.data == "None":
                 flash("Please select an organization before submitting.", "danger")
                 return render_template(
                     "profile.html",
@@ -258,7 +267,7 @@ def profile(user_id=None):
                 "id": user.id,
                 "phase": 1,
                 "class_flight": "Change me",
-                "grade": "E-1",
+                "grade": "E1",
                 "user_id": user.id,
                 "supervisor_id": 1,
             }
@@ -266,13 +275,9 @@ def profile(user_id=None):
             if current_user.user.role.role_permission not in [0, 1, 2]:
                 user_data = {"phone": form.phone.data}
 
-
-
             DatabaseManager.update_user(user.id, user_data)
             DatabaseManager.add_student(student_data)
-            
 
-            
     roles = DatabaseManager.get_roles()
 
     return render_template(
@@ -281,6 +286,7 @@ def profile(user_id=None):
         user=user,
         roles=roles,
         form=form,
+        student_profile_url=student_profile_url,
         include_navbar=True,
     )
 
