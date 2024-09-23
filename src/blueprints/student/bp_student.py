@@ -133,10 +133,11 @@ def profile(student_id=None):
         for organization in organizations
     ]
 
+    user_profile_url = url_for("profile", user_id=user.id)
+
     if request.method == "GET":
         print("GET")
 
-        user_profile_url = url_for("profile", user_id=user.id)
         current_user_student = DatabaseManager.get_student_by_account(
             current_user.email
         )
@@ -187,6 +188,7 @@ def profile(student_id=None):
 
             DatabaseManager.update_student(student.id, student_data)
 
+    student_341s = DatabaseManager.get_341_for_student(student.id)
     return render_template(
         "student-profile.html",
         student=student,
@@ -195,6 +197,7 @@ def profile(student_id=None):
         include_navbar=True,
         show_save_button=current_user.user.role.role_permission != 3,
         user_profile_url=user_profile_url,
+        student_341s=student_341s,
     )
 
 

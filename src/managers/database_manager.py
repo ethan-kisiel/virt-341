@@ -48,6 +48,7 @@ def create_student(session, student_data: dict):
     except Exception as e:
         print(e)
 
+
 def update_object(session, model_type: T, pk: int | str, data: dict) -> T:
     """
     Updates an object of type T with a given primary key pk with the given data
@@ -270,7 +271,8 @@ def create_role(session, role_data: dict):
         print("Value error")
     except Exception as e:
         print(e)
-        
+
+
 def create_user(session, user_data: dict):
     """function that creates a user object on the session, given the user data"""
     try:
@@ -284,15 +286,16 @@ def create_user(session, user_data: dict):
             organization_id=user_data.get("organization_id"),
         )
         session.add(user)
-        
+
         session.commit()
-        
+
         return user
-    
+
     except ValueError:
         print("Value error")
     except Exception as e:
         print(e)
+
 
 def delete_student(session, student_id: int):
     """Deletes a student object by student_id
@@ -382,7 +385,7 @@ class DatabaseManager:
         """
         print(f"account added: {new_user}")
         return cls.with_session(create_user, new_user)
-    
+
     @classmethod
     def add_student(cls, student_data: dict) -> Student:
         """_summary_
@@ -407,13 +410,11 @@ class DatabaseManager:
         print(f"account added: {account_data}")
         return cls.with_session(create_account, account_data)
 
-
-
     @classmethod
     def add_role(cls, role_data: dict):
         """adds a role object"""
         return cls.with_session(create_role, role_data)
-    
+
     @classmethod
     def add_user(cls, user_data: dict):
         """adds a user object"""
@@ -499,7 +500,7 @@ class DatabaseManager:
         return cls.with_session(
             lambda session: session.query(User)
             .join(Role)
-            .filter(Role.role_permission == 2)
+            .filter(Role.role_permission <= 2)
             .all()
         )
 
@@ -644,6 +645,22 @@ class DatabaseManager:
     def has_341(cls, student_id: int) -> bool:
         """Checks if a student has 341 in database"""
         return cls.with_session(
-            lambda session, student_id: session.query(Form341).filter_by(student_id=student_id).count() > 0,
+            lambda session, student_id: session.query(Form341)
+            .filter_by(student_id=student_id)
+            .count()
+            > 0,
             student_id,
+        )
+
+    @classmethod
+    def get_341_for_student(cls, student_id: int):
+        """Gets all 341s for student"""
+
+        return cls.with_session(
+            lambda session: session.query(Form341)
+            .options(
+                joinedload(Form341.student), joinedload(Form341.reporting_individual)
+            )
+            .filter_by(student_id=student_id)
+            .all()
         )

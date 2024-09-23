@@ -90,18 +90,21 @@
             </form>
         </div>
     </div>
-    {% if student.has_341 %}
+    {% if student_341s %}
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">341 Form Comments</div>
         <div class="card-body">
+            {% for form_341 in student_341s %}
             <div class="row">
                 <div class="col-md-12">
-                    <p>Comments: {{ student.comments }}</p>
-                    <p>Date and Time: {{ student.datetime }}</p>
-                    <p>Location: {{ student.location }}</p>
-                    <p>Reporting Individual: {{ student.reporting_individual }}</p>
+                    <p>Comment: {{ form_341.comment }}</p>
+                    <p>Date and Time: {{ form_341.date }} {{ form_341.time }}</p>
+                    <p>Location: {{ form_341.place }}</p>
+                    <p>Reporting Individual: {{ form_341.reporting_individual.qualified_name }}</p>
                 </div>
             </div>
+            <hr>
+            {% endfor %}
         </div>
     </div>
 {% else %}
