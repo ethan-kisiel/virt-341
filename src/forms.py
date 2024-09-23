@@ -140,32 +140,43 @@ class Form341(FlaskForm):
 
     student_phase = StringField("Student Phase", render_kw={"readonly": True})
 
-    # Name and Grade section
+    # Name and Grade section (read-only)
     name = StringField(
-        "Last Name - First Name - Middle Initial", validators=[DataRequired()]
+        "Last Name - First Name - Middle Initial",
+        validators=[DataRequired()],
+        render_kw={"readonly": True},
     )
-    grade = StringField("Grade", validators=[DataRequired()])
+    grade = StringField(
+        "Grade", validators=[DataRequired()], render_kw={"readonly": True}
+    )
 
-    # Organization and Class/Flight section
-    organization = StringField("Organization", validators=[Optional()])
-    class_flight = StringField("Class/Flight", validators=[Optional()])
+    # Organization and Class/Flight section (read-only)
+    organization = StringField(
+        "Organization", validators=[Optional()], render_kw={"readonly": True}
+    )
+    class_flight = StringField(
+        "Class/Flight", validators=[Optional()], render_kw={"readonly": True}
+    )
 
-    # Excellence/Discrepancy section
+    # Excellence/Discrepancy section (editable)
     excellence_discrepancy = TextAreaField(
         "Excellence/Exhibited Discrepancy (Be specific)", validators=[DataRequired()]
     )
 
-    # Time, Date, and Place section
+    # Time, Date, and Place section (editable)
     time = StringField("Time", validators=[DataRequired()])
     date = StringField("Date", validators=[DataRequired()])
     place = StringField("Place", validators=[Optional()])
 
-    # Reporting individual section
+    # Reporting individual section (editable)
     reporting_name = StringField(
         "Printed Name of Reporting Individual", validators=[DataRequired()]
     )
+
+    # Signature field (editable)
     signature = StringField(
-        "Signature of Reporting Individual", validators=[Optional()]
+        "Signature of Reporting Individual",
+        validators=[DataRequired()],  # Updated to make it required and editable
     )
 
     # Submit button

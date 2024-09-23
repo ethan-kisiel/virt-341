@@ -23,71 +23,62 @@
         <form method="POST" action="/submit">
             {{ form.hidden_tag() }}
 
-            <!-- Name and Grade Input Section -->
+            <!-- Name and Grade (Read-only) -->
             <div class="form-row">
-                <!-- Input for Name -->
                 <div class="form-cell large">
                     <label for="name">LAST NAME - FIRST NAME - MIDDLE INITIAL</label>
-                    {{ form.name(class="form-control", id="name") }}
+                    {{ form.name(class="form-control", id="name", readonly=True) }}
                 </div>
-                <!-- Input for Grade -->
                 <div class="form-cell small">
                     <label for="grade">GRADE</label>
-                    {{ form.grade(class="form-control", id="grade") }}
+                    {{ form.grade(class="form-control", id="grade", readonly=True) }}
                 </div>
             </div>
 
-            <!-- Organization and Class/Flight Input Section -->
+            <!-- Organization and Class/Flight (Read-only) -->
             <div class="form-row">
-                <!-- Input for Organization -->
                 <div class="form-cell large">
                     <label for="organization">ORGANIZATION</label>
-                    {{ form.organization(class="form-control", id="organization") }}
+                    {{ form.organization(class="form-control", id="organization", readonly=True) }}
                 </div>
-                <!-- Input for Class/Flight -->
                 <div class="form-cell small">
                     <label for="class-flight">CLASS/FLIGHT (If Applicable)</label>
-                    {{ form.class_flight(class="form-control", id="class-flight") }}
+                    {{ form.class_flight(class="form-control", id="class-flight", readonly=True) }}
                 </div>
             </div>
 
-            <!-- Description of Excellence/Discrepancy Section -->
+            <!-- Editable Fields -->
+            <!-- Excellence/Discrepancy (Editable) -->
             <div class="form-section">
                 <label for="excellence-discrepancy">EXCELLENCE/EXHIBITED DISCREPANCY (Be specific)</label>
                 {{ form.excellence_discrepancy(class="form-control", id="excellence-discrepancy") }}
             </div>
 
-            <!-- Time, Date, and Place Input Section -->
+            <!-- Time, Date, Place, and Reporting Name (Editable) -->
             <div class="form-row">
-                <!-- Input for Time -->
                 <div class="form-cell medium">
                     <label for="time">TIME</label>
                     {{ form.time(class="form-control", id="time") }}
                 </div>
-                <!-- Input for Date -->
                 <div class="form-cell medium">
                     <label for="date">DATE</label>
                     {{ form.date(class="form-control", id="date") }}
                 </div>
-                <!-- Input for Place -->
                 <div class="form-cell medium">
                     <label for="place">PLACE</label>
                     {{ form.place(class="form-control", id="place") }}
                 </div>
             </div>
-
-            <!-- Reporting Individual's Name and Signature Section -->
             <div class="form-row">
-                <!-- Input for Reporting Individual's Name -->
                 <div class="form-cell large">
                     <label for="reporting-name">PRINTED NAME OF REPORTING INDIVIDUAL</label>
                     {{ form.reporting_name(class="form-control", id="reporting-name") }}
                 </div>
-                <!-- Input for Signature -->
-                <div class="form-cell large">
-                    <label for="signature">SIGNATURE OF REPORTING INDIVIDUAL</label>
-                    {{ form.signature(class="form-control", id="signature") }}
-                </div>
+            </div>
+            <div class="form-cell large">
+                <label for="signature">SIGNATURE OF REPORTING INDIVIDUAL</label>
+                {{ form.signature(class="form-control", id="signature") }}
+            </div>
             </div>
 
             <br>

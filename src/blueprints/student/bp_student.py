@@ -36,7 +36,7 @@ def index():
     return redirect(url_for("bp_student.profile"))
 
 
-@student_bp.route("/<int:student_id>/341form")
+@student_bp.route("/<int:student_id>/341form", methods=["GET", "POST"])
 @login_required
 def form341(student_id: int):
     """
@@ -47,14 +47,18 @@ def form341(student_id: int):
     """
 
     form = Form341()
-    student = DatabaseManager.get_student_by_account(current_user.email)
+    student = DatabaseManager.get_student(student_id)
 
     if not student and student_id is not None:
         return "404 Not found", 404  # if looking for nonexistent student, send 404
+
     elif not student:
         return redirect(
             url_for("profile")
         )  # if looking at own student profile, send to user profile
+
+    if request.method == "GET":
+        pass
 
     return render_template("341-form.html", student=student, form=form)
 
