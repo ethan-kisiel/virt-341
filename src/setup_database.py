@@ -61,6 +61,16 @@ def main():
                 DatabaseManager.add_account(ad)
             except Exception as e:
                 pass
+            
+    with open('src/student_data.json', 'r') as file:
+        student_data = json.loads(file.read())
+        print(student_data)
+        for sd in student_data:
+            try:
+                DatabaseManager.add_student(sd["student"])
+            except Exception as e:
+                pass
+
 
 
 
