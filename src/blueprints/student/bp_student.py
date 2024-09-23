@@ -63,7 +63,6 @@ def form341(student_id: int):
         )  # if looking at own student profile, send to user profile
 
     if request.method == "GET":
-        form.student_phase.data = f"{student.phase}"
         form.name.data = f"{student.user.last_name}, {student.user.first_name}, {student.user.middle_initial}"
         form.grade.data = f"{student.grade}"
         form.organization.data = student.user.organization.organization_name
@@ -207,7 +206,7 @@ def generate_student_qr(student_id: int = None):
     Return:
     Sends the generated QR code as an image file
     """
-    student = DatabaseManager.get_student_by_account(current_user.email)
+    student = DatabaseManager.get_student(student_id)
 
     if not student and student_id is not None:
         return "404 Not found", 404  # if looking for nonexistent student, send 404

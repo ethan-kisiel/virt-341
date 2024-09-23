@@ -152,8 +152,6 @@ class StudentProfileForm(FlaskForm):
 
 class Form341Form(FlaskForm):
 
-    student_phase = StringField("Student Phase", render_kw={"readonly": True})
-
     # Name and Grade section (read-only)
     name = StringField(
         "Last Name - First Name - Middle Initial",
