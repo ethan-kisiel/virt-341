@@ -127,7 +127,7 @@ def profile(student_id=None):
 
         form.student_phase.data = str(student.phase)
 
-        if current_user.user.role.role_permission in [0, 1, 2]:
+        if current_user.user.role.role_permission not in [0, 1, 2]:
             form.first_name.render_kw = {"disabled": True}
             form.middle_initial.render_kw = {"disabled": True}
             form.last_name.render_kw = {"disabled": True}
@@ -135,6 +135,11 @@ def profile(student_id=None):
             form.rank.render_kw = {"disabled": True}
             form.organization.render_kw = {"disabled": True}
 
+            form.class_flight.render_kw = {"disabled": True}
+
+            form.pay_grade.render_kw = {"disabled": True}
+            form.current_mtl.render_kw = {"disabled": True}
+            form.student_phase.render_kw = {"disabled": True}
     elif request.method == "POST":
         print("POST")
         if form.validate_on_submit():
@@ -178,12 +183,13 @@ def generate_student_qr(student_id: int = None):
         return redirect(
             url_for("profile")
         )  # if looking at own student profile, send to user profile
-    student_id = student_id or student.id 
-    
+    student_id = student_id or student.id
+
     qr_data_url = url_for("bp_student.form341", student_id=student_id, _external=True)
     img_io = generate_qr_code(qr_data_url)
 
     return send_file(img_io, mimetype="image/png")
+
 
 @student_bp.route("/341-form", methods=["GET", "POST"])
 @login_required
@@ -230,7 +236,6 @@ def form_341():
             }
 
             DatabaseManager.submit_341_report(current_user.id, form_data)
-
 
             return redirect(url_for("bp_student.form_341"))
 
