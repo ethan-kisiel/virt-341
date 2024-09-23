@@ -301,4 +301,4 @@ if __name__ == "__main__":
     # host = ConfigManager.config.ip
     # port = ConfigManager.config.port
 
-    app.run(host="10.1.72.126", port=8080)  # TODO get control of host and port
+    app.run(host="0.0.0.0", port=8080)  # TODO get control of host and port
