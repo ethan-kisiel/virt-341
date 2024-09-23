@@ -239,7 +239,29 @@ def create_role(session, role_data: dict):
         print("Value error")
     except Exception as e:
         print(e)
-
+        
+def create_user(session, user_data: dict):
+    """function that creates a user object on the session, given the user data"""
+    try:
+        user = User(
+            last_name=user_data.get("last_name"),
+            first_name=user_data.get("first_name"),
+            middle_initial=user_data.get("middle_initial"),
+            rank=user_data.get("rank"),
+            phone=user_data.get("phone"),
+            role_id=user_data.get("role_id"),
+            organization_id=user_data.get("organization_id"),
+        )
+        session.add(user)
+        
+        session.commit()
+        
+        return user
+    
+    except ValueError:
+        print("Value error")
+    except Exception as e:
+        print(e)
 
 def delete_student(session, student_id: int):
     """Deletes a student object by student_id
@@ -360,6 +382,11 @@ class DatabaseManager:
     def add_role(cls, role_data: dict):
         """adds a role object"""
         return cls.with_session(create_role, role_data)
+    
+    @classmethod
+    def add_user(cls, user_data: dict):
+        """adds a user object"""
+        return cls.with_session(create_user, user_data)
 
     @classmethod
     def add_organization(cls, organization_data: dict):
