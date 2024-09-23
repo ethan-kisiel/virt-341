@@ -391,7 +391,7 @@ class DatabaseManager:
         return cls.with_session(
             lambda session: session.query(User)
             .join(Role)
-            .filter(Role.role_permission == 3)
+            .filter(Role.role_permission == 2)
             .all()
         )
 
@@ -487,13 +487,7 @@ class DatabaseManager:
         Return: return_description
         """
 
-        # student = self.get_student(student_id)
-        # if student:
-        #     student.first_name = updated_data.get("first_name")
-        #     student.last_name = updated_data.get("last_name")
-        #     self.db.session.commit()
-        #     return True
-        # return False
+        cls.with_session(update_object, Student, student_id, updated_data)
 
     @classmethod
     def remove_user(cls, user_id: int, email: str):

@@ -201,7 +201,7 @@ def profile(user_id=None):
     form.organization.choices.insert(0, (None, "Unassigned"))
 
     if request.method == "GET":
-
+        print("GET")
         if user_id == current_user.user_id:
             return redirect(url_for("profile"))
 
@@ -232,6 +232,7 @@ def profile(user_id=None):
             form.organization.render_kw = DISABLED_KWARGS
 
     else:  # request is POST at this point
+        print("POST ")
         if form.validate_on_submit():
             user_data = {
                 "last_name": form.last_name.data,

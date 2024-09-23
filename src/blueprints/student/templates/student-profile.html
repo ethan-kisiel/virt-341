@@ -79,7 +79,9 @@
                     {{ form.student_phase(class="form-control", id="studentPhase", onchange="this.className = 'form-control ' + this.options[this.selectedIndex].className;") }}
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-success">{{ form.submit.label.text }}</button>
+                </div>
             </form>
         </div>
     </div>
