@@ -11,6 +11,7 @@ from flask import Flask
 from flask import render_template
 from flask import url_for
 from flask import redirect
+from flask import flash
 from flask import request
 from flask_wtf import FlaskForm
 
@@ -201,7 +202,7 @@ def profile(user_id=None):
     form.organization.choices.insert(0, (None, "Unassigned"))
 
     if request.method == "GET":
-
+        print("GET")
         if user_id == current_user.user_id:
             return redirect(url_for("profile"))
 
@@ -232,7 +233,18 @@ def profile(user_id=None):
             form.organization.render_kw = DISABLED_KWARGS
 
     else:  # request is POST at this point
+        print("POST ")
         if form.validate_on_submit():
+            if form.organization.data == 'None':
+                flash("Please select an organization before submitting.", "danger")
+                return render_template(
+                    "profile.html",
+                    account=account,
+                    user=user,
+                    roles=roles,
+                    form=form,
+                    include_navbar=True,
+                )
             user_data = {
                 "last_name": form.last_name.data,
                 "first_name": form.first_name.data,
@@ -242,13 +254,15 @@ def profile(user_id=None):
                 "role_id": int(form.role.data),
                 "organization_id": int(form.organization.data),
             }
-
+            
             # if the user doesn't have edit privelages
             if current_user.user.role.role_permission not in [0, 1, 2]:
                 user_data = {"phone": form.phone.data}
-
+            
             DatabaseManager.update_user(user.id, user_data)
 
+            flash("Profile saved successfully!", "success")
+            
     roles = DatabaseManager.get_roles()
 
     return render_template(

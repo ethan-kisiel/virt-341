@@ -4,6 +4,19 @@
 {% block content %}
 <div class="container mt-5">
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="container mt-3">
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
 <!-- Form for updating user and account information -->
 <div class="card mb-4">
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
@@ -102,15 +115,15 @@
             location.reload();
         });
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
-            const saveButton = document.querySelector('button[name="saveButton"]');
-            saveButton.addEventListener('click', function(event) {
-                event.preventDefault(); 
-                alert('Profile saved successfully!');
-                document.getElementById('updateUserAccountForm').submit();
-            });
+        // Auto-hide flashed messages after 5 seconds
+        setTimeout(function() {
+        let alertElements = document.querySelectorAll('.alert');
+        alertElements.forEach(function(alert) {
+            let alertInstance = new bootstrap.Alert(alert);
+            alertInstance.close();
         });
+    }, 3000); // 3000ms = 3 seconds
+
 </script>
 
 {% endblock %}
