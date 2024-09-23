@@ -127,7 +127,9 @@ def profile(student_id=None):
 
         form.student_phase.data = str(student.phase)
 
+
         if current_user.user.role.role_permission not in [0, 1, 2]:
+
             form.first_name.render_kw = {"disabled": True}
             form.middle_initial.render_kw = {"disabled": True}
             form.last_name.render_kw = {"disabled": True}
@@ -162,6 +164,7 @@ def profile(student_id=None):
         user=user,
         form=form,
         include_navbar=True,
+        show_save_button= current_user.user.role.role_permission != 3 
     )
 
 

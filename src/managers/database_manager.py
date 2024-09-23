@@ -22,6 +22,32 @@ from models import Form341
 T = TypeVar("T")
 
 
+def create_student(session, student_data: dict):
+    """function that creates a student object on the session, given
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+    try:
+        student = Student(
+            phase=student_data.get("phase"),
+            class_flight=student_data.get("class_flight"),
+            grade=student_data.get("grade"),
+            user_id=student_data.get("user_id"),
+            supervisor_id=student_data.get("supervisor_id"),
+        )
+
+        session.add(student)
+        session.commit()
+
+        return student
+
+    except ValueError:
+        print("Value error")
+    except Exception as e:
+        print(e)
+
 def update_object(session, model_type: T, pk: int | str, data: dict) -> T:
     """
     Updates an object of type T with a given primary key pk with the given data
@@ -325,6 +351,19 @@ class DatabaseManager:
         """
         print(f"account added: {new_user}")
         return cls.with_session(create_user, new_user)
+    
+    @classmethod
+    def add_student(cls, student_data: dict) -> Student:
+        """_summary_
+
+        Args:
+            student_data (dict): _description_
+
+        Returns:
+            Student: _description_
+        """
+
+        return cls.with_session(create_student, student_data)
 
     @classmethod
     def add_account(cls, account_data: dict) -> Account:
@@ -337,9 +376,7 @@ class DatabaseManager:
         print(f"account added: {account_data}")
         return cls.with_session(create_account, account_data)
 
-    @classmethod
-    def add_student(cls, student):
-        pass
+
 
     @classmethod
     def add_role(cls, role_data: dict):
