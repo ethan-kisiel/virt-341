@@ -94,6 +94,7 @@ def form341(student_id: int):
 #         include_navbar=True,
 #     )
 
+
 @student_bp.route("/profile", methods=["GET", "POST", "DELETE"])
 @student_bp.route("/profile/<int:student_id>", methods=["GET", "POST", "DELETE"])
 @login_required
@@ -110,62 +111,69 @@ def profile(student_id=None):
         try:
             student = DatabaseManager.get_student(student_id)
             user = student.user
+            account = DatabaseManager.get_account_by_user_id(user.id)
         except AttributeError:
             return "404 Not found.", 404
     else:
         student = DatabaseManager.get_student_by_account(current_user.email)
         if not student:
             return "404 Not found.", 404
-        user = current_user.user
+
+        user = student.user
+        account = current_user
 
     if request.method == "DELETE":
         DatabaseManager.delete_student(student.id)
-        return "", 204  
+        return "", 204
 
     form = StudentProfileForm()
 
-    roles = DatabaseManager.get_roles()
-    organizations = DatabaseManager.get_organizations()
-
-    form.role.choices = [(role.id, role.role_name) for role in roles]
-    form.role.choices.insert(0, (None, "Unassigned"))
-    form.organization.choices = [(org.id, org.organization_name) for org in organizations]
-    form.organization.choices.insert(0, (None, "Unassigned"))
-
     if request.method == "GET":
 
-        if student_id == current_user.user_id:
+        mtls = DatabaseManager.get_mtls()
+        form.current_mtl.choices = [(mtl.id, mtl.qualified_name) for mtl in mtls]
+
+        organizations = DatabaseManager.get_organizations()
+
+        form.organization.choices = [
+            (organization.id, organization.organization_name)
+            for organization in organizations
+        ]
+
+        current_user_student = DatabaseManager.get_student_by_account(
+            current_user.email
+        )
+        # on get request populate form with existing data
+        if student_id == current_user_student.id:
             return redirect(url_for("bp_student.profile"))
 
-        form.first_name.data = student.first_name
-        form.middle_initial.data = student.middle_initial
-        form.last_name.data = student.last_name
+        form.first_name.data = user.first_name
+        form.middle_initial.data = user.middle_initial
+        form.last_name.data = user.last_name
 
-        form.email.data = user.email
-        form.phone_number.data = student.phone_number
-        form.rank.data = student.rank
-        form.role.data = str(student.role_id)
-        form.organization.data = str(student.organization_id)
-        
-        if current_user.user.role.role_permission not in [0, 1, 2]:
-            form.first_name.render_kw = {'disabled': True}
-            form.middle_initial.render_kw = {'disabled': True}
-            form.last_name.render_kw = {'disabled': True}
-            form.email.render_kw = {'disabled': True}
-            form.rank.render_kw = {'disabled': True}
-            form.role.render_kw = {'disabled': True}
-            form.organization.render_kw = {'disabled': True}
+        form.class_flight.data = student.class_flight
+
+        form.organization.data = str(user.organization_id)
+        form.rank.data = user.rank
+        form.pay_grade.data = student.grade
+
+        form.current_mtl.data = str(student.supervisor_id)
+
+        if current_user.user.role.role_permission in [0, 1, 2]:
+            form.first_name.render_kw = {"disabled": True}
+            form.middle_initial.render_kw = {"disabled": True}
+            form.last_name.render_kw = {"disabled": True}
+
+            form.rank.render_kw = {"disabled": True}
+            form.organization.render_kw = {"disabled": True}
 
     elif request.method == "POST":
         if form.validate_on_submit():
             student_data = {
-                "last_name": form.last_name.data,
-                "first_name": form.first_name.data,
-                "middle_initial": form.middle_initial.data,
                 "rank": form.rank.data,
-                "phone_number": form.phone_number.data,
-                "role_id": int(form.role.data),
-                "organization_id": int(form.organization.data),
+                "class_flight": form.class_flight.data,
+                "supervisor_id": form.current_mtl.data,
+                "phase": form.student_phase.data,
             }
 
             if current_user.user.role_id not in [0, 1, 2]:

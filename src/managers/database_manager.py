@@ -213,7 +213,8 @@ def create_role(session, role_data: dict):
         print("Value error")
     except Exception as e:
         print(e)
-        
+
+
 def delete_student(session, student_id: int):
     """Deletes a student object by student_id
 
@@ -234,9 +235,6 @@ def delete_student(session, student_id: int):
         print(e)
     except Exception as e:
         print(e)
-
-
- 
 
 
 class DatabaseManager:
@@ -383,6 +381,21 @@ class DatabaseManager:
         return cls.with_session(lambda session: session.query(Role).all())
 
     @classmethod
+    def get_mtls(cls):
+        """sumary_line
+
+        Keyword arguments:
+        argument -- description
+        Return: return_description
+        """
+        return cls.with_session(
+            lambda session: session.query(User)
+            .join(Role)
+            .filter(Role.role_permission == 3)
+            .all()
+        )
+
+    @classmethod
     def get_organizations(cls):
         """sumary_line
 
@@ -509,4 +522,3 @@ class DatabaseManager:
     def remove_student(cls, student_id: int):
         """Removes a student by ID"""
         cls.with_session(delete_student, student_id)
-    
