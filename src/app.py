@@ -257,10 +257,10 @@ def profile(user_id=None):
             student_data = {
                 "id": user.id,
                 "phase": 1,
-                "class_flight": "Present",
+                "class_flight": "Change me",
                 "grade": "E-1",
                 "user_id": user.id,
-                "supervisor_id": 0
+                "supervisor_id": 1,
             }
             # if the user doesn't have edit privelages
             if current_user.user.role.role_permission not in [0, 1, 2]:
