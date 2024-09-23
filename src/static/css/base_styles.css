@@ -32,7 +32,7 @@ nav {
 
 /* Add hover effect for the navbar links */
 .navbar-custom .nav-link:hover {
-    color: #dcdcdc; /* Lighter color on hover */
+    color: #000000; /* Lighter color on hover */
 }
 
 /* Style for the navbar-toggler icon (for mobile) */
@@ -43,4 +43,26 @@ nav {
 /* Round the corners for the collapsed menu (for mobile) */
 .navbar-custom .collapse {
     border-radius: 8px;
+}
+
+body {
+    position: relative;
+    height: 100vh; /* Ensures the body takes the full viewport height */
+    margin: 0; /* Removes default margin */
+    overflow: hidden; /* Prevents overflow from the overlay */
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("/static/images/airforce.jpg");
+    background-size: 50%; /* Adjust size as needed */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    opacity: 0.1; /* Adjust this value for more or less fade */
+    z-index: -1; /* Places the overlay behind the body content */
 }

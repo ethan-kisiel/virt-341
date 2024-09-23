@@ -2,6 +2,9 @@
 
 {
     "users": [
+        {"last_name": "Kisiel", "first_name": "Ethan", "middle_initial": "A", "rank": "Amn", "phone": null, "role_id": 1, "organization_id": 1},
+        {"last_name": "Schell", "first_name": "John", "middle_initial": "N", "rank": "SSgt", "phone": null, "role_id": 1, "organization_id": 1},
+        {"last_name": "Semrock", "first_name": "Joshua", "middle_initial": "S", "rank": "TSgt", "phone": null, "role_id": 1, "organization_id": 1},
         {"last_name": "Smith", "first_name": "John", "middle_initial": "A", "rank": "AB", "phone": "555-0100", "role_id": 5, "organization_id": 1},
         {"last_name": "Doe", "first_name": "Jane", "middle_initial": "B", "rank": "AB", "phone": "555-0101", "role_id": 5, "organization_id": 1},
         {"last_name": "Brown", "first_name": "Alice", "middle_initial": "C", "rank": "Amn", "phone": "555-0102", "role_id": 5, "organization_id": 1},
