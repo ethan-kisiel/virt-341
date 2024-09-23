@@ -116,7 +116,11 @@ class StudentProfileForm(FlaskForm):
 
     pay_grade = StringField("Pay Grade", validators=[DataRequired()])
 
-    current_mtl = StringField("Current MTL", validators=[Optional()])
+    current_mtl = SelectField(
+        "MTL",
+        choices=[],  # Example choices
+        validators=[Optional()],
+    )
 
     student_phase = SelectField(
         "Current Phase",

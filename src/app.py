@@ -244,7 +244,7 @@ def profile(user_id=None):
             }
 
             # if the user doesn't have edit privelages
-            if current_user.user.role_id not in [0, 1, 2]:
+            if current_user.user.role.role_permission not in [0, 1, 2]:
                 user_data = {"phone": form.phone.data}
 
             DatabaseManager.update_user(user.id, user_data)
