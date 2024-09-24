@@ -14,30 +14,41 @@
       <body>
         {% if include_navbar %}
         <nav class="navbar navbar-expand-lg navbar-custom">
-          <a class="navbar-brand" href="#">{% if current_user.user.organization %}{{ current_user.user.organization.organization_name }}{% endif %}</a>
+          <a class="navbar-brand" href="{{ url_for('bp_organization.index') }}">{% if current_user.user.organization %}{{ current_user.user.organization.organization_name }}{% endif %}</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
-      
+
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto">
                   {% if current_user %}
                   <li class="nav-item">
-                      <a class="nav-link" href="#">{{ current_user.user.first_name }} {{ current_user.user.middle_initial }} {{ current_user.user.last_name }}</a>
+                      <a class="nav-link" href="">{{ current_user.user.first_name }} {{ current_user.user.middle_initial }} {{ current_user.user.last_name }}</a>
                   </li>
                   {% endif %}
-      
+
                   <li class="nav-item">
                       <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
                   </li>
+
+                  {% if is_student %}
                   <li class="nav-item">
                       <a class="nav-link" href="{{ url_for('bp_student.profile') }}">Student Profile</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="{{ url_for('bp_student.generate_student_qr') }}">QR Code</a>
                   </li>
+                  {% endif %}
+
+
+                  <li class="nav-item">
+                      <input id="goto-input" class="form-control" placeholder="Search user id" oninput="gotoProfile()"></input>
+                  </li>
+                  <li class="nav-item">
+                    <a id="goto-button" class="btn btn-primary">Go to profile</a>
+                  </li>
               </ul>
-      
+
               <ul class="navbar-nav ms-auto">
                   <li class="nav-item">
                       <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
@@ -48,7 +59,7 @@
             <p class="mb-0"><b>WORK IN PROGRESS. SUBJECT TO CHANGE</b></p>
         </div>
       </nav>
-      
+
         {% endif %}
 
         <section class="content">
@@ -69,6 +80,13 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+      <script>
+          function gotoProfile()
+          {
+            $("#goto-button").attr("href", `{{ url_for('profile') }}/${$("#goto-input").val()}`)
+          }
+      </script>
 
     </body>
 </html>

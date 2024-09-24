@@ -18,6 +18,7 @@ from flask_wtf import FlaskForm
 from flask_login import login_required
 from flask_login import login_user
 from flask_login import logout_user
+from flask_login import AnonymousUserMixin
 from flask_login import current_user
 
 from constants import DISABLED_KWARGS
@@ -49,6 +50,30 @@ login_manager.init_app(app)  # init login manager
 # student/
 #       profile, 341, analytics,
 # student/<int: student_id>/
+
+
+@app.context_processor
+def is_user_student():
+    """sumary_line
+
+    Keyword arguments:
+    argument -- description
+    Return: return_description
+    """
+
+    is_student = False
+    try:
+        print(current_user.email)
+        if not isinstance(current_user, AnonymousUserMixin):
+            is_student = (
+                DatabaseManager.get_student_by_account(current_user.email) is not None
+            )
+
+            print(is_student)
+    except AttributeError:
+        print("ATTRIBUTE ERROR")
+
+    return dict(is_student=is_student)
 
 
 @login_manager.unauthorized_handler
@@ -276,6 +301,7 @@ def profile(user_id=None):
 
             DatabaseManager.update_user(user.id, user_data)
             DatabaseManager.add_student(student_data)
+            flash("User information updated successfully.", "success")
 
     roles = DatabaseManager.get_roles()
 
