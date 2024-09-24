@@ -211,7 +211,9 @@ def generate_student_qr(student_id: int = None):
     Return:
     Sends the generated QR code as an image file
     """
-    student_id = DatabaseManager.get_student_by_account(current_user.email).id
+
+    if student_id is None:
+        student_id = DatabaseManager.get_student_by_account(current_user.email).id
     student = DatabaseManager.get_student(student_id)
 
     if not student and student_id is not None:
