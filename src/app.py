@@ -276,7 +276,8 @@ def profile(user_id=None):
 
             DatabaseManager.update_user(user.id, user_data)
             DatabaseManager.add_student(student_data)
-
+            flash("User information updated successfully.", "success")
+            
     roles = DatabaseManager.get_roles()
 
     return render_template(
